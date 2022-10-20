@@ -2,24 +2,28 @@
 
 declare(strict_types=1);
 
-namespace App\Entity\Dictionary;
+namespace App\Entity\Forum;
 
+use App\Entity\UserManagement\User;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\UuidV4;
 
 #[ORM\Entity]
-class MarksDictionary
+class ForumPost
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
     private UuidV4 $id;
 
-    #[ORM\Column(type: 'string')]
-    private string $name;
+    #[ORM\Column(type: 'text')]
+    private string $content;
 
-    #[ORM\Column(type: 'integer')]
-    private int $position;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    private User $author;
+
+    #[ORM\ManyToOne(targetEntity: Forum::class)]
+    private Forum $forum;
 
     #[ORM\Column(type: 'datetime')]
     private DateTime $createdAt;
@@ -32,25 +36,36 @@ class MarksDictionary
         return $this->id;
     }
 
-    public function getName(): string
+    public function getContent(): string
     {
-        return $this->name;
+        return $this->content;
     }
 
-    public function setName(string $name): self
+    public function setContent(string $content): self
     {
-        $this->name = $name;
+        $this->content = $content;
         return $this;
     }
 
-    public function getPosition(): int
+    public function getAuthor(): User
     {
-        return $this->position;
+        return $this->author;
     }
 
-    public function setPosition(int $position): self
+    public function setAuthor(User $author): self
     {
-        $this->position = $position;
+        $this->author = $author;
+        return $this;
+    }
+
+    public function getForum(): Forum
+    {
+        return $this->forum;
+    }
+
+    public function setForum(Forum $forum): self
+    {
+        $this->forum = $forum;
         return $this;
     }
 

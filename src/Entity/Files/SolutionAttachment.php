@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Entity\Files;
 
-use App\Entity\Platform\Course;
+use App\Entity\Platform\Solution;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\UuidV4;
 
 #[ORM\Entity]
-class CourseAttachment
+class SolutionAttachment
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
@@ -18,8 +18,8 @@ class CourseAttachment
     #[ORM\ManyToOne(targetEntity: Storage::class)]
     private Storage $storage;
 
-    #[ORM\ManyToOne(targetEntity: Course::class)]
-    private Course $course;
+    #[ORM\ManyToOne(targetEntity: Solution::class)]
+    private Solution $solution;
 
     public function getId(): UuidV4
     {
@@ -37,14 +37,14 @@ class CourseAttachment
         return $this;
     }
 
-    public function getCourse(): Course
+    public function getSolution(): Solution
     {
-        return $this->course;
+        return $this->solution;
     }
 
-    public function setCourse(Course $course): self
+    public function setSolution(Solution $solution): self
     {
-        $this->course = $course;
+        $this->solution = $solution;
         return $this;
     }
 }

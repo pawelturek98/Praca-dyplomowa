@@ -6,6 +6,7 @@ namespace App\Entity\UserManagement;
 
 use App\Enum\UserManagement\UserTypeEnum;
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\UuidV4;
 
@@ -44,7 +45,7 @@ class User
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $degree = null;
 
-    #[ORM\Column(type: 'int')]
+    #[ORM\Column(type: 'integer')]
     private UserTypeEnum $type = UserTypeEnum::USER_ADMINISTRATOR;
 
     #[ORM\Column(type: 'datetime')]
