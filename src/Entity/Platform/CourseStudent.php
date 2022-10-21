@@ -30,6 +30,11 @@ class CourseStudent
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private bool $isPassed = false;
 
+    public function __construct()
+    {
+        $this->id = UuidV4::v4();
+    }
+
     public function getId(): UuidV4
     {
         return $this->id;

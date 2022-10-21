@@ -33,6 +33,13 @@ class Exercise
     #[ORM\ManyToOne(targetEntity: Course::class, cascade: ['persist'])]
     private Course $course;
 
+    public function __construct()
+    {
+        $this->id = UuidV4::v4();
+        $this->createdAt = new DateTime('now');
+        $this->updatedAt = new DateTime('now');
+    }
+
     public function getId(): UuidV4
     {
         return $this->id;

@@ -21,6 +21,11 @@ class CourseAttachment
     #[ORM\ManyToOne(targetEntity: Course::class)]
     private Course $course;
 
+    public function __construct()
+    {
+        $this->id = UuidV4::v4();
+    }
+
     public function getId(): UuidV4
     {
         return $this->id;

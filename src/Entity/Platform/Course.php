@@ -34,6 +34,11 @@ class Course
     #[ORM\ManyToOne(targetEntity: User::class)]
     private User $leaderTeacher;
 
+    public function __construct()
+    {
+        $this->id = UuidV4::v4();
+    }
+
     public function getId(): UuidV4
     {
         return $this->id;

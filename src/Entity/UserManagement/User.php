@@ -4,23 +4,28 @@ declare(strict_types=1);
 
 namespace App\Entity\UserManagement;
 
+use App\Dictionary\UserManagement\UserDictionary;
 use App\Enum\UserManagement\UserTypeEnum;
+use App\Repository\UserManagement\UserRepository;
 use DateTime;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\UuidV4;
 
-#[ORM\Entity]
-class User
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['email', 'username'], message: 'user.unique')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
     private UuidV4 $id;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', unique: true)]
     private string $username;
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string', unique: true)]
     private string $email;
 
     #[ORM\Column(type: 'string')]
@@ -45,8 +50,8 @@ class User
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $degree = null;
 
-    #[ORM\Column(type: 'integer')]
-    private UserTypeEnum $type = UserTypeEnum::USER_ADMINISTRATOR;
+    #[ORM\Column(type: 'string')]
+    private string $type;
 
     #[ORM\Column(type: 'datetime')]
     private DateTime $createdAt;
@@ -54,8 +59,16 @@ class User
     #[ORM\Column(type: 'datetime')]
     private DateTime $updatedAt;
 
-    #[ORM\Column(type: 'datetime')]
-    private DateTime $lastSeen;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?DateTime $lastSeen = null;
+
+    public function __construct()
+    {
+        $this->id = UuidV4::v4();
+        $this->type = UserDictionary::ROLE_STUDENT;
+        $this->createdAt = new DateTime('now');
+        $this->updatedAt = new DateTime('now');
+    }
 
     public function getId(): UuidV4
     {
@@ -161,12 +174,12 @@ class User
         return $this;
     }
 
-    public function getType(): UserTypeEnum
+    public function getType(): string
     {
         return $this->type;
     }
 
-    public function setType(UserTypeEnum $type): self
+    public function setType(string $type): self
     {
         $this->type = $type;
         return $this;
@@ -203,5 +216,19 @@ class User
     {
         $this->lastSeen = $lastSeen;
         return $this;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
+    public function getRoles(): array
+    {
+        return [$this->type];
+    }
+
+    public function eraseCredentials(): void
+    {
     }
 }
