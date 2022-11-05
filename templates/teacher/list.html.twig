@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block breadcrumbs %}
+    <ul>
+        <li>
+            <span>{{ 'app.navigation.course_list' | trans }}</span>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card filters">
+                <div class="card-header">{{ 'app.filters' | trans }}</div>
+                <div class="card-body">
+                    {{ form_start(filterForm) }}
+                    {{ form_widget(filterForm) }}
+                    {{ form_end(filterForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="card course-list">
+                <div class="card-header">{{ 'app.course_list.table.title' | trans }}</div>
+                <div class="card-body">
+                    <table>
+                        <tr>
+                            <th>{{ 'app.course_list.table.name' | trans }}</th>
+                            <th>{{ 'app.course_list.table.teacher' | trans }}</th>
+                            <th>{{ 'app.course_list.table.start_date' | trans }}</th>
+                            <th>{{ 'app.course_list.table.close_date' | trans }}</th>
+                            <th>{{ 'app.course_list.table.status' | trans }}</th>
+                            <th>{{ 'app.list.action.label' | trans }}</th>
+                        </tr>
+                        {% for course in courses %}
+                            <tr>
+                                <td>{{ course.name }}</td>
+                                <td>{{ course.leaderTeacher.fullName }}</td>
+                                <td>{{ course.startDate | date('d.m.Y') }}</td>
+                                <td>{{ course.closeDate | date('d.m.Y') }}</td>
+                                <td>{{ course.status }}</td>
+                                <td>{{ 'app.course_list.table.show_course' | trans }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            {% include '_partials/pagination.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

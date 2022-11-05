@@ -1,0 +1,22 @@
+app:
+  course_list:
+    table:
+      empty: Brak kursów
+      name: Nazwa
+      title: Lista kursów studenta
+      teacher: Nauczyciel
+      start_date: Data początku
+      close_date: Data końca
+      status: Status
+  filters: Filtrowanie
+  navigation:
+    course_list: Lista kursów
+    logout: Wyloguj
+    marks_list: Lista ocen
+    settings: Ustawienia
+  list:
+    action:
+      label: Akcja
+  settings:
+    default:
+      title: Platforma e-learningowa

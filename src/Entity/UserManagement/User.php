@@ -231,4 +231,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function eraseCredentials(): void
     {
     }
+
+    public function getFullName(): string
+    {
+        return sprintf('%s %s', $this->getFirstname(), $this->getLastname());
+    }
+
+    public function getFullNameReversed(): string
+    {
+        return sprintf('%s %s', $this->getLastname(), $this->getFirstname());
+    }
 }

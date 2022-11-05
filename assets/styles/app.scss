@@ -1,0 +1,104 @@
+@import 'bootstrap/scss/bootstrap';
+
+$navigation-color: green;
+
+body {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.navigation {
+    position: absolute;
+    background: $navigation-color;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 300px;
+
+    .logout {
+        position: absolute;
+        bottom: -5px;
+        width: 300px;
+    }
+}
+
+.container {
+    margin-left: inherit;
+    max-width: 78%;
+}
+
+.clearfix-menu {
+    width: 300px;
+    height: 400px;
+}
+
+.nav-link {
+    color: whitesmoke;
+    background: #273F23;
+    margin-bottom: 5px;
+
+    &:hover {
+        background: seagreen;
+        color: white;
+    }
+}
+
+.profile-info {
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    border-bottom: 3px solid #41922D;
+
+    &-item {
+        width: 100%;
+        text-align: center;
+    }
+
+    &__avatar {
+        img {
+            border-radius: 50%;
+            width: 124px;
+            height: 124px;
+        }
+    }
+
+    &__data {
+        span {
+            display: block;
+            padding: 10px 5px;
+            color: white;
+
+            &.full-name {
+                font-size: 1.2em;
+            }
+        }
+    }
+}
+
+.breadcrumbs {
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+.filter-form {
+    display: flex;
+    flex-direction: row;
+    column-gap: 15px;
+
+    .filter-form__row {
+        width: 100%;
+    }
+}
+
+.text {
+    &-right {
+        text-align: right;
+    }
+
+    &-left {
+        text-align: left;
+    }
+}

@@ -20,5 +20,15 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    _instanceof:
+        App\Filter\CourseStudent\Filters\CourseStudentFilterInterface:
+            public: true,
+            tags: ['app.course_student.filter']
+
+    App\Filter\CourseStudent\CourseStudentFilterGenerator:
+        arguments:
+            - !tagged_iterator app.course_student.filter
+
+    App\Filter\CourseStudent\CourseStudentFilterResolver:
+        arguments:
+            - !tagged_iterator app.course_student.filter

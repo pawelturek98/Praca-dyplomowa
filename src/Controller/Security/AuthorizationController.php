@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Controller\Security;
 
-use App\Form\UserManagement\LoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +16,12 @@ class AuthorizationController extends AbstractController
     {
         return $this->render('security/login.html.twig', [
             'last_username' => $authenticationUtils->getLastUsername(),
-            'error' => $authenticationUtils->getLastAuthenticationError()
+            'error' => $authenticationUtils->getLastAuthenticationError(),
         ]);
+    }
+
+    #[Route(path: '/logout', name: 'app.security.logout')]
+    public function logout()
+    {
     }
 }
