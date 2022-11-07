@@ -32,8 +32,6 @@ class RegistrationController extends AbstractController
                 )
             );
 
-            $user->setType(UserDictionary::ROLE_TEACHER);
-
             $entityManager->persist($user);
             $entityManager->flush();
 
