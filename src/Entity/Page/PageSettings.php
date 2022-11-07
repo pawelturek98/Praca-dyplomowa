@@ -20,6 +20,11 @@ class PageSettings
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $value = null;
 
+    public function __construct()
+    {
+        $this->id = UuidV4::v4();
+    }
+
     public function getId(): UuidV4
     {
         return $this->id;

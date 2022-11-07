@@ -6,9 +6,11 @@ namespace App\Entity\Platform;
 
 use App\Entity\Dictionary\MarksDictionary;
 use App\Entity\UserManagement\User;
+use App\Repository\Platform\CourseStudentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\UuidV4;
 
+#[ORM\Entity(repositoryClass: CourseStudentRepository::class)]
 class CourseStudent
 {
     #[ORM\Id]
@@ -29,6 +31,11 @@ class CourseStudent
 
     #[ORM\Column(type: 'boolean', options: ['default' => false])]
     private bool $isPassed = false;
+
+    public function __construct()
+    {
+        $this->id = UuidV4::v4();
+    }
 
     public function getId(): UuidV4
     {

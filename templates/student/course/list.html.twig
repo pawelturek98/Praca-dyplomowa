@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block breadcrumbs %}
+    <ul>
+        <li>
+            <span>{{ 'app.navigation.course_list' | trans }}</span>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="row mb-4 mt-4">
+        <div class="col-12">
+            {{ form_start(filterForm) }}
+            <div class="card filters">
+                <div class="card-header">{{ 'app.filters' | trans }}</div>
+                <div class="card-body filter-form">
+                    <div class="form-group filter-form__row">
+                        {{ form_widget(filterForm.teacher) }}
+                    </div>
+                    <div class="form-group filter-form__row">
+                        {{ form_widget(filterForm.status) }}
+                    </div>
+                    <div class="form-group filter-form__row">
+                        {{ form_widget(filterForm.startDate) }}
+                    </div>
+                    <div class="form-group filter-form__row">
+                        {{ form_widget(filterForm.closeDate) }}
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-primary">
+                        {{ 'app.form.filter.button' | trans }}
+                    </button>
+                </div>
+            </div>
+            {{ form_end(filterForm) }}
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card course-list">
+                <div class="card-header">{{ 'app.course_list.table.title' | trans }}</div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <tr class="text-center">
+                            <th>{{ 'app.course_list.table.name' | trans }}</th>
+                            <th>{{ 'app.course_list.table.teacher' | trans }}</th>
+                            <th>{{ 'app.course_list.table.start_date' | trans }}</th>
+                            <th>{{ 'app.course_list.table.close_date' | trans }}</th>
+                            <th>{{ 'app.course_list.table.status' | trans }}</th>
+                            <th>{{ 'app.list.action.label' | trans }}</th>
+                        </tr>
+                        {% for course in courses %}
+                            <tr>
+                                <td>{{ course.name }}</td>
+                                <td>{{ course.leaderTeacher.fullName }}</td>
+                                <td>{{ course.startDate | date('d.m.Y') }}</td>
+                                <td>{{ course.closeDate | date('d.m.Y') }}</td>
+                                <td>{{ course.status }}</td>
+                                <td>{{ 'app.course_list.table.show_course' | trans }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6">{{ 'app.course_list.table.empty' | trans }}</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            {% include '_partials/pagination.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

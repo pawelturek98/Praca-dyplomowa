@@ -21,6 +21,11 @@ class SolutionAttachment
     #[ORM\ManyToOne(targetEntity: Solution::class)]
     private Solution $solution;
 
+    public function __construct()
+    {
+        $this->id = UuidV4::v4();
+    }
+
     public function getId(): UuidV4
     {
         return $this->id;

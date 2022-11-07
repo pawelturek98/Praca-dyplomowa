@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Entity\Platform;
 
 use App\Entity\UserManagement\User;
+use App\Repository\Platform\CourseRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\UuidV4;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: CourseRepository::class)]
 class Course
 {
     #[ORM\Id]
@@ -33,6 +34,11 @@ class Course
 
     #[ORM\ManyToOne(targetEntity: User::class)]
     private User $leaderTeacher;
+
+    public function __construct()
+    {
+        $this->id = UuidV4::v4();
+    }
 
     public function getId(): UuidV4
     {

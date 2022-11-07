@@ -41,6 +41,11 @@ class Address
     #[ORM\Column(type: 'string')]
     private string $countryCode;
 
+    public function __construct()
+    {
+        $this->id = UuidV4::v4();
+    }
+
     public function getId(): UuidV4
     {
         return $this->id;
