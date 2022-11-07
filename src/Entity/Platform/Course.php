@@ -33,7 +33,7 @@ class Course
     private string $status;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    private User $leaderTeacher;
+    private User $leadingTeacher;
 
     public function __construct()
     {
@@ -100,14 +100,14 @@ class Course
         return $this;
     }
 
-    public function getLeaderTeacher(): User
+    public function getLeadingTeacher(): User
     {
-        return $this->leaderTeacher;
+        return $this->leadingTeacher;
     }
 
-    public function setLeaderTeacher(User $leaderTeacher): self
+    public function setLeadingTeacher(User $leadingTeacher): self
     {
-        $this->leaderTeacher = $leaderTeacher;
+        $this->leadingTeacher = $leadingTeacher;
         return $this;
     }
 }

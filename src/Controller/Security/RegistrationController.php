@@ -2,6 +2,7 @@
 
 namespace App\Controller\Security;
 
+use App\Dictionary\UserManagement\UserDictionary;
 use App\Entity\UserManagement\User;
 use App\Form\UserManagement\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
