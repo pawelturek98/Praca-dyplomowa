@@ -2,6 +2,11 @@
 {% set moderatorRole = constant('App\\Dictionary\\UserManagement\\UserDictionary::ROLE_MODERATOR') %}
 {% set teacherRole = constant('App\\Dictionary\\UserManagement\\UserDictionary::ROLE_TEACHER') %}
 {% set studentRole = constant('App\\Dictionary\\UserManagement\\UserDictionary::ROLE_STUDENT') %}
+
+{% set bodyClass = '' %}
+{% if not app.user %}
+    {% set bodyClass = 'authorization-page' %}
+{% endif %}
 <!DOCTYPE html>
 <html lang="pl">
     <head>
@@ -16,7 +21,7 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
+    <body class="{{ bodyClass }}">
         {% block navigation %}
             {% if app.user %}
             <div class="clearfix-menu">&nbsp;</div>
@@ -49,6 +54,7 @@
             {% endif %}
         {% endblock %}
         <div class="container">
+            {% if app.user %}
             <div class="row mt-4">
                 <div class="col-12 ">
                     <div class="card breadcrumbs">
@@ -58,6 +64,7 @@
                     </div>
                 </div>
             </div>
+            {% endif %}
             <div class="main">
                 {% block body %}{% endblock %}
             </div>

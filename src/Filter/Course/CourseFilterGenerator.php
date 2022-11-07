@@ -26,7 +26,7 @@ class CourseFilterGenerator implements FilterGeneratorInterface
         $qb = $this->courseRepository->getFindAllQueryBuilder();
 
         if (!in_array('ct', $qb->getAllAliases())) {
-            $qb->leftJoin('c.leaderTeacher', 'ct');
+            $qb->leftJoin('c.leadingTeacher', 'ct');
         }
 
         $qb->addSelect($qb->getAllAliases());

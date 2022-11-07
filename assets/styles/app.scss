@@ -7,6 +7,17 @@ body {
     justify-content: flex-start;
 }
 
+.authorization-page {
+    background: #E9FFCC;
+}
+
+.login-panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .navigation {
     position: absolute;
     background: $navigation-color;
@@ -101,4 +112,8 @@ body {
     &-left {
         text-align: left;
     }
+}
+
+.display-block {
+    display: block;
 }

@@ -21,9 +21,9 @@ services:
             - '../src/Kernel.php'
 
     _instanceof:
-        App\Filter\CourseStudent\Filters\CourseStudentFilterInterface:
+        App\Filter\Course\Filters\CourseFilterInterface:
             public: true,
-            tags: ['app.course_student.filter']
+            tags: ['app.course.filter']
 
     App\Filter\CourseStudent\CourseStudentFilterGenerator:
         arguments:
@@ -32,3 +32,8 @@ services:
     App\Filter\CourseStudent\CourseStudentFilterResolver:
         arguments:
             - !tagged_iterator app.course_student.filter
+
+    App\Filter\Course\CourseFilterGenerator:
+        arguments:
+            - !tagged_iterator app.course.filter
+

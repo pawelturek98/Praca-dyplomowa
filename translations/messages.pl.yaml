@@ -20,3 +20,11 @@ app:
   settings:
     default:
       title: Platforma e-learningowa
+  security:
+    email: E-mail
+    firstname: Imię
+    lastname: Nazwisko
+    login: Zaloguj
+    password: Hasło
+    register: Zarejestruj się
+    username: Nazwa użytkownika

@@ -6,6 +6,7 @@ namespace App\Controller\Teacher;
 
 use App\Filter\Course\CourseFilterGenerator;
 use App\Filter\Course\Filters\TeacherFilter;
+use App\Form\Platform\CourseStudentFilterFormType;
 use App\Service\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +23,8 @@ class CourseController extends AbstractController
         $pageLimit = (int) $request->get('pageLimit', 100);
         $paginator = new Paginator($page, $pageLimit);
 
+        $filterForm = $this->createForm(CourseStudentFilterFormType::class);
+
         $filterData[TeacherFilter::NAME] = $this->getUser();
         if (null !== $request->get('filter')) {
             $filterData = $request->get('filter');
@@ -37,7 +40,8 @@ class CourseController extends AbstractController
         return $this->render('teacher/course/list.html.twig', [
             'courses' => $courses,
             'total' => $allCoursesAmount,
-            'paginator' => $paginator
+            'paginator' => $paginator,
+            'filterForm' => $filterForm->createView()
         ]);
     }
 
