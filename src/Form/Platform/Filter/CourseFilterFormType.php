@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Form\Platform;
+namespace App\Form\Platform\Filter;
 
 use App\Filter\CourseStudent\Filters\CloseDateFilter;
 use App\Filter\CourseStudent\Filters\StartDateFilter;
@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class CourseStudentFilterFormType extends AbstractType
+class CourseFilterFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

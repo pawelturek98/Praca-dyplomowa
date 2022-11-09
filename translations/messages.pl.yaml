@@ -1,4 +1,9 @@
 app:
+  course:
+    add: Dodaj kurs
+    description: Opis kursu
+    create:
+      label: Dodawanie kursu
   course_list:
     table:
       empty: Brak kursów
@@ -17,6 +22,7 @@ app:
   list:
     action:
       label: Akcja
+  save: Zapisz
   settings:
     default:
       title: Platforma e-learningowa

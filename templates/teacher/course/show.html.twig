@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block breadcrumbs %}
+    <ul>
+        <li>
+            <a href="{{ path('app.teacher.course.list') }}">{{ 'app.navigation.course_list' | trans }}</a>
+        </li>
+        <li>
+            {{ course.name }}
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            {% include 'teacher/course/partials/_description.html.twig' %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {% include 'teacher/course/partials/_lectureList.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block breadcrumbs %}
+    <ul>
+        <li>
+            <span>{{ 'app.navigation.course_list' | trans }}</span>
+        </li>
+        <li>
+            <span>{{ 'app.navigation.add_course' | trans }}</span>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    {{ 'app.course.create.label' | trans }}
+                </div>
+                <div class="card-body">
+                    {{ form_start(courseForm) }}
+                    {{ form_widget(courseForm) }}
+                    <div class="form-group text-right">
+                        <button class="btn btn-success" type="submit">
+                            {{ 'app.course.add' | trans }}
+                        </button>
+                    </div>
+                    {{ form_end(courseForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

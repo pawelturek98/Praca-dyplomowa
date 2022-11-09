@@ -7,7 +7,7 @@ namespace App\Controller\Student;
 use App\Entity\Platform\Course;
 use App\Filter\CourseStudent\CourseStudentFilterGenerator;
 use App\Filter\CourseStudent\Filters\StudentFilter;
-use App\Form\Platform\CourseStudentFilterFormType;
+use App\Form\Platform\Filter\CourseFilterFormType;
 use App\Service\Pagination\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,7 +24,7 @@ class CourseController extends AbstractController
         $page = (int) $request->get('page', 1);
         $pageLimit = (int) $request->get('pageLimit', 100);
         $paginator = new Paginator($page, $pageLimit);
-        $filterForm = $this->createForm(CourseStudentFilterFormType::class);
+        $filterForm = $this->createForm(CourseFilterFormType::class);
 
         if (null !== $request->get('filter')) {
             $filterData = $request->get('filter');

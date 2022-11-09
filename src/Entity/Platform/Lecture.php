@@ -4,24 +4,15 @@ declare(strict_types=1);
 
 namespace App\Entity\Platform;
 
+use App\Repository\Platform\LectureRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\UuidV4;
 
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: LectureRepository::class)]
 class Lecture
 {
-    public const VIDEO_TYPE = 'video';
-    public const TEXT_TYPE = 'text';
-    public const PDF_TYPE = 'pdf';
-
-    public const POSSIBLE_LECTURE_TYPES = [
-        self::VIDEO_TYPE,
-        self::TEXT_TYPE,
-        self::PDF_TYPE
-    ];
-
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: True)]
     private UuidV4 $id;

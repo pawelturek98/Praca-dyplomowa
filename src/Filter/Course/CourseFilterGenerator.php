@@ -31,6 +31,7 @@ class CourseFilterGenerator implements FilterGeneratorInterface
 
         $qb->addSelect($qb->getAllAliases());
         $qb = $this->getModifiedQueryBuilder($qb);
+//        dd($qb->getQuery()->getSQL());
 
         if (null !== $this->paginator) {
             $qb->setMaxResults($this->paginator->pageLimit);

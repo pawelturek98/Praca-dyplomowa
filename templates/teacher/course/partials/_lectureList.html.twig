@@ -1,0 +1,32 @@
+<div class="card mt-3">
+    <div class="card-header"></div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>{{ 'app.lecture_list.table.lesson' | trans }}</th>
+                <th>{{ 'app.lecture_list.table.type' | trans }}</th>
+                <th>{{ 'app.lecture_list.table.created_at' | trans }}</th>
+                <th>{{ 'app.list.action.label' | trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for lecture in lectures %}
+            <tr>
+                <td>{{ lecture.name }}</td>
+                <td>{{ lecture.type }}</td>
+                <td>{{ lecture.created_at | date('d.m.Y') }}</td>
+                <td></td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4">{{ 'app.lecture_list.table.empty' | trans }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-right">
+            <a href="" class="btn btn-success">{{ 'app.lecture.add' | trans }}</a>
+        </div>
+    </div>
+</div>
