@@ -12,23 +12,7 @@
                     {{ 'app.course.lecture.create.title' | trans }}
                 </div>
                 <div class="card-body">
-                    {{ form_start(lectureForm) }}
-                    <div class="form-group mb-3">
-                        {{ form_row(lectureForm.name) }}
-                    </div>
-                    <div class="form-group mb-3">
-                        {{ form_row(lectureForm.type) }}
-                    </div>
-                    <div class="form-group content-type-input mb-3" id="lecture-text">
-                        {{ form_row(lectureForm.contentText) }}
-                    </div>
-                    <div class="form-group content-type-input mb-3 display-hidden" id="lecture-video">
-                        {{ form_row(lectureForm.contentUrl) }}
-                    </div>
-                    <div class="form-group content-type-input mb-3 display-hidden" id="lecture-pdf">
-                        {{ form_row(lectureForm.contentFile) }}
-                    </div>
-                    {{ form_end(lectureForm) }}
+                    {% include 'teacher/lecture/_form.html.twig' %}
                 </div>
             </div>
         </div>

@@ -17,8 +17,16 @@
             <tr>
                 <td>{{ lecture.name }}</td>
                 <td>{{ lecture.type }}</td>
-                <td>{{ lecture.created_at | date('d.m.Y') }}</td>
-                <td></td>
+                <td>{{ lecture.createdAt | date('d.m.Y') }}</td>
+                <td>
+                    <a href="{{ path('app.teacher.course.lecture.edit', {'id': lecture.id}) }}">
+                        {{ 'app.list.action.edit' | trans }}
+                    </a>
+                    |
+                    <a href="{{ path('app.teacher.course.lecture.delete', {'id': lecture.id, 'courseId': course.id}) }}">
+                        {{ 'app.list.action.delete' | trans }}
+                    </a>
+                </td>
             </tr>
             {% else %}
             <tr>

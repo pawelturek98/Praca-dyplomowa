@@ -4,16 +4,20 @@ declare(strict_types=1);
 
 namespace App\Entity\Platform;
 
+use App\Repository\Platform\ExerciseRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\UuidV4;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: ExerciseRepository::class)]
 class Exercise
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]
     private UuidV4 $id;
+
+    #[ORM\Column(type: 'string')]
+    private string $exerciseName;
 
     #[ORM\Column(type: 'string')]
     private string $exerciseContent;
@@ -43,6 +47,17 @@ class Exercise
     public function getId(): UuidV4
     {
         return $this->id;
+    }
+
+    public function getExerciseName(): string
+    {
+        return $this->exerciseName;
+    }
+
+    public function setExerciseName(string $exerciseName): self
+    {
+        $this->exerciseName = $exerciseName;
+        return $this;
     }
 
     public function getExerciseContent(): string

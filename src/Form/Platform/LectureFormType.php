@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class LectureFormType extends AbstractType
 {
@@ -43,6 +44,16 @@ class LectureFormType extends AbstractType
                 'required' => false,
                 'mapped' => false,
                 'label' => 'app.lecture.form.content',
+                'constraints' => [
+                    new File([
+                        'maxSize' => '10240k', // 10 Mb
+                        'mimeTypes' => [
+                            'application/pdf',
+                            'application/x-pdf'
+                        ],
+                        'mimeTypesMessage' => 'app.file.validation.message'
+                    ])
+                ]
             ])
         ;
     }

@@ -21,6 +21,8 @@ app:
     settings: Ustawienia
   list:
     action:
+      delete: Usuń
+      edit: Edytuj
       label: Akcja
   save: Zapisz
   settings:
