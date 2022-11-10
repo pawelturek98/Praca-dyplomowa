@@ -1,5 +1,7 @@
 <div class="card mt-3">
-    <div class="card-header"></div>
+    <div class="card-header">
+        {{ 'app.lecture_list.label' }}
+    </div>
     <div class="card-body">
         <table class="table table-bordered">
             <thead>
@@ -26,7 +28,9 @@
             </tbody>
         </table>
         <div class="text-right">
-            <a href="" class="btn btn-success">{{ 'app.lecture.add' | trans }}</a>
+            <a href="{{ path('app.teacher.course.lecture.add', {'id': course.id}) }}" class="btn btn-success">
+                {{ 'app.lecture.add' | trans }}
+            </a>
         </div>
     </div>
 </div>

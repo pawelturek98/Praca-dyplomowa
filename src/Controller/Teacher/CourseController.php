@@ -36,7 +36,6 @@ class CourseController extends AbstractController
         $filterForm = $this->createForm(CourseFilterFormType::class);
 
         $filterData[TeacherFilter::NAME] = $this->getUser()->getId();
-//        dd($filterData);
         if (null !== $request->get('filter')) {
             $filterData = $request->get('filter');
         }

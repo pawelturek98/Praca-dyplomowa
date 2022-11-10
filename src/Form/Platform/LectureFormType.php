@@ -8,6 +8,7 @@ use App\Dictionary\Platform\LectureTypeDictionary;
 use App\Entity\Platform\Lecture;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,10 +27,22 @@ class LectureFormType extends AbstractType
                 }
             ])
             ->add('name', TextType::class, [
-                'label' => 'app.lecture.form.name'
+                'label' => 'app.lecture.form.name',
             ])
-            ->add('content', TextareaType::class, [
-                'label' => 'app.lecture.form.content'
+            ->add('contentText', TextareaType::class, [
+                'required' => false,
+                'mapped' => false,
+                'label' => 'app.lecture.form.content',
+            ])
+            ->add('contentUrl', TextType::class, [
+                'required' => false,
+                'mapped' => false,
+                'label' => 'app.lecture.form.content',
+            ])
+            ->add('contentFile', FileType::class, [
+                'required' => false,
+                'mapped' => false,
+                'label' => 'app.lecture.form.content',
             ])
         ;
     }
