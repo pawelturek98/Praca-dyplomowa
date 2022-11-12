@@ -5,13 +5,33 @@
             <thead>
             <tr>
                 <td>{{ 'app.course.student_list.table.fullname' | trans }}</td>
-                <td>{{ 'app.list.action.label' | transe }}</td>
+                <td>{{ 'app.list.action.label' | trans }}</td>
             </tr>
             </thead>
             <tbody>
+            {% for courseStudent in courseStudents %}
             <tr>
+                <td>{{ courseStudent.student.fullname }}</td>
+                <td>
+                    <a href="{{ path('app.teacher.course_student.delete', {'studentId': courseStudent.student.id, 'courseId': courseStudent.course.id}) }}">
+                        {{ 'app.list.action.delete' | trans }}
+                    </a>
+                </td>
             </tr>
+            {% endfor %}
             </tbody>
         </table>
+    </div>
+    <div class="card-footer">
+        {{ form_start(courseStudentForm) }}
+        <div class="row">
+            <div class="col-8">
+                {{ form_row(courseStudentForm.student) }}
+            </div>
+            <div class="col-4">
+                <button class="btn btn-success">{{ 'app.list.action.save' | trans }}</button>
+            </div>
+        </div>
+        {{ form_end(courseStudentForm) }}
     </div>
 </div>

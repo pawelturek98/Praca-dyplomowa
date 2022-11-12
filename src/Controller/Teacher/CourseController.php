@@ -6,9 +6,11 @@ namespace App\Controller\Teacher;
 
 use App\Dictionary\Main\FlashTypeDictionary;
 use App\Entity\Platform\Course;
+use App\Entity\Platform\CourseStudent;
 use App\Filter\Course\CourseFilterGenerator;
 use App\Filter\Course\Filters\TeacherFilter;
 use App\Form\Platform\CourseFormType;
+use App\Form\Platform\CourseStudentFormType;
 use App\Form\Platform\Filter\CourseFilterFormType;
 use App\Repository\Platform\CourseStudentRepository;
 use App\Repository\Platform\ExerciseRepository;
@@ -16,6 +18,7 @@ use App\Repository\Platform\LectureRepository;
 use App\Service\Pagination\Paginator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -90,21 +93,32 @@ class CourseController extends AbstractController
         $courseForm = $this->createForm(CourseFormType::class, $course);
         $courseForm->handleRequest($request);
 
-        if ($courseForm->isSubmitted() && $courseForm->isValid()) {
-            $this->entityManager->persist($course);
-            $this->entityManager->flush();
+        if ($this->handleCourseForm($courseForm, $course)) {
+            $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.course_edited');
+            return $this->redirectToRoute('app.teacher.course.show', ['id' => $course->getId()]);
         }
+
 
         $lectures = $lectureRepository->findBy(['course' => $course]);
         $exercises = $exerciseRepository->findBy(['course' => $course]);
-        $courseStudent = $courseStudentRepository->findBy(['course' => $course]);
+        $courseStudents = $courseStudentRepository->findBy(['course' => $course]);
+
+        $courseStudent = new CourseStudent();
+        $courseStudentForm = $this->createForm(CourseStudentFormType::class, $courseStudent);
+        $courseStudentForm->handleRequest($request);
+
+        if ($this->handleCourseStudentForm($courseStudentForm, $courseStudent, $course)) {
+            $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.course_student_added');
+            return $this->redirectToRoute('app.teacher.course.show', ['id' => $course->getId()]);
+        }
 
         return $this->render('teacher/course/show.html.twig', [
             'course' => $course,
             'courseForm' => $courseForm->createView(),
             'lectures' => $lectures,
             'exercises' => $exercises,
-            'courseStudent' => $courseStudent,
+            'courseStudents' => $courseStudents,
+            'courseStudentForm' => $courseStudentForm->createView()
         ]);
     }
 
@@ -121,5 +135,54 @@ class CourseController extends AbstractController
         $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.course.delete.success');
 
         return $this->redirectToRoute('app.teacher.course.list');
+    }
+
+    #[Route('{studentId}/{courseId}/delete', name: 'app.teacher.course_student.delete')]
+    public function deleteCourseStudent(
+        string $studentId,
+        string $courseId,
+        CourseStudentRepository $courseStudentRepository
+    ): Response {
+        $courseStudent = $courseStudentRepository->findOneBy(['student' => $studentId, 'course' => $courseId]);
+
+        if (null === $courseStudent) {
+            $this->addFlash(FlashTypeDictionary::ERROR, 'app.flash_messages.course_student_not_found');
+            return $this->redirectToRoute('app.teacher.course.show', ['id' => $courseId]);
+        }
+
+        $this->entityManager->remove($courseStudent);
+        $this->entityManager->flush();
+
+        $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.course_student_removed');
+        return $this->redirectToRoute('app.teacher.course.show', ['id' => $courseId]);
+    }
+
+    private function handleCourseForm(FormInterface $form, Course $course): bool
+    {
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return false;
+        }
+
+        $this->entityManager->persist($course);
+        $this->entityManager->flush();
+
+        return true;
+    }
+
+    private function handleCourseStudentForm(
+        FormInterface $form,
+        CourseStudent $courseStudent,
+        Course $course
+    ): bool {
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return false;
+        }
+
+        $courseStudent->setCourse($course);
+
+        $this->entityManager->persist($courseStudent);
+        $this->entityManager->flush();
+
+        return true;
     }
 }

@@ -18,7 +18,7 @@ class CourseStudentFormType extends AbstractType
         $builder
             ->add('student', EntityType::class, [
                 'label' => 'app.course.student_list.student',
-                'model' => User::class,
+                'class' => User::class,
                 'choice_label' => function (User $user): string {
                     return $user->getFullName();
                 }
