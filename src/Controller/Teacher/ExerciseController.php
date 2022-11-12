@@ -8,6 +8,8 @@ use App\Dictionary\Main\FlashTypeDictionary;
 use App\Entity\Platform\Course;
 use App\Entity\Platform\Exercise;
 use App\Form\Platform\ExerciseFormType;
+use App\Repository\Platform\CourseRepository;
+use App\Repository\Platform\SolutionRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -39,14 +41,18 @@ class ExerciseController extends AbstractController
         }
 
         return $this->render('teacher/exercise/create.html.twig', [
-            'exerciseForm' => $exerciseForm
+            'exerciseForm' => $exerciseForm->createView(),
+            'course' => $course
         ]);
     }
 
-    #[Route('{id}/exercise/edit', name: 'app.teacher.course.exercise.edit')]
+    #[Route('{id}/{courseId}/exercise/edit', name: 'app.teacher.course.exercise.edit')]
     public function edit(
         Exercise $exercise,
+        string $courseId,
         Request $request,
+        SolutionRepository $solutionRepository,
+        CourseRepository $courseRepository
     ): Response {
         $exerciseForm = $this->createForm(ExerciseFormType::class, $exercise);
         $exerciseForm->handleRequest($request);
@@ -56,8 +62,13 @@ class ExerciseController extends AbstractController
             return $this->redirectToRoute('app.teacher.course.exercise.edit', ['id' => $exercise->getId()]);
         }
 
+        $solutions = $solutionRepository->findBy(['exercise' => $exercise]);
+        $course = $courseRepository->find($courseId);
+
         return $this->render('teacher/exercise/edit.html.twig', [
-            'exerciseForm' => $exerciseForm
+            'exerciseForm' => $exerciseForm->createView(),
+            'solutions' => $solutions,
+            'course' => $course,
         ]);
     }
 
@@ -72,8 +83,11 @@ class ExerciseController extends AbstractController
         return $this->redirectToRoute('app.teacher.course.show', ['id' => $courseId]);
     }
 
-    private function handleExerciseForm(FormInterface $form, Exercise $exercise, ?Course $course = null): bool
-    {
+    private function handleExerciseForm(
+        FormInterface $form,
+        Exercise $exercise,
+        ?Course $course = null
+    ): bool {
         if (!$form->isSubmitted() || !$form->isValid()) {
             return false;
         }

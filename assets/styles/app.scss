@@ -19,7 +19,7 @@ body {
 }
 
 .navigation {
-    position: absolute;
+    position: fixed;
     background: $navigation-color;
     left: 0;
     top: 0;
@@ -91,6 +91,16 @@ body {
         list-style: none;
         padding: 0;
         margin: 0;
+
+        li {
+            display: inline;
+        }
+
+        li+li:before {
+            padding: 3px;
+            color: black;
+            content: "/\00a0";
+        }
     }
 }
 

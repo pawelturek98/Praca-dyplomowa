@@ -9,7 +9,7 @@
             <a href="{{ path('app.teacher.course.show', {'id': course.id}) }}">{{ course.name }}</a>
         </li>
         <li>
-            {{ 'app.course.lecture.edit_breadcrumb' | trans }}
+            {{ 'app.course.exercise.create' | trans }}
         </li>
     </ul>
 {% endblock %}
@@ -19,10 +19,10 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    {{ 'app.course.lecture.edit' | trans({'{lectureName}': lecture.name}) }}
+                    {{ 'app.course.exercise.create' | trans }}
                 </div>
                 <div class="card-body">
-                    {% include 'teacher/lecture/_form.html.twig' %}
+                    {% include 'teacher/exercise/_form.html.twig' %}
                 </div>
             </div>
         </div>

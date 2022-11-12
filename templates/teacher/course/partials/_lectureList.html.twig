@@ -1,14 +1,14 @@
 <div class="card mt-3">
     <div class="card-header">
-        {{ 'app.lecture_list.label' }}
+        {{ 'app.course.lecture_list.label' | trans }}
     </div>
     <div class="card-body">
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>{{ 'app.lecture_list.table.lesson' | trans }}</th>
-                <th>{{ 'app.lecture_list.table.type' | trans }}</th>
-                <th>{{ 'app.lecture_list.table.created_at' | trans }}</th>
+                <th>{{ 'app.course.lecture_list.table.lesson' | trans }}</th>
+                <th>{{ 'app.course.lecture_list.table.type' | trans }}</th>
+                <th>{{ 'app.course.lecture_list.table.created_at' | trans }}</th>
                 <th>{{ 'app.list.action.label' | trans }}</th>
             </tr>
             </thead>
@@ -19,7 +19,7 @@
                 <td>{{ lecture.type }}</td>
                 <td>{{ lecture.createdAt | date('d.m.Y') }}</td>
                 <td>
-                    <a href="{{ path('app.teacher.course.lecture.edit', {'id': lecture.id}) }}">
+                    <a href="{{ path('app.teacher.course.lecture.edit', {'id': lecture.id, 'courseId': course.id}) }}">
                         {{ 'app.list.action.edit' | trans }}
                     </a>
                     |
@@ -30,14 +30,14 @@
             </tr>
             {% else %}
             <tr>
-                <td colspan="4">{{ 'app.lecture_list.table.empty' | trans }}</td>
+                <td colspan="4">{{ 'app.course.lecture_list.table.empty' | trans }}</td>
             </tr>
             {% endfor %}
             </tbody>
         </table>
         <div class="text-right">
             <a href="{{ path('app.teacher.course.lecture.add', {'id': course.id}) }}" class="btn btn-success">
-                {{ 'app.lecture.add' | trans }}
+                {{ 'app.course.lecture.add' | trans }}
             </a>
         </div>
     </div>

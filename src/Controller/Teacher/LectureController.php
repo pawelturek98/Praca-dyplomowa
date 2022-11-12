@@ -12,6 +12,7 @@ use App\Entity\Platform\Course;
 use App\Entity\Platform\Lecture;
 use App\Factory\Storage\StorageFactory;
 use App\Form\Platform\LectureFormType;
+use App\Repository\Platform\CourseRepository;
 use App\Service\Uploader\Uploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,14 +53,17 @@ class LectureController extends AbstractController
         }
 
         return $this->render('teacher/lecture/create.html.twig', [
-           'lectureForm' => $lectureForm->createView()
+            'lectureForm' => $lectureForm->createView(),
+            'course' => $course,
         ]);
     }
 
-    #[Route('{id}/lecture/edit', name: 'app.teacher.course.lecture.edit')]
+    #[Route('{id}/{courseId}/lecture/edit', name: 'app.teacher.course.lecture.edit')]
     public function edit(
         Lecture $lecture,
-        Request $request
+        string $courseId,
+        Request $request,
+        CourseRepository $courseRepository
     ): Response {
         $lectureForm = $this->createForm(LectureFormType::class, $lecture);
         $lectureForm->handleRequest($request);
@@ -70,9 +74,12 @@ class LectureController extends AbstractController
             return $this->redirectToRoute('app.teacher.course.lecture.edit', ['id' => $lecture->getId()]);
         }
 
+        $course = $courseRepository->find($courseId);
+
         return $this->render('teacher/lecture/edit.html.twig', [
             'lectureForm' => $lectureForm->createView(),
-            'lecture' => $lecture
+            'lecture' => $lecture,
+            'course' => $course,
         ]);
     }
 

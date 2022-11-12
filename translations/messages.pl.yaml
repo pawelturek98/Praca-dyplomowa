@@ -1,11 +1,50 @@
 app:
   course:
     add: Dodaj kurs
-    description: Opis kursu
     create:
       label: Dodawanie kursu
+    description: Opis kursu
+    exercise:
+      add: Dodaj ćwiczenie
+      create: Tworzenie nowego ćwiczenia
+      form:
+        name: Nazwa ćwiczenia
+        description: Opis ćwiczenia
+        state: Status ćwiczenia
+        close_date: Data zamknięcia
+    exercise_list:
+      label: Lista ćwiczeń
+      table:
+        created_at: Dodano dnia
+        close_date: Data zamknięcia
+        name: Nazwa ćwiczenia
+    form:
+      close_date: Data zamknięcia
+      description: Opis kursu
+      name: Nazwa kursu
+    lecture:
+      add: Dodaj lekcję
+      edit: "Edytuj lekcję: {lectureName}"
+      edit_breadcrumb: Edycja lekcji
+      create: Tworzenie nowego kursu
+      form:
+        content: Treść lekcji
+        name: Nazwa lekcji
+        type: Typ lekcji
+      type:
+        video: Film YouTube
+        pdf: Plik PDF
+        text: Tekst
+    lecture_list:
+      label: Lista kursów
+      table:
+        created_at: Dodano dnia
+        empty: Brak lekcji
+        lesson: Lekcja
+        type: Typ
   course_list:
     table:
+      delete_course: Usuń kurs
       empty: Brak kursów
       name: Nazwa
       title: Lista kursów studenta
@@ -13,17 +52,26 @@ app:
       start_date: Data początku
       close_date: Data końca
       status: Status
+      show_course: Pokaż kurs
+  dictionary:
+    status:
+      active: Aktywny
+      inactive: Nieaktywny
+      suspended: Zawieszony
   filters: Filtrowanie
-  navigation:
-    course_list: Lista kursów
-    logout: Wyloguj
-    marks_list: Lista ocen
-    settings: Ustawienia
+  form:
+    filter:
+      button: Filtruj
   list:
     action:
       delete: Usuń
       edit: Edytuj
       label: Akcja
+  navigation:
+    course_list: Lista kursów
+    logout: Wyloguj
+    marks_list: Lista ocen
+    settings: Ustawienia
   save: Zapisz
   settings:
     default:

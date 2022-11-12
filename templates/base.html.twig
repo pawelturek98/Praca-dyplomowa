@@ -48,7 +48,7 @@
                     {% if studentRole in app.user.roles %}
                         {% include '_partials/navigation/student_menu.html.twig' %}
                     {% endif %}
-                    <a href="{{ path('app.security.logout') }}" class="nav-link">{{ 'app.navigation.logout' | trans }}</a>
+                    <a href="{{ path('app.security.logout') }}" class="nav-link logout">{{ 'app.navigation.logout' | trans }}</a>
                 </nav>
             </div>
             {% endif %}

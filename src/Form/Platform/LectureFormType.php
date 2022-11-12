@@ -21,29 +21,29 @@ class LectureFormType extends AbstractType
     {
         $builder
             ->add('type', ChoiceType::class, [
-                'label' => 'app.lecture.form.type',
+                'label' => 'app.course.lecture.form.type',
                 'choices' => LectureTypeDictionary::POSSIBLE_LECTURE_TYPES,
                 'choice_label' => function(string $value): string {
-                    return sprintf('app.lecture.type.%s', $value);
+                    return sprintf('app.course.lecture.type.%s', $value);
                 }
             ])
             ->add('name', TextType::class, [
-                'label' => 'app.lecture.form.name',
+                'label' => 'app.course.lecture.form.name',
             ])
             ->add('contentText', TextareaType::class, [
                 'required' => false,
                 'mapped' => false,
-                'label' => 'app.lecture.form.content',
+                'label' => 'app.course.lecture.form.content',
             ])
             ->add('contentUrl', TextType::class, [
                 'required' => false,
                 'mapped' => false,
-                'label' => 'app.lecture.form.content',
+                'label' => 'app.course.lecture.form.content',
             ])
             ->add('contentFile', FileType::class, [
                 'required' => false,
                 'mapped' => false,
-                'label' => 'app.lecture.form.content',
+                'label' => 'app.course.lecture.form.content',
                 'constraints' => [
                     new File([
                         'maxSize' => '10240k', // 10 Mb

@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Controller\Teacher;
 
+use App\Dictionary\Main\FlashTypeDictionary;
 use App\Entity\Platform\Course;
 use App\Filter\Course\CourseFilterGenerator;
 use App\Filter\Course\Filters\TeacherFilter;
 use App\Form\Platform\CourseFormType;
 use App\Form\Platform\Filter\CourseFilterFormType;
+use App\Repository\Platform\CourseStudentRepository;
+use App\Repository\Platform\ExerciseRepository;
 use App\Repository\Platform\LectureRepository;
 use App\Service\Pagination\Paginator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -17,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/teacher/course/')]
 class CourseController extends AbstractController
 {
     public function __construct(
@@ -24,7 +28,7 @@ class CourseController extends AbstractController
     ) {
     }
 
-    #[Route('/teacher/course/list', name: 'app.teacher.course.list')]
+    #[Route('list', name: 'app.teacher.course.list')]
     public function list(
         Request $request,
         CourseFilterGenerator $courseFilterGenerator
@@ -55,7 +59,7 @@ class CourseController extends AbstractController
         ]);
     }
 
-    #[Route('/teacher/course/add', name: 'app.teacher.course.add')]
+    #[Route('add', name: 'app.teacher.course.add')]
     public function create(
         Request $request
     ): Response {
@@ -75,11 +79,13 @@ class CourseController extends AbstractController
         ]);
     }
 
-    #[Route('/teacher/course/show/{id}', name: 'app.teacher.course.show')]
+    #[Route('{id}/show', name: 'app.teacher.course.show')]
     public function show(
         Course $course,
         Request $request,
         LectureRepository $lectureRepository,
+        ExerciseRepository $exerciseRepository,
+        CourseStudentRepository $courseStudentRepository,
     ): Response {
         $courseForm = $this->createForm(CourseFormType::class, $course);
         $courseForm->handleRequest($request);
@@ -90,23 +96,30 @@ class CourseController extends AbstractController
         }
 
         $lectures = $lectureRepository->findBy(['course' => $course]);
+        $exercises = $exerciseRepository->findBy(['course' => $course]);
+        $courseStudent = $courseStudentRepository->findBy(['course' => $course]);
 
         return $this->render('teacher/course/show.html.twig', [
             'course' => $course,
             'courseForm' => $courseForm->createView(),
-            'lectures' => $lectures
+            'lectures' => $lectures,
+            'exercises' => $exercises,
+            'courseStudent' => $courseStudent,
         ]);
     }
 
-    public function edit(
-        Request $request
-    ) {
+    #[Route('{id}/delete', name: 'app.teacher.course.delete')]
+    public function delete(Course $course): Response
+    {
+        if ($course->getLeadingTeacher() !== $this->getUser()) {
+            $this->addFlash(FlashTypeDictionary::ERROR, 'app.course.delete.error');
+            return $this->redirectToRoute('app.teacher.course.list');
+        }
 
-    }
+        $this->entityManager->remove($course);
+        $this->entityManager->flush();
+        $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.course.delete.success');
 
-    public function delete(
-        Request $request
-    ) {
-
+        return $this->redirectToRoute('app.teacher.course.list');
     }
 }

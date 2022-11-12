@@ -6,11 +6,12 @@ namespace App\Entity\Platform;
 
 use App\Entity\Dictionary\MarksDictionary;
 use App\Entity\UserManagement\User;
+use App\Repository\Platform\SolutionRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\UuidV4;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: SolutionRepository::class)]
 class Solution
 {
     #[ORM\Id]

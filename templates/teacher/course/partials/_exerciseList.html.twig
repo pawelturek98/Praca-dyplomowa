@@ -1,0 +1,44 @@
+<div class="card mt-3">
+    <div class="card-header">
+        {{ 'app.exercise_list.label' | trans }}
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>{{ 'app.course.exercise_list.table.name' | trans }}</th>
+                <th>{{ 'app.course.exercise_list.table.created_at' | trans }}</th>
+                <th>{{ 'app.course.exercise_list.table.close_date' | trans }}</th>
+                <th>{{ 'app.list.action.label' | trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for exercise in exercises %}
+                <tr>
+                    <td>{{ exercise.exerciseName }}</td>
+                    <td>{{ exercise.createdAt | date('d.m.Y') }}</td>
+                    <td>{{ exercise.closeDate | date('d.m.Y') }}</td>
+                    <td>
+                        <a href="{{ path('app.teacher.course.exercise.edit', {'id': exercise.id, 'courseId': course.id}) }}">
+                            {{ 'app.list.action.edit' | trans }}
+                        </a>
+                        |
+                        <a href="{{ path('app.teacher.course.exercise.delete', {'id': exercise.id, 'courseId': course.id}) }}">
+                            {{ 'app.list.action.delete' | trans }}
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">{{ 'app.course.exercise_list.table.empty' | trans }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-right">
+            <a href="{{ path('app.teacher.course.exercise.add', {'id': course.id}) }}" class="btn btn-success">
+                {{ 'app.course.exercise.add' | trans }}
+            </a>
+        </div>
+    </div>
+</div>

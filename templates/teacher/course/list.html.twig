@@ -58,13 +58,15 @@
                                 <td>{{ course.leadingTeacher.fullName }}</td>
                                 <td>{{ course.startDate | date('d.m.Y') }}</td>
                                 <td>{{ course.closeDate | date('d.m.Y') }}</td>
-                                <td>{{ course.status }}</td>
+                                <td>{{ ('app.dictionary.status.' ~ course.status) | trans }}</td>
                                 <td>
                                     <a href="{{ path('app.teacher.course.show', {'id': course.id}) }}">
                                         {{ 'app.course_list.table.show_course' | trans }}
                                     </a>
                                     |
-                                    {{ 'app.course_list.table.delete_course' }}
+                                    <a href="{{ path('app.teacher.course.delete', {'id': course.id}) }}">
+                                        {{ 'app.course_list.table.delete_course' | trans }}
+                                    </a>
                                 </td>
                             </tr>
                         {% else %}
