@@ -35,10 +35,12 @@
             {% endfor %}
             </tbody>
         </table>
+        {% if app.user.type is same as teacherRole %}
         <div class="text-right">
             <a href="{{ path('app.teacher.course.lecture.add', {'id': course.id}) }}" class="btn btn-success">
                 {{ 'app.course.lecture.add' | trans }}
             </a>
         </div>
+        {% endif %}
     </div>
 </div>

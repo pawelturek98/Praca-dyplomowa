@@ -52,14 +52,18 @@
                             <th>{{ 'app.course_list.table.status' | trans }}</th>
                             <th>{{ 'app.list.action.label' | trans }}</th>
                         </tr>
-                        {% for course in courses %}
+                        {% for courseStudent in courses %}
                             <tr>
-                                <td>{{ course.name }}</td>
-                                <td>{{ course.leaderTeacher.fullName }}</td>
-                                <td>{{ course.startDate | date('d.m.Y') }}</td>
-                                <td>{{ course.closeDate | date('d.m.Y') }}</td>
-                                <td>{{ course.status }}</td>
-                                <td>{{ 'app.course_list.table.show_course' | trans }}</td>
+                                <td>{{ courseStudent.course.name }}</td>
+                                <td>{{ courseStudent.course.leadingTeacher.fullName }}</td>
+                                <td>{{ courseStudent.course.startDate | date('d.m.Y') }}</td>
+                                <td>{{ courseStudent.course.closeDate | date('d.m.Y') }}</td>
+                                <td>{{ courseStudent.course.status }}</td>
+                                <td>
+                                    <a href="{{ path('app.common.course.show', {'id': courseStudent.course.id}) }}">
+                                        {{ 'app.course_list.table.show_course' | trans }}
+                                    </a>
+                                </td>
                             </tr>
                         {% else %}
                             <tr>
@@ -72,9 +76,9 @@
         </div>
     </div>
 
-    <div class="row mb-4">
-        <div class="col-12">
-            {% include '_partials/pagination.html.twig' %}
-        </div>
-    </div>
+{#    <div class="row mb-4">#}
+{#        <div class="col-12">#}
+{#            {% include '_partials/pagination.html.twig' %}#}
+{#        </div>#}
+{#    </div>#}
 {% endblock %}

@@ -42,15 +42,10 @@ class CourseController extends AbstractController
             'filterForm' => $filterForm->createView(),
             'courses' => $courses,
             'total' => $allCoursesAmount,
-            'paginator' => $paginator
+            'paginator' => $paginator,
+            'pageLimit' => $pageLimit,
+            'lastPage' => ceil($allCoursesAmount / $pageLimit),
+            'currentPage' => $page,
         ]);
-    }
-
-    #[Route('/student/course/show/{id}', name: 'app.student.course.show')]
-    public function show(
-        Course $course,
-        Request $request,
-    ) {
-
     }
 }
