@@ -1,3 +1,6 @@
+{% set teacherRole = constant('App\\Dictionary\\UserManagement\\UserDictionary::ROLE_TEACHER') %}
+{% set studentRole = constant('App\\Dictionary\\UserManagement\\UserDictionary::ROLE_STUDENT') %}
+{% if app.user.type is same as teacherRole %}
 <div class="card mt-3">
     <div class="card-header">
         {{ 'app.course.description' | trans }}
@@ -22,3 +25,16 @@
         {{ form_end(courseForm, {render_rest: false}) }}
     </div>
 </div>
+{% endif %}
+{% if app.user.type is same as studentRole %}
+    <div class="card mt-3">
+        <div class="card-header">
+            {{ 'app.course.description' | trans }}
+        </div>
+        <div class="card-body">
+            <p>
+                {{ course.description }}
+            </p>
+        </div>
+    </div>
+{% endif %}

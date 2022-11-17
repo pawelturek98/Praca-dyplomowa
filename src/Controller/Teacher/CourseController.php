@@ -88,54 +88,6 @@ class CourseController extends AbstractController
         ]);
     }
 
-    #[Route('{id}/show/{slug}/{forumId}', name: 'app.teacher.course.show')]
-    public function show(
-        Course $course,
-        Request $request,
-        LectureRepository $lectureRepository,
-        ExerciseRepository $exerciseRepository,
-        CourseStudentRepository $courseStudentRepository,
-        ForumRepository $forumRepository,
-        string $slug = 'course-show',
-        string $forumId = null,
-    ): Response {
-        $courseForm = $this->createForm(CourseFormType::class, $course);
-        $courseForm->handleRequest($request);
-
-        if ($this->handleCourseForm($courseForm, $course)) {
-            $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.course_edited');
-            return $this->redirectToRoute('app.teacher.course.show', ['id' => $course->getId()]);
-        }
-
-        $lectures = $lectureRepository->findBy(['course' => $course]);
-        $exercises = $exerciseRepository->findBy(['course' => $course]);
-        $courseStudents = $courseStudentRepository->findBy(['course' => $course]);
-        $forumList = $forumRepository->findBy(['course' => $course]);
-
-        $courseStudent = new CourseStudent();
-        $courseStudentForm = $this->createForm(CourseStudentFormType::class, $courseStudent);
-        $courseStudentForm->handleRequest($request);
-
-        if ($this->handleCourseStudentForm($courseStudentForm, $courseStudent, $course)) {
-            $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.course_student_added');
-            return $this->redirectToRoute('app.teacher.course.show', ['id' => $course->getId()]);
-        }
-
-        $forumForm = $this->createForm(ForumFormType::class, new Forum());
-
-        return $this->render('teacher/course/show.html.twig', [
-            'course' => $course,
-            'courseForm' => $courseForm->createView(),
-            'lectures' => $lectures,
-            'exercises' => $exercises,
-            'courseStudents' => $courseStudents,
-            'courseStudentForm' => $courseStudentForm->createView(),
-            'forumList' => $forumList,
-            'forumForm' => $forumForm->createView(),
-            'slug' => $slug,
-        ]);
-    }
-
     #[Route('{id}/delete', name: 'app.teacher.course.delete')]
     public function delete(Course $course): Response
     {
@@ -166,34 +118,15 @@ class CourseController extends AbstractController
     private function handleCourseForm(
         FormInterface $form,
         Course $course,
-        ?UserInterface $leadingTeacher = null,
+        ?UserInterface $leadingTeacher,
     ): bool {
         if (!$form->isSubmitted() || !$form->isValid()) {
             return false;
         }
 
-        if ($leadingTeacher) {
-            $course->setLeadingTeacher($leadingTeacher);
-        }
+        $course->setLeadingTeacher($leadingTeacher);
 
         $this->entityManager->persist($course);
-        $this->entityManager->flush();
-
-        return true;
-    }
-
-    private function handleCourseStudentForm(
-        FormInterface $form,
-        CourseStudent $courseStudent,
-        Course $course
-    ): bool {
-        if (!$form->isSubmitted() || !$form->isValid()) {
-            return false;
-        }
-
-        $courseStudent->setCourse($course);
-
-        $this->entityManager->persist($courseStudent);
         $this->entityManager->flush();
 
         return true;

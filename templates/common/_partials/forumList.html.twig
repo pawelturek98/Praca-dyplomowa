@@ -26,7 +26,21 @@
                                 {{ 'app.forum.opened' | trans }}
                             {% endif %}
                         </td>
-                        <td></td>
+                        <td>
+                            <a href="{{ path('app.common.course.show', {'id': course.id, 'slug': 'forum', 'forumId': forum.id}) }}">
+                                {{ 'app.show' | trans }}
+                            </a>
+                            {% if app.user.type is same as teacherRole %}
+                                |
+                                <a href="{{ path('app.teacher.forum.change_status', {'id': forum.id}) }}">
+                                {% if forum.isClosed %}
+                                    {{ 'app.forum.open' | trans }}
+                                {% else %}
+                                    {{ 'app.forum.close' | trans }}
+                                {% endif %}
+                                </a>
+                            {% endif %}
+                        </td>
                     </tr>
                     {% else %}
                     <tr>

@@ -1,5 +1,8 @@
 {% extends 'base.html.twig' %}
 
+{% set teacherRole = constant('App\\Dictionary\\UserManagement\\UserDictionary::ROLE_TEACHER') %}
+{% set studentRole = constant('App\\Dictionary\\UserManagement\\UserDictionary::ROLE_STUDENT') %}
+
 {% block breadcrumbs %}
     <ul>
         <li>
@@ -17,23 +20,25 @@
             <ul class="nav nav-pills">
                 <li class="nav-item">
                     <a
-                        href="{{ path('app.teacher.course.show', {'id': course.id, 'slug': 'course-show'}) }}"
+                        href="{{ path('app.common.course.show', {'id': course.id, 'slug': 'course-show'}) }}"
                         class="nav-link first-link {% if slug is same as 'course-show' %}active{% endif %}"
                     >
                         {{ 'app.course_list.general_information' | trans }}
                     </a>
                 </li>
+                {% if app.user.type is same as teacherRole %}
                 <li class="nav-item">
                     <a
-                        href="{{ path('app.teacher.course.show', {'id': course.id, 'slug': 'student-list'}) }}"
+                        href="{{ path('app.common.course.show', {'id': course.id, 'slug': 'student-list'}) }}"
                         class="nav-link {% if slug is same as 'student-list' %}active{% endif %}"
                     >
                         {{ 'app.course_list.student_list' | trans }}
                     </a>
                 </li>
+                {% endif %}
                 <li class="nav-item">
                     <a
-                        href="{{ path('app.teacher.course.show', {'id': course.id, 'slug': 'forum'}) }}"
+                        href="{{ path('app.common.course.show', {'id': course.id, 'slug': 'forum'}) }}"
                         class="nav-link {% if slug is same as 'forum' %}active{% endif %}"
                     >
                         {{ 'app.course_list.forum' | trans }}
@@ -45,28 +50,34 @@
     {% if slug is same as 'course-show' %}
     <div class="row">
         <div class="col">
-            {% include 'teacher/course/_partials/description.html.twig' %}
+            {% include 'common/course/_partials/description.html.twig' %}
         </div>
     </div>
     <div class="row">
         <div class="col">
-            {% include 'teacher/course/_partials/lectureList.html.twig' %}
+            {% include 'common/course/_partials/lectureList.html.twig' %}
         </div>
     </div>
     <div class="row mb-3">
         <div class="col">
-            {% include 'teacher/course/_partials/exerciseList.html.twig' %}
+            {% include 'common/course/_partials/exerciseList.html.twig' %}
         </div>
     </div>
     {% endif %}
     {% if slug is same as 'student-list' %}
     <div class="row mt-3">
         <div class="col">
-            {% include 'teacher/course/_partials/studentList.html.twig' %}
+            {% include 'common/course/_partials/studentList.html.twig' %}
         </div>
     </div>
     {% endif %}
     {% if slug is same as 'forum' %}
-        {% include 'common/_partials/forumList.html.twig' %}
+        {% if forumId %}
+            {{ render(controller(
+                'App\\Controller\\Common\\ForumController::posts', {forumId: forumId}
+            )) }}
+        {% else %}
+            {% include 'common/_partials/forumList.html.twig' %}
+        {% endif %}
     {% endif %}
 {% endblock %}

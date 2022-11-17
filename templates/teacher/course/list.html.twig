@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+    {% extends 'base.html.twig' %}
 
 {% block breadcrumbs %}
     <ul>
@@ -60,7 +60,7 @@
                                 <td>{{ course.closeDate | date('d.m.Y') }}</td>
                                 <td>{{ ('app.dictionary.status.' ~ course.status) | trans }}</td>
                                 <td>
-                                    <a href="{{ path('app.teacher.course.show', {'id': course.id}) }}">
+                                    <a href="{{ path('app.common.course.show', {'id': course.id}) }}">
                                         {{ 'app.course_list.table.show_course' | trans }}
                                     </a>
                                     |

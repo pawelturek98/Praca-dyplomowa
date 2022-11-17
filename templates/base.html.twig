@@ -1,5 +1,4 @@
 {% set administratorRole = constant('App\\Dictionary\\UserManagement\\UserDictionary::ROLE_ADMINISTRATOR') %}
-{% set moderatorRole = constant('App\\Dictionary\\UserManagement\\UserDictionary::ROLE_MODERATOR') %}
 {% set teacherRole = constant('App\\Dictionary\\UserManagement\\UserDictionary::ROLE_TEACHER') %}
 {% set studentRole = constant('App\\Dictionary\\UserManagement\\UserDictionary::ROLE_STUDENT') %}
 
@@ -35,9 +34,6 @@
                 <nav class="nav flex-column">
                     {% if administratorRole in app.user.roles %}
                         {% include '_partials/navigation/administrator_menu.html.twig' %}
-                    {% endif %}
-                    {% if moderatorRole in app.user.roles %}
-                        {% include '_partials/navigation/moderator_menu.html.twig' %}
                     {% endif %}
                     {% if teacherRole in app.user.roles %}
                         {% include '_partials/navigation/teacher_menu.html.twig' %}

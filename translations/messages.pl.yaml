@@ -91,6 +91,17 @@ app:
   form:
     filter:
       button: Filtruj
+  forum:
+    list:
+      title: Lista wątków
+      table:
+          name: Nazwa wątka
+          created_at: Dodano dnia
+          status: Status
+      close: Zamknij
+      closed: Zamknięte
+      open: Otwórz
+      opened: Otwarte
   flash_messages:
     address_data_changed: Pomyślnie zmieniono adres
     course_created: Pomyślnie stworzono nowy kurs
@@ -136,6 +147,7 @@ app:
     register: Zarejestruj się
     repeat_password: Powtórz hasło
     username: Nazwa użytkownika
+  show: Pokaż
   user:
     settings:
       address: Ustawienia adresu

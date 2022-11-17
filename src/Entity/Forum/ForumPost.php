@@ -8,6 +8,7 @@ use App\Entity\UserManagement\User;
 use App\Repository\Forum\ForumPostRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\UuidV4;
 
 #[ORM\Entity(repositoryClass: ForumPostRepository::class)]
@@ -60,7 +61,7 @@ class ForumPost
         return $this->author;
     }
 
-    public function setAuthor(User $author): self
+    public function setAuthor(User|UserInterface $author): self
     {
         $this->author = $author;
         return $this;
