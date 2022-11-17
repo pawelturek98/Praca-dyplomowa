@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Repository\UserManagement;
 
+use App\Dictionary\UserManagement\UserDictionary;
 use App\Entity\UserManagement\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -19,12 +20,14 @@ class UserRepository extends ServiceEntityRepository
     public function getStudentsQueryBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.type')
-            ->
+            ->andWhere('s.type = :userType')
+            ->setParameter('userType', UserDictionary::ROLE_STUDENT);
     }
 
     public function getAllStudents(): array
     {
-
+        return $this->getStudentsQueryBuilder()
+            ->getQuery()
+            ->execute();
     }
 }

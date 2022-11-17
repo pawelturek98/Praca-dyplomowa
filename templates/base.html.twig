@@ -15,10 +15,7 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
+            <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         {% endblock %}
     </head>
     <body class="{{ bodyClass }}">
@@ -53,7 +50,7 @@
             </div>
             {% endif %}
         {% endblock %}
-        <div class="container">
+        <div class="container mb-5">
             {% if app.user %}
             <div class="row mt-4">
                 <div class="col-12 ">
@@ -65,9 +62,26 @@
                 </div>
             </div>
             {% endif %}
+            <div class="row mt-3">
+                <div class="col-12">
+                    {% for type, messages in app.session.flashbag.all %}
+                        {% for message in messages %}
+                        {% if type == 'error' %}{% set type = 'danger' %}{% endif %}
+                        <span class="alert alert-{{ type }} w-100 display-block">{{ message | trans }}</span>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
             <div class="main">
                 {% block body %}{% endblock %}
             </div>
         </div>
+    <!-- ADDITIONAL JAVASCRIPTS -->
+    {% block javascripts %}
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
     </body>
 </html>

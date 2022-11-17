@@ -1,11 +1,11 @@
 <div class="card">
     <div class="card-header">{{ 'app.course.student_list.label' | trans }}</div>
     <div class="card-body">
-        <table class="table">
+        <table class="table table-bordered">
             <thead>
             <tr>
-                <td>{{ 'app.course.student_list.table.fullname' | trans }}</td>
-                <td>{{ 'app.list.action.label' | trans }}</td>
+                <th>{{ 'app.course.student_list.table.fullname' | trans }}</th>
+                <th>{{ 'app.list.action.label' | trans }}</th>
             </tr>
             </thead>
             <tbody>
@@ -13,10 +13,14 @@
             <tr>
                 <td>{{ courseStudent.student.fullname }}</td>
                 <td>
-                    <a href="{{ path('app.teacher.course_student.delete', {'studentId': courseStudent.student.id, 'courseId': courseStudent.course.id}) }}">
+                    <a href="{{ path('app.teacher.course_student.delete', {'id': courseStudent.id}) }}">
                         {{ 'app.list.action.delete' | trans }}
                     </a>
                 </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="2">{{ 'app.course.student_list.table.empty' | trans }}</td>
             </tr>
             {% endfor %}
             </tbody>
@@ -25,11 +29,11 @@
     <div class="card-footer">
         {{ form_start(courseStudentForm) }}
         <div class="row">
-            <div class="col-8">
+            <div class="col-10">
                 {{ form_row(courseStudentForm.student) }}
             </div>
-            <div class="col-4">
-                <button class="btn btn-success">{{ 'app.list.action.save' | trans }}</button>
+            <div class="col-2 student-list-button">
+                <button class="btn btn-success w-100">{{ 'app.list.action.save' | trans }}</button>
             </div>
         </div>
         {{ form_end(courseStudentForm) }}

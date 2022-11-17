@@ -21,10 +21,13 @@ window.onload = function() {
     }
 
     let lectureFormType = document.querySelector('#lecture_form_type');
+    if (lectureFormType) {
+        showLectureFormContentInput(`lecture-${lectureFormType.value}`);
+        lectureFormType.addEventListener('change', function (e) {
+            console.log('test');
+            showLectureFormContentInput(`lecture-${this.value}`)
+        });
+    }
 
-    showLectureFormContentInput(`lecture-${lectureFormType.value}`);
-    lectureFormType.addEventListener('change', function (e) {
-        console.log('test');
-        showLectureFormContentInput(`lecture-${this.value}`)
-    });
+   $('.use-select2').select2()
 }

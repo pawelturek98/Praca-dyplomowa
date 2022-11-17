@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Entity\Forum;
 
 use App\Entity\UserManagement\User;
+use App\Repository\Forum\ForumPostRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\UuidV4;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: ForumPostRepository::class)]
 class ForumPost
 {
     #[ORM\Id]

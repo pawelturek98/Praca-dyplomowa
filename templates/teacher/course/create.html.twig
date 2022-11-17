@@ -3,10 +3,10 @@
 {% block breadcrumbs %}
     <ul>
         <li>
-            <span>{{ 'app.navigation.course_list' | trans }}</span>
+            <a href="{{ 'app.teacher.course.list' }}">{{ 'app.navigation.course_list' | trans }}</a>
         </li>
         <li>
-            <span>{{ 'app.navigation.add_course' | trans }}</span>
+            {{ 'app.navigation.add_course' | trans }}
         </li>
     </ul>
 {% endblock %}

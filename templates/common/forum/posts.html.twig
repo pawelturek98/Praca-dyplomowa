@@ -17,24 +17,24 @@
             <ul class="nav nav-pills">
                 <li class="nav-item">
                     <a
-                        href="{{ path('app.teacher.course.show', {'id': course.id, 'slug': 'course-show'}) }}"
-                        class="nav-link first-link {% if slug is same as 'course-show' %}active{% endif %}"
+                            href="{{ path('app.teacher.course.show', {'id': course.id, 'slug': 'course-show'}) }}"
+                            class="nav-link first-link {% if slug is same as 'course-show' %}active{% endif %}"
                     >
                         {{ 'app.course_list.general_information' | trans }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a
-                        href="{{ path('app.teacher.course.show', {'id': course.id, 'slug': 'student-list'}) }}"
-                        class="nav-link {% if slug is same as 'student-list' %}active{% endif %}"
+                            href="{{ path('app.teacher.course.show', {'id': course.id, 'slug': 'student-list'}) }}"
+                            class="nav-link {% if slug is same as 'student-list' %}active{% endif %}"
                     >
                         {{ 'app.course_list.student_list' | trans }}
                     </a>
                 </li>
                 <li class="nav-item">
                     <a
-                        href="{{ path('app.teacher.course.show', {'id': course.id, 'slug': 'forum'}) }}"
-                        class="nav-link {% if slug is same as 'forum' %}active{% endif %}"
+                            href="{{ path('app.teacher.course.show', {'id': course.id, 'slug': 'forum'}) }}"
+                            class="nav-link {% if slug is same as 'forum' %}active{% endif %}"
                     >
                         {{ 'app.course_list.forum' | trans }}
                     </a>
@@ -43,28 +43,28 @@
         </div>
     </div>
     {% if slug is same as 'course-show' %}
-    <div class="row">
-        <div class="col">
-            {% include 'teacher/course/_partials/description.html.twig' %}
+        <div class="row">
+            <div class="col">
+                {% include 'teacher/course/_partials/description.html.twig' %}
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            {% include 'teacher/course/_partials/lectureList.html.twig' %}
+        <div class="row">
+            <div class="col">
+                {% include 'teacher/course/_partials/lectureList.html.twig' %}
+            </div>
         </div>
-    </div>
-    <div class="row mb-3">
-        <div class="col">
-            {% include 'teacher/course/_partials/exerciseList.html.twig' %}
+        <div class="row mb-3">
+            <div class="col">
+                {% include 'teacher/course/_partials/exerciseList.html.twig' %}
+            </div>
         </div>
-    </div>
     {% endif %}
     {% if slug is same as 'student-list' %}
-    <div class="row mt-3">
-        <div class="col">
-            {% include 'teacher/course/_partials/studentList.html.twig' %}
+        <div class="row mt-3">
+            <div class="col">
+                {% include 'teacher/course/_partials/studentList.html.twig' %}
+            </div>
         </div>
-    </div>
     {% endif %}
     {% if slug is same as 'forum' %}
         {% include 'common/_partials/forumList.html.twig' %}

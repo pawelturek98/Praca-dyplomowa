@@ -83,13 +83,18 @@ class LectureController extends AbstractController
         ]);
     }
 
-    #[Route('{id}/{courseId}/lecture/delete', name: 'app.teacher.course.lecture.delete')]
-    public function delete(Lecture $lecture, string $courseId): Response
-    {
+    #[Route('{id}/lecture/delete', name: 'app.teacher.course.lecture.delete')]
+    public function delete(Lecture $lecture): Response {
+        $course = $lecture->getCourse();
+        if ($course->getLeadingTeacher() !== $this->getUser()) {
+            $this->addFlash(FlashTypeDictionary::ERROR, 'app.flash_messages.lecture_delete_error');
+            return $this->redirectToRoute('app.teacher.course.show', ['id' => $course->getId()]);
+        }
+
         $this->entityManager->remove($lecture);
         $this->entityManager->flush();
 
-        return $this->redirectToRoute('app.teacher.course.show', ['id' => $courseId]);
+        return $this->redirectToRoute('app.teacher.course.show', ['id' => $course->getId()]);
     }
 
     private function handleForm(FormInterface $form, Lecture $lecture, ?Course $course = null): bool

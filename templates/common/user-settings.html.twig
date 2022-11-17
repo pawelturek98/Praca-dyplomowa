@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block breadcrumbs %}
+    <ul>
+        <li>
+            {{ 'app.navigation.settings' | trans }}
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-6">
+            {% include 'common/_partials/addressForm.html.twig' %}
+        </div>
+        <div class="col-6">
+            {% include 'common/_partials/userForm.html.twig' %}
+            {% include 'common/_partials/passwordForm.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

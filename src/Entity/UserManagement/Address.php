@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Entity\UserManagement;
 
+use App\Repository\UserManagement\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\UuidV4;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: AddressRepository::class)]
 class Address
 {
     #[ORM\Id]

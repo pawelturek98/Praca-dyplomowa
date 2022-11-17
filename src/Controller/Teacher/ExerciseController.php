@@ -67,20 +67,25 @@ class ExerciseController extends AbstractController
 
         return $this->render('teacher/exercise/edit.html.twig', [
             'exerciseForm' => $exerciseForm->createView(),
+            'exercise' => $exercise,
             'solutions' => $solutions,
             'course' => $course,
         ]);
     }
 
     #[Route('{id}/exercise/delete', name: 'app.teacher.course.exercise.delete')]
-    public function delete(
-        Exercise $exercise,
-        string $courseId
-    ): Response {
+    public function delete(Exercise $exercise): Response {
+        $course = $exercise->getCourse();
+        if ($course->getLeadingTeacher() !== $this->getUser()) {
+            $this->addFlash(FlashTypeDictionary::ERROR, 'app.flash_messages.exercise_delete_error');
+            return $this->redirectToRoute('app.teacher.course.show', ['id' => $course->getId()]);
+        }
+
         $this->entityManager->remove($exercise);
         $this->entityManager->flush();
 
-        return $this->redirectToRoute('app.teacher.course.show', ['id' => $courseId]);
+        $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.exercise_deleted');
+        return $this->redirectToRoute('app.teacher.course.show', ['id' => $course->getId()]);
     }
 
     private function handleExerciseForm(
