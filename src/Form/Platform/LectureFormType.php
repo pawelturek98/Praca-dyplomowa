@@ -6,6 +6,7 @@ namespace App\Form\Platform;
 
 use App\Dictionary\Platform\LectureTypeDictionary;
 use App\Entity\Platform\Lecture;
+use App\Form\Storage\StorageFormType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -41,15 +42,16 @@ class LectureFormType extends AbstractType
                 'label' => 'app.course.lecture.form.content',
             ])
             ->add('contentFile', FileType::class, [
+                'label' => 'app.course.lecture.form.content',
                 'required' => false,
                 'mapped' => false,
-                'label' => 'app.course.lecture.form.content',
                 'constraints' => [
                     new File([
                         'maxSize' => '10240k', // 10 Mb
                         'mimeTypes' => [
                             'application/pdf',
-                            'application/x-pdf'
+                            'application/x-pdf',
+                            'application/zip',
                         ],
                         'mimeTypesMessage' => 'app.file.validation.message'
                     ])

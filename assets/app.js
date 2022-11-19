@@ -29,5 +29,17 @@ window.onload = function() {
         });
     }
 
+    document.querySelectorAll('.remove').forEach((item) => {
+        item.addEventListener('click', function (event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            let modal = confirm(this.dataset.message);
+            if (modal) {
+                window.location = this.href;
+            }
+        })
+    })
+
    $('.use-select2').select2()
 }

@@ -17,8 +17,12 @@ class StudentFilter implements CourseStudentFilterInterface
 
     public function modifyQueryBuilder(QueryBuilder $queryBuilder, array $data): void
     {
+        if (!in_array('css', $queryBuilder->getAllAliases())) {
+            $queryBuilder->leftJoin('cs.student', 'css');
+        }
+
         $queryBuilder
-            ->andWhere('cs.student = :student')
-            ->setParameter('student', $data[self::NAME]);
+            ->andWhere('css.id = :student')
+            ->setParameter('student', $data[self::NAME], 'uuid');
     }
 }

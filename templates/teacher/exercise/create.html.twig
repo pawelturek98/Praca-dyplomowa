@@ -6,7 +6,7 @@
             <a href="{{ path('app.teacher.course.list') }}">{{ 'app.navigation.course_list' | trans }}</a>
         </li>
         <li>
-            <a href="{{ path('app.teacher.course.show', {'id': course.id}) }}">{{ course.name }}</a>
+            <a href="{{ path('app.common.course.show', {'id': course.id}) }}">{{ course.name }}</a>
         </li>
         <li>
             {{ 'app.course.exercise.create' | trans }}

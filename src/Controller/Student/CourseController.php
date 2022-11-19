@@ -16,13 +16,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class CourseController extends AbstractController
 {
-    #[Route('/student/courses/list', name: 'app.student.course.list')]
+    #[Route('student/courses/list', name: 'app.student.course.list')]
     public function list(
         Request $request,
         CourseStudentFilterGenerator $courseStudentFilterGenerator
     ): Response {
         $page = (int) $request->get('page', 1);
-        $pageLimit = (int) $request->get('pageLimit', 100);
+        $pageLimit = (int) $request->get('pageLimit', 1);
         $paginator = new Paginator($page, $pageLimit);
         $filterForm = $this->createForm(CourseFilterFormType::class);
 

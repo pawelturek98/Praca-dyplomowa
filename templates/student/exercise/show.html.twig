@@ -1,0 +1,117 @@
+{% extends 'base.html.twig' %}
+
+{% set videoType = constant('App\\Dictionary\\Platform\\LectureTypeDictionary::VIDEO_TYPE') %}
+{% set textType = constant('App\\Dictionary\\Platform\\LectureTypeDictionary::TEXT_TYPE') %}
+{% set attachementType = constant('App\\Dictionary\\Platform\\LectureTypeDictionary::ATTACHMENT_TYPE') %}
+
+{% block breadcrumbs %}
+    <ul>
+        <li>
+            <a href="{{ path('app.student.course.list') }}">
+                {{ 'app.navigation.course_list' | trans }}
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app.common.course.show', {'id': exercise.course.id}) }}">
+                {{ exercise.course.name }}
+            </a>
+        </li>
+        <li>
+            {{ exercise.exerciseName }}
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    {{ exercise.exerciseName }}
+                </div>
+                <div class="card-body">
+                    {{ exercise.exerciseContent }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% set showForm = true %}
+    {% if solution and solution.isSaved %}
+        {% set showForm = false %}
+    {% endif %}
+
+    <div class="row mt-3">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    {{ 'app.course.exercise.solution.dispose_file' | trans }}
+                </div>
+                <div class="card-body">
+                    {% if showForm %}
+                    {{ form_start(solutionForm, {'attr': {'class': 'row'}}) }}
+                    <div class="form-group col-10">
+                        {{ form_row(solutionForm.file) }}
+                    </div>
+                    <div class="form-group col-2" style="padding: 31px;">
+                        <button class="btn btn-success" type="submit">
+                            {{ 'app.save' | trans }}
+                        </button>
+                    </div>
+                    {{ form_end(solutionForm) }}
+                    {% else %}
+                        <span class="alert alert-info m-1 display-block">
+                            {{ 'app.course.exercise.solution.already_disposed' | trans }}
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    {{ 'app.course.exercise.solution_list.label' | trans }}
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-center">
+                        <thead>
+                        <tr>
+                            <td>{{ 'app.course.exercise.solution.name' | trans }}</td>
+                            <td>{{ 'app.course.exercise.solution.type' | trans }}</td>
+                            <td>{{ 'app.list.action.label' | trans }}</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for solutionFile in solutionFiles %}
+                        <tr>
+                            <td>{{ solutionFile.storage.name }}</td>
+                            <td>{{ solutionFile.storage.type }}</td>
+                            <td></td>
+                        </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3">
+                                    {{ 'app.course.exercise.solution_list.empty' | trans }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer text-right">
+                    {% if not solution.isSaved %}
+                        <a href="{{ path('app.student.course.solution.dispose', {'id': solution.id}) }}" class="btn btn-primary remove">
+                            {{ 'app.course.exercise.solution.dispose' | trans }}
+                        </a>
+                    {% else %}
+                        <a href="{{ path('app.student.course.solution.dispose', {'id': solution.id}) }}" class="btn btn-warning">
+                            {{ 'app.course.exercise.solution.undispose' | trans }}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

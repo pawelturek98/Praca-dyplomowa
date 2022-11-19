@@ -8,11 +8,11 @@ final class LectureTypeDictionary
 {
     public const VIDEO_TYPE = 'video';
     public const TEXT_TYPE = 'text';
-    public const PDF_TYPE = 'pdf';
+    public const ATTACHMENT_TYPE = 'attachment';
 
     public const POSSIBLE_LECTURE_TYPES = [
         self::VIDEO_TYPE,
         self::TEXT_TYPE,
-        self::PDF_TYPE
+        self::ATTACHMENT_TYPE
     ];
 }

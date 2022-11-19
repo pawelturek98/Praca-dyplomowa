@@ -32,7 +32,7 @@ class CourseStudentFilterGenerator implements FilterGeneratorInterface
             $qb->leftJoin('cs.student', 'css');
         }
 
-        $qb->addSelect($qb->getAllAliases());
+        $qb->addSelect(['css', 'csc']);
         $qb = $this->getModifiedQueryBuilder($qb);
 
         if (null !== $this->paginator) {
@@ -42,7 +42,7 @@ class CourseStudentFilterGenerator implements FilterGeneratorInterface
 
         $qb->orderBy('csc.name', 'DESC');
 
-        return $this->courseStudentRepository->findAll();
+        return $this->courseStudentRepository->findByQueryBuilder($qb);
     }
 
     public function countResults(): int

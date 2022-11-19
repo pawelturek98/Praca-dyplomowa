@@ -15,6 +15,9 @@ use App\Repository\Forum\ForumRepository;
 use App\Repository\Platform\CourseStudentRepository;
 use App\Repository\Platform\ExerciseRepository;
 use App\Repository\Platform\LectureRepository;
+use App\Repository\Platform\SolutionRepository;
+use App\Resolver\Platform\ExerciseResolver;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -35,7 +38,7 @@ class CourseController extends AbstractController
         Course $course,
         Request $request,
         LectureRepository $lectureRepository,
-        ExerciseRepository $exerciseRepository,
+        ExerciseResolver $exerciseResolver,
         CourseStudentRepository $courseStudentRepository,
         ForumRepository $forumRepository,
         string $slug = 'course-show',
@@ -46,11 +49,11 @@ class CourseController extends AbstractController
 
         if ($this->handleCourseForm($courseForm, $course)) {
             $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.course_edited');
-            return $this->redirectToRoute('app.teacher.course.show', ['id' => $course->getId()]);
+            return $this->redirectToRoute('app.common.course.show', ['id' => $course->getId()]);
         }
 
         $lectures = $lectureRepository->findBy(['course' => $course]);
-        $exercises = $exerciseRepository->findBy(['course' => $course]);
+        $exercises = $exerciseResolver->resolve($course);
         $courseStudents = $courseStudentRepository->findBy(['course' => $course]);
         $forumList = $forumRepository->findBy(['course' => $course]);
 
@@ -58,9 +61,13 @@ class CourseController extends AbstractController
         $courseStudentForm = $this->createForm(CourseStudentFormType::class, $courseStudent);
         $courseStudentForm->handleRequest($request);
 
-        if ($this->handleCourseStudentForm($courseStudentForm, $courseStudent, $course)) {
+        if ($this->handleCourseStudentForm($courseStudentForm, $courseStudent, $course, $courseStudents)) {
+
             $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.course_student_added');
-            return $this->redirectToRoute('app.common.course.show', ['id' => $course->getId()]);
+            return $this->redirectToRoute('app.common.course.show', [
+                'id' => $course->getId(),
+                'slug' => 'student-list'
+            ]);
         }
 
         $forumForm = $this->createForm(ForumFormType::class, new Forum());
@@ -96,10 +103,22 @@ class CourseController extends AbstractController
     private function handleCourseStudentForm(
         FormInterface $form,
         CourseStudent $courseStudent,
-        Course $course
+        Course $course,
+        array $courseStudents,
     ): bool {
         if (!$form->isSubmitted() || !$form->isValid()) {
             return false;
+        }
+
+        /** @var CourseStudent $existingCourseStudent */
+        foreach ($courseStudents as $existingCourseStudent) {
+            if (
+                $existingCourseStudent->getStudent() === $courseStudent->getStudent() &&
+                $existingCourseStudent->getCourse() === $course
+            ) {
+                $this->addFlash(FlashTypeDictionary::ERROR, 'app.flash_messages.student_assigned_to_course');
+                return false;
+            }
         }
 
         $courseStudent->setCourse($course);

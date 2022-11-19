@@ -17,15 +17,25 @@ app:
     description: Opis kursu
     exercise:
       add: Dodaj ćwiczenie
-      edit: "Edycja ćwiczenia: {exerciseName}"
       create: Tworzenie nowego ćwiczenia
+      edit: "Edycja ćwiczenia: {exerciseName}"
+      disposed: Oddane
       form:
-        name: Nazwa ćwiczenia
-        description: Opis ćwiczenia
-        state: Status ćwiczenia
         close_date: Data zamknięcia
+        description: Opis ćwiczenia
+        name: Nazwa ćwiczenia
+        state: Status ćwiczenia
+      not_disposed: Nie oddane
+      solution:
+        already_disposed: Rozwiązanie już oddane
+        name: Nazwa pliku
+        type: Typ
+        dispose: Oddaj do sprawdzenia
+        dispose_file: Dodaj plik
+        undispose: Wycofaj ze sprawdzenia
       solution_list:
         title: Rozwiązania studentów
+        label: Rozwiązania
         student: Imię i nazwisko studenta
         disposed_at: Oddane dnia
         mark: Ocena
@@ -37,6 +47,9 @@ app:
         close_date: Data zamknięcia
         empty: Brak ćwiczeń
         name: Nazwa ćwiczenia
+        mark: Ocena
+        status: Status
+        show: Pokaż zadanie
     form:
       start_date: Data rozpoczęcia
       close_date: Data zamknięcia
@@ -46,14 +59,14 @@ app:
       add: Dodaj lekcję
       edit: "Edytuj lekcję: {lectureName}"
       edit_breadcrumb: Edycja lekcji
-      create: Tworzenie nowego kursu
+      create: Tworzenie nowej lekcji
       form:
         content: Treść lekcji
         name: Nazwa lekcji
         type: Typ lekcji
       type:
         video: Film YouTube
-        pdf: Plik PDF
+        attachment: Plik
         text: Tekst
     lecture_list:
       label: Lista wykładów
@@ -62,6 +75,7 @@ app:
         empty: Brak lekcji
         lesson: Lekcja
         type: Typ
+        show: Pokaż lekcję
     student_list:
       label: Lista studentów
       table:
@@ -82,6 +96,7 @@ app:
       close_date: Data końca
       status: Status
       show_course: Pokaż kurs
+  choosen_file: "Wybrany plik: {fileName}"
   dictionary:
     status:
       active: Aktywny
@@ -101,7 +116,7 @@ app:
       close: Zamknij
       closed: Zamknięte
       open: Otwórz
-      opened: Otwarte
+    opened: Otwarte
   flash_messages:
     address_data_changed: Pomyślnie zmieniono adres
     course_created: Pomyślnie stworzono nowy kurs
@@ -133,6 +148,9 @@ app:
     settings: Ustawienia
   pagination:
     page: Strona {currentPage} z {lastPage}
+  remove:
+    exercise: "Czy na pewno chcesz usunąć ćwiczenie: {exerciseName}?"
+    lecture: "Czy na pewno chcesz usunąć wykład: {lectureName}?"
   save: Zapisz
   settings:
     default:

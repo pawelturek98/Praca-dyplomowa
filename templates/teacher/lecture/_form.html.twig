@@ -1,3 +1,4 @@
+{% set videoType = constant('App\\Dictionary\\Platform\\LectureTypeDictionary::VIDEO_TYPE') %}
 {{ form_start(lectureForm) }}
 <div class="form-group mb-3">
     {{ form_row(lectureForm.name) }}
@@ -6,13 +7,28 @@
     {{ form_row(lectureForm.type) }}
 </div>
 <div class="form-group content-type-input mb-3" id="lecture-text">
-    {{ form_row(lectureForm.contentText) }}
+    {{ form_row(lectureForm.contentText, {'value': lecture.content}) }}
 </div>
 <div class="form-group content-type-input mb-3 display-hidden" id="lecture-video">
-    {{ form_row(lectureForm.contentUrl) }}
+    {{ form_row(lectureForm.contentUrl, {'value': lecture.content}) }}
+    <div class="w-100 text-center">
+        {% if lecture.type is same as videoType %}
+            <iframe
+                    width="560"
+                    height="315"
+                    src="{{ lecture.content }}"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            ></iframe>
+        {% endif %}
+    </div>
 </div>
-<div class="form-group content-type-input mb-3 display-hidden" id="lecture-pdf">
+<div class="form-group content-type-input mb-3 display-hidden" id="lecture-attachment">
     {{ form_row(lectureForm.contentFile) }}
+    {% if lecture.lectureFile %}
+        {{ 'app.choosen_file' | trans({'{fileName}': lecture.lectureFile.name}) }}
+    {% endif %}
 </div>
 <div class="form-group text-right">
     <button class="btn btn-success" type="submit">{{ 'app.save' | trans }}</button>

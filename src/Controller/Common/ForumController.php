@@ -66,7 +66,7 @@ class ForumController extends AbstractController
 
         $endpoint = 'app.student.course.show';
         if ($this->getUser()->getType() === UserDictionary::ROLE_TEACHER) {
-            $endpoint = 'app.teacher.course.show';
+            $endpoint = 'app.common.course.show';
         }
 
         if ($forumForm->isSubmitted() && $forumForm->isValid()) {

@@ -49,7 +49,7 @@ class LectureController extends AbstractController
 
         if ($formHandled) {
             $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.lecture_created');
-            return $this->redirectToRoute('app.teacher.course.show', ['id' => $course->getId()]);
+            return $this->redirectToRoute('app.common.course.show', ['id' => $course->getId()]);
         }
 
         return $this->render('teacher/lecture/create.html.twig', [
@@ -58,12 +58,10 @@ class LectureController extends AbstractController
         ]);
     }
 
-    #[Route('{id}/{courseId}/lecture/edit', name: 'app.teacher.course.lecture.edit')]
+    #[Route('{id}/lecture/edit', name: 'app.teacher.course.lecture.edit')]
     public function edit(
         Lecture $lecture,
-        string $courseId,
         Request $request,
-        CourseRepository $courseRepository
     ): Response {
         $lectureForm = $this->createForm(LectureFormType::class, $lecture);
         $lectureForm->handleRequest($request);
@@ -74,12 +72,10 @@ class LectureController extends AbstractController
             return $this->redirectToRoute('app.teacher.course.lecture.edit', ['id' => $lecture->getId()]);
         }
 
-        $course = $courseRepository->find($courseId);
-
         return $this->render('teacher/lecture/edit.html.twig', [
             'lectureForm' => $lectureForm->createView(),
             'lecture' => $lecture,
-            'course' => $course,
+            'course' => $lecture->getCourse(),
         ]);
     }
 
@@ -88,13 +84,13 @@ class LectureController extends AbstractController
         $course = $lecture->getCourse();
         if ($course->getLeadingTeacher() !== $this->getUser()) {
             $this->addFlash(FlashTypeDictionary::ERROR, 'app.flash_messages.lecture_delete_error');
-            return $this->redirectToRoute('app.teacher.course.show', ['id' => $course->getId()]);
+            return $this->redirectToRoute('app.common.course.show', ['id' => $course->getId()]);
         }
 
         $this->entityManager->remove($lecture);
         $this->entityManager->flush();
 
-        return $this->redirectToRoute('app.teacher.course.show', ['id' => $course->getId()]);
+        return $this->redirectToRoute('app.common.course.show', ['id' => $course->getId()]);
     }
 
     private function handleForm(FormInterface $form, Lecture $lecture, ?Course $course = null): bool
@@ -107,11 +103,20 @@ class LectureController extends AbstractController
             $lecture->setCourse($course);
         }
 
-        if ($lecture->getType() === LectureTypeDictionary::PDF_TYPE) {
-            $pdfFile = $form->get('contentFile')->getData();
-            $lecture->setLectureFile(
-                $this->handlePdfFile($pdfFile)
-            );
+        switch ($lecture->getType()) {
+            default:
+            case LectureTypeDictionary::TEXT_TYPE:
+                $lecture->setContent($form->get('contentText')->getViewData());
+                break;
+            case LectureTypeDictionary::VIDEO_TYPE:
+                $lecture->setContent($form->get('contentUrl')->getViewData());
+                break;
+            case LectureTypeDictionary::ATTACHMENT_TYPE:
+                $file = $form->get('contentFile')->getData();
+                $lecture->setLectureFile(
+                    $this->handleLectureFile($file)
+                );
+                break;
         }
 
         $this->entityManager->persist($lecture);
@@ -120,14 +125,14 @@ class LectureController extends AbstractController
         return true;
     }
 
-    private function handlePdfFile(?UploadedFile $pdfFile): ?Storage
+    private function handleLectureFile(?UploadedFile $file): ?Storage
     {
-        if (!$pdfFile) {
+        if (!$file) {
             return null;
         }
 
         $filename = $this->uploader
-            ->setFile($pdfFile)
+            ->setFile($file)
             ->setStrategy(FileUploaderStrategyDictionary::STRATEGY_LOCAL)
             ->setTargetDirectory(self::TARGET_DIRECTORY)
             ->upload();

@@ -6,19 +6,12 @@ namespace App\Controller\Teacher;
 
 use App\Dictionary\Main\FlashTypeDictionary;
 use App\Dictionary\Platform\StatusDictionary;
-use App\Entity\Forum\Forum;
 use App\Entity\Platform\Course;
 use App\Entity\Platform\CourseStudent;
 use App\Filter\Course\CourseFilterGenerator;
 use App\Filter\Course\Filters\TeacherFilter;
-use App\Form\Forum\ForumFormType;
 use App\Form\Platform\CourseFormType;
-use App\Form\Platform\CourseStudentFormType;
 use App\Form\Platform\Filter\CourseFilterFormType;
-use App\Repository\Forum\ForumRepository;
-use App\Repository\Platform\CourseStudentRepository;
-use App\Repository\Platform\ExerciseRepository;
-use App\Repository\Platform\LectureRepository;
 use App\Service\Pagination\Paginator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -112,7 +105,7 @@ class CourseController extends AbstractController
         $this->entityManager->flush();
 
         $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.course_student_removed');
-        return $this->redirectToRoute('app.teacher.course.show', ['id' => $course->getId()]);
+        return $this->redirectToRoute('app.common.course.show', ['id' => $course->getId()]);
     }
 
     private function handleCourseForm(

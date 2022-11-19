@@ -37,7 +37,7 @@ class ExerciseController extends AbstractController
 
         if ($this->handleExerciseForm($exerciseForm, $exercise, $course)) {
             $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.exercise_created');
-            return $this->redirectToRoute('app.teacher.course.show', ['id' => $course->getId()]);
+            return $this->redirectToRoute('app.common.course.show', ['id' => $course->getId()]);
         }
 
         return $this->render('teacher/exercise/create.html.twig', [
@@ -62,7 +62,7 @@ class ExerciseController extends AbstractController
             return $this->redirectToRoute('app.teacher.course.exercise.edit', ['id' => $exercise->getId()]);
         }
 
-        $solutions = $solutionRepository->findBy(['exercise' => $exercise]);
+        $solutions = $solutionRepository->findBy(['exercise' => $exercise, 'isSaved' => true]);
         $course = $courseRepository->find($courseId);
 
         return $this->render('teacher/exercise/edit.html.twig', [
@@ -78,14 +78,14 @@ class ExerciseController extends AbstractController
         $course = $exercise->getCourse();
         if ($course->getLeadingTeacher() !== $this->getUser()) {
             $this->addFlash(FlashTypeDictionary::ERROR, 'app.flash_messages.exercise_delete_error');
-            return $this->redirectToRoute('app.teacher.course.show', ['id' => $course->getId()]);
+            return $this->redirectToRoute('app.common.course.show', ['id' => $course->getId()]);
         }
 
         $this->entityManager->remove($exercise);
         $this->entityManager->flush();
 
         $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.exercise_deleted');
-        return $this->redirectToRoute('app.teacher.course.show', ['id' => $course->getId()]);
+        return $this->redirectToRoute('app.common.course.show', ['id' => $course->getId()]);
     }
 
     private function handleExerciseForm(
