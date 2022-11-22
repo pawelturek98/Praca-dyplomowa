@@ -11,9 +11,17 @@ final class StatusDictionary
     public const STATUS_SUSPENDED = 'suspended';
     public const STATUS_DELETED = 'deleted';
 
+    public const STATUS_MARKED = 'marked';
+    public const STATUS_UNMARKED = 'unmarked';
+
     public const AVAILABLE_STATUSES = [
         self::STATUS_ACTIVE,
         self::STATUS_INACTIVE,
         self::STATUS_SUSPENDED,
+    ];
+
+    public const AVAILABLE_MARK_STATUSES = [
+        self::STATUS_MARKED,
+        self::STATUS_UNMARKED,
     ];
 }

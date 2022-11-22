@@ -8,9 +8,11 @@ use App\DTO\Platform\ExerciseDTO;
 use App\Entity\Platform\Course;
 use App\Entity\Platform\Exercise;
 use App\Entity\Platform\Solution;
+use App\Entity\UserManagement\User;
 use App\Repository\Platform\ExerciseRepository;
 use App\Repository\Platform\SolutionRepository;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class ExerciseResolver
 {
@@ -21,25 +23,31 @@ class ExerciseResolver
     ) {
     }
 
-    public function resolve(Course $course): array
+    public function resolve(Course $course = null, ?UserInterface $student = null): array
     {
         $exercises = $this->exerciseRepository->findBy(['course' => $course]);
         $output = [];
+
+        if (null === $student) {
+            $student = $this->security->getUser();
+        }
 
         /** @var Exercise $exercise $exercise */
         foreach ($exercises as $exercise) {
             /** @var Solution $solution */
             $solution = $this->solutionRepository->findOneBy([
                 'exercise' => $exercise,
-                'student' => $this->security->getUser()
+                'student' => $student,
             ]);
 
             $mark = null;
             $isDisposed = false;
+            $disposedAt = null;
 
             if ($solution) {
                 $mark = $solution->getMarksDictionary()?->getName();
                 $isDisposed = $solution->isSaved();
+                $disposedAt = $solution->getDisposedAt();
             }
 
             $output[] = (new ExerciseDTO())
@@ -48,6 +56,7 @@ class ExerciseResolver
                 ->setCourse($course)
                 ->setClosedAt($exercise->getCreatedAt())
                 ->setCreatedAt($exercise->getCreatedAt())
+                ->setDisposedAt($disposedAt)
                 ->setMark($mark)
                 ->setDisposed($isDisposed);
         }

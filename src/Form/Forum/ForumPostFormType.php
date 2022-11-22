@@ -16,7 +16,7 @@ class ForumPostFormType extends AbstractType
     {
         $builder
             ->add('content', TextareaType::class, [
-                'label' => 'app.forum.forum_post.content'
+                'label' => 'app.forum.posts.content'
             ]);
     }
 

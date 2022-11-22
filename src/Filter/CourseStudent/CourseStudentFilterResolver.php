@@ -20,7 +20,7 @@ class CourseStudentFilterResolver
         /** @var CourseStudentFilterInterface $filter */
         foreach ($this->courseFilter as $filter) {
             $key = $filter::NAME;
-            if (isset($key, $filterData)) {
+            if (isset($filterData[$key])) {
                 $data = $filterData[$key];
 
                 if ($filter->support([$key => $data])) {

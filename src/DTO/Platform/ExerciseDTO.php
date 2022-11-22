@@ -18,6 +18,8 @@ class ExerciseDTO
 
     private DateTime $closedAt;
 
+    private ?DateTime $disposedAt = null;
+
     private bool $isDisposed = false;
 
     private ?string $mark = '';
@@ -65,6 +67,17 @@ class ExerciseDTO
     public function setClosedAt(DateTime $closedAt): self
     {
         $this->closedAt = $closedAt;
+        return $this;
+    }
+
+    public function getDisposedAt(): ?DateTime
+    {
+        return $this->disposedAt;
+    }
+
+    public function setDisposedAt(?DateTime $disposedAt): self
+    {
+        $this->disposedAt = $disposedAt;
         return $this;
     }
 

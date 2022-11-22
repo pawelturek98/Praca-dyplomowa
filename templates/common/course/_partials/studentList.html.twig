@@ -13,7 +13,11 @@
             <tr>
                 <td>{{ courseStudent.student.fullname }}</td>
                 <td>
-                    <a href="{{ path('app.teacher.course_student.delete', {'id': courseStudent.id}) }}">
+                    <a
+                        href="{{ path('app.teacher.course_student.delete', {'id': courseStudent.id}) }}"
+                        class="btn btn-danger remove"
+                        data-message="{{ 'app.course.student_list.table.remove_confirm' | trans({'{fullname}': courseStudent.student.fullname}) }}"
+                    >
                         {{ 'app.list.action.delete' | trans }}
                     </a>
                 </td>

@@ -28,11 +28,15 @@ app:
       not_disposed: Nie oddane
       solution:
         already_disposed: Rozwiązanie już oddane
+        empty_files: Brak plików dla rozwiązania
+        files: Pliki rozwiązania
         name: Nazwa pliku
         type: Typ
         dispose: Oddaj do sprawdzenia
         dispose_file: Dodaj plik
         undispose: Wycofaj ze sprawdzenia
+        show:
+          title: "Rozwiązanie studenta: {studentFullname}"
       solution_list:
         title: Rozwiązania studentów
         label: Rozwiązania
@@ -81,7 +85,9 @@ app:
       table:
         fullname: Imię i nazwisko studenta
         empty: Brak studentów zapisanych w kursie
+        remove_confirm: Czy na pewno chcesz usunąć kursanta {fullname}?
       student: Student
+    remove_confirm: "Czy na pewno chcesz usunąć kurs: {name}?"
   course_list:
     forum: Forum
     general_information: Informacje ogólne
@@ -90,7 +96,7 @@ app:
       delete_course: Usuń kurs
       empty: Brak kursów
       name: Nazwa
-      title: Lista kursów studenta
+      title: Lista kursów
       teacher: Nauczyciel
       start_date: Data początku
       close_date: Data końca
@@ -102,11 +108,27 @@ app:
       active: Aktywny
       inactive: Nieaktywny
       suspended: Zawieszony
+  delete: Usuń
   filters: Filtrowanie
+  filter:
+    course: Kurs
+    close_date: Data zakończenia
+    status:
+      label: Status
+      marked: Oceniona
+      unmarked: Nie oceniona
+    student: Student
+    start_date: Data rozpoczęcia
   form:
+    placeholder: -- Wybierz --
     filter:
       button: Filtruj
   forum:
+    already_closed: Forum jest aktualnie zamnkięte
+    create:
+      title: Tworzenie nowego wątku
+    close: Zamknij
+    description: Treść
     list:
       title: Lista wątków
       table:
@@ -116,25 +138,33 @@ app:
       close: Zamknij
       closed: Zamknięte
       open: Otwórz
+    name: Nazwa wątku
     opened: Otwarte
+    open: Otwórz
+    posts:
+      add_response: Dodaj odpowiedź
+      content: Treść
+      remove_confirm: Czy na pewno chcesz usunąć post?
   flash_messages:
-    address_data_changed: Pomyślnie zmieniono adres
-    course_created: Pomyślnie stworzono nowy kurs
-    course_deleted: Kurs został usunięty pomyślnie
-    course_deleted_error: Nie można usunąć kursu, nie jesteś właścicielem kursu
-    course_edited: Pomyślnie zmieniono kurs
-    course_student_added: Pomyślnie dodano kursanta
-    course_student_not_found: Nie znaleziono kursanta
-    course_student_removed: Pomyślnie usunięto kursanta
-    exercise_created: Pomyślnie stworzono zadanie
-    exercise_edited: Pomyślnie zmieniono zadanie
-    exercise_delete_error: Nie można usunąć zadania, nie jesteś właścicielem kursu
-    exercise_deleted: Usunięto zadanie
-    lecture_created: Stworzono wykład
-    lecture_edited: Pomyślnie wyedytowano wykład
+    address_data_changed: Pomyślnie zmieniono adres!
+    course_created: Pomyślnie stworzono nowy kurs!
+    course_deleted: Kurs został usunięty pomyślnie!
+    course_deleted_error: Nie można usunąć kursu, nie jesteś właścicielem kursu!
+    course_edited: Pomyślnie zmieniono kurs!
+    course_student_added: Pomyślnie dodano kursanta!
+    course_student_not_found: Nie znaleziono kursanta!
+    course_student_removed: Pomyślnie usunięto kursanta!
+    exercise_created: Pomyślnie stworzono zadanie!
+    exercise_edited: Pomyślnie zmieniono zadanie!
+    exercise_delete_error: Nie można usunąć zadania, nie jesteś właścicielem kursu!
+    exercise_deleted: Usunięto zadanie!
+    lecture_created: Stworzono wykład!
+    lecture_edited: Pomyślnie wyedytowano wykład!
     old_password_not_same: Podano złe obecne hasło!
+    solution_marked: Pomyślnie dodano ocenę do rozwiązania!
     password_not_same: Podane hasła różnią się!
-    user_info_changed: Pomyślnie zmieniono dane użytkownika
+    post_created: Pomyśnie dodano nowy wpis!
+    user_info_changed: Pomyślnie zmieniono dane użytkownika!
   list:
     action:
       delete: Usuń
@@ -145,7 +175,21 @@ app:
     course_list: Lista kursów
     logout: Wyloguj
     marks_list: Lista ocen
+    messages: Wiadomości
     settings: Ustawienia
+  marks:
+    list:
+      label: Lista ocen
+      table:
+        course_name: Nazwa kursu
+        empty: Nie znaleziono ocen
+        leader: Prowadzący
+        component_mark: Ocena cząstkowa
+        mark: Ocena końcowa
+        status: Status
+        student: Student
+    show:
+      label: "Lista ocen: {courseName}"
   pagination:
     page: Strona {currentPage} z {lastPage}
   remove:

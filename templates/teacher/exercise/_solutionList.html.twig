@@ -18,7 +18,14 @@
                     <td>{{ solution.student.fullName }}</td>
                     <td>{{ solution.disposedAt | date('Y.m.d') }}</td>
                     <td>{{ solution.marksDictionary.name | default('-') }}</td>
-                    <td></td>
+                    <td>
+                        <a
+                            href="{{ path('app.teacher.course.solution.show', {'id': solution.id}) }}"
+                            class="btn btn-primary"
+                        >
+                            {{ 'app.show' | trans }}
+                        </a>
+                    </td>
                 </tr>
             {% else %}
                 <tr>

@@ -25,7 +25,7 @@ class Solution
     #[ORM\ManyToOne(targetEntity: Exercise::class, cascade: ['remove'])]
     private Exercise $exercise;
 
-    #[ORM\ManyToOne(targetEntity: Exercise::class, cascade: ['remove'])]
+    #[ORM\ManyToOne(targetEntity: MarksDictionary::class, cascade: ['remove'])]
     #[ORM\JoinColumn(nullable: true)]
     private ?MarksDictionary $marksDictionary = null;
 

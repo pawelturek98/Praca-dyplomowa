@@ -22,7 +22,7 @@ class CourseController extends AbstractController
         CourseStudentFilterGenerator $courseStudentFilterGenerator
     ): Response {
         $page = (int) $request->get('page', 1);
-        $pageLimit = (int) $request->get('pageLimit', 1);
+        $pageLimit = (int) $request->get('pageLimit', 30);
         $paginator = new Paginator($page, $pageLimit);
         $filterForm = $this->createForm(CourseFilterFormType::class);
 

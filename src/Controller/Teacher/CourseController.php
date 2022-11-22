@@ -105,7 +105,10 @@ class CourseController extends AbstractController
         $this->entityManager->flush();
 
         $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.course_student_removed');
-        return $this->redirectToRoute('app.common.course.show', ['id' => $course->getId()]);
+        return $this->redirectToRoute('app.common.course.show', [
+            'id' => $course->getId(),
+            'slug' => 'student-list'
+        ]);
     }
 
     private function handleCourseForm(

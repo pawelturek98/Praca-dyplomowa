@@ -65,12 +65,12 @@ class CourseStudent
         return $this;
     }
 
-    public function getMarksDictionary(): MarksDictionary
+    public function getMarksDictionary(): ?MarksDictionary
     {
         return $this->marksDictionary;
     }
 
-    public function setMarksDictionary(MarksDictionary $marksDictionary): self
+    public function setMarksDictionary(?MarksDictionary $marksDictionary): self
     {
         $this->marksDictionary = $marksDictionary;
         return $this;

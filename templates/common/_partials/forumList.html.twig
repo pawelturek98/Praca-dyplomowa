@@ -5,7 +5,7 @@
                 {{ 'app.forum.list.title' | trans }}
             </div>
             <div class="card-body">
-                <table class="table table-bordered">
+                <table class="table table-bordered text-center">
                     <thead>
                     <tr>
                         <th>{{ 'app.forum.list.table.name' | trans }}</th>
@@ -27,12 +27,17 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a href="{{ path('app.common.course.show', {'id': course.id, 'slug': 'forum', 'forumId': forum.id}) }}">
+                            <a
+                                href="{{ path('app.common.course.show', {'id': course.id, 'slug': 'forum', 'forumId': forum.id}) }}"
+                                class="btn btn-primary"
+                            >
                                 {{ 'app.show' | trans }}
                             </a>
                             {% if app.user.type is same as teacherRole %}
-                                |
-                                <a href="{{ path('app.teacher.forum.change_status', {'id': forum.id}) }}">
+                                <a
+                                    href="{{ path('app.teacher.forum.change_status', {'id': forum.id}) }}"
+                                    class="btn {% if forum.isClosed %}btn-success {% else %}btn-danger{% endif %}"
+                                >
                                 {% if forum.isClosed %}
                                     {{ 'app.forum.open' | trans }}
                                 {% else %}
@@ -58,7 +63,7 @@
     <div class="col">
         <div class="card">
             <div class="card-header">
-                {{ 'app.forum.create.title' }}
+                {{ 'app.forum.create.title' | trans }}
             </div>
             <div class="card-body text-center">
                 <div class="w-50 m-auto">

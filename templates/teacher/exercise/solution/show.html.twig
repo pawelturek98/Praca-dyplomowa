@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block breadcrumbs %}
+    <ul>
+        <li>
+            <a href="{{ path('app.teacher.course.list') }}">
+                {{ 'app.navigation.course_list' | trans }}
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app.common.course.show', {'id': solution.exercise.course.id}) }}">
+                {{ solution.exercise.course.name }}
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app.teacher.course.exercise.edit', {'id': solution.exercise.id, 'courseId': solution.exercise.course.id}) }}">
+                {{ solution.exercise.exerciseName }}
+            </a>
+        </li>
+        <li>
+            {{ 'app.course.exercise.solution.show.title' | trans({'{studentFullname}': solution.student.fullname}) }}
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    {{ 'app.course.exercise.solution.show.title' | trans({'{studentFullname}': solution.student.fullname}) }}
+                </div>
+                <div class="card-body">
+                    <p>
+                        <strong>{{ 'app.course.exercise.solution_list.disposed_at' | trans }}:</strong>
+                        {{ solution.disposedAt | date('d.m.Y H:i:s') }}
+                    </p>
+                    <p>
+                        <strong>{{ 'app.course.exercise.solution_list.mark' | trans }}:</strong>
+                        {{ solution.marksDictionary.name | default('-') }}
+                    </p>
+                    {{ form_start(markForm, {'attr': {'class': 'row'}}) }}
+                    <div class="form-group col-4">
+                        {{ form_row(markForm.mark) }}
+                    </div>
+                    <div class="form-group col-3" style="padding-top: 33px">
+                        <button class="btn btn-success" type="submit">
+                            {{ 'app.save' | trans }}
+                        </button>
+                    </div>
+                    {{ form_end(markForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    {{ 'app.course.exercise.solution.files' | trans }}
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                        <tr>
+                            <th>{{ 'app.course.exercise.solution.name' | trans }}</th>
+                            <th>{{ 'app.course.exercise.solution.type' | trans }}</th>
+                            <th>{{ 'app.list.action.label' | trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for solutionFile in solutionFiles %}
+                            <tr>
+                                <td>{{ solutionFile.storage.name }}</td>
+                                <td>{{ solutionFile.storage.type }}</td>
+                                <td></td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="3">
+                                    {{ 'app.course.exercise.solution_list.empty' | trans }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
