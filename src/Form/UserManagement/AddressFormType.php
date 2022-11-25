@@ -22,37 +22,46 @@ class AddressFormType extends AbstractType
         $builder
             ->add('city', TextType::class, [
                 'label' => 'app.address.form.city',
+                'required' => false,
             ])
             ->add('street', TextType::class, [
                 'label' => 'app.address.form.street',
+                'required' => false,
             ])
             ->add('streetNumber', TextType::class, [
                 'label' => 'app.address.form.street_number',
+                'required' => false,
             ])
             ->add('postalCode', TextType::class, [
                 'label' => 'app.address.form.postal_code',
+                'required' => false,
                 'attr' => [
                     'class' => 'postal-code'
                 ]
             ])
             ->add('vatNumber', TextType::class, [
                 'label' => 'app.address.form.vat_number',
+                'required' => false,
             ])
             ->add('pesel', TextType::class, [
                 'label' => 'app.address.form.pesel',
+                'required' => false,
             ])
             ->add('district', TextType::class, [
                 'label' => 'app.address.form.district',
+                'required' => false,
             ])
             ->add('province', TextType::class, [
-                'label' => 'app.address.form.province'
+                'label' => 'app.address.form.province',
+                'required' => false,
             ])
             ->add('countryCode', ChoiceType::class, [
                 'label' => 'app.address.form.country',
                 'choices' => $this->countryResource->getAllCountriesList(),
+                'required' => false,
                 'attr' => [
                     'class' => 'use-select2'
-                ]
+                ],
             ])
         ;
     }
@@ -61,6 +70,7 @@ class AddressFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Address::class,
+            'csrf_protection' => false,
         ]);
     }
 }

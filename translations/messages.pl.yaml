@@ -1,4 +1,11 @@
 app:
+  administrator:
+    user_list:
+      table:
+        name: Imię i nazwisko
+        type: Typ
+        created_at: Utworzony
+        last_seen: Ostatnie logowanie
   address:
     form:
       city: Miasto
@@ -177,6 +184,7 @@ app:
     marks_list: Lista ocen
     messages: Wiadomości
     settings: Ustawienia
+    user_list: Lista użytkowników
   marks:
     list:
       label: Lista ocen
@@ -209,9 +217,22 @@ app:
     register: Zarejestruj się
     repeat_password: Powtórz hasło
     username: Nazwa użytkownika
+    type: Typ użytkownika
   show: Pokaż
   user:
+    create: Dodawanie nowego użytkownika
+    edit: Edycja użytkownika
+    filter:
+      email: E-mail
+      fullname: Imię i nazwisko
+      type: Typ użytkownika
+    list:
+      add: Dodaj nowego użytkownika
     settings:
       address: Ustawienia adresu
       password: Ustawienia hasła
       personal: Dane użytkownika
+    type:
+      teacher: Nauczyciel
+      administrator: Administrator
+      student: Student

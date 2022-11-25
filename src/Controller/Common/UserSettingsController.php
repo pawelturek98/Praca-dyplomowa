@@ -10,6 +10,7 @@ use App\Entity\UserManagement\User;
 use App\Form\UserManagement\AddressFormType;
 use App\Form\UserManagement\PasswordFormType;
 use App\Form\UserManagement\RegistrationFormType;
+use App\FormHandler\UserManagement\UserFormHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
@@ -28,15 +29,20 @@ class UserSettingsController extends AbstractController
 
     #[Route('/user-settings', name: 'app.common.user_settings')]
     public function index(
-        Request $request
+        Request $request,
+        UserFormHandler $userFormHandler,
     ): Response {
         /** @var User $user */
         $user = $this->getUser();
         $address = $user->getAddress() ?? new Address();
+
+        $userFormHandler->setAddress($address);
+        $userFormHandler->setUser($user);
+
         $addressForm = $this->createForm(AddressFormType::class, $address);
         $addressForm->handleRequest($request);
 
-        if ($this->handleAddressForm($addressForm, $address, $user)) {
+        if ($userFormHandler->handleAddressForm($addressForm)) {
             $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.address_data_changed');
             return $this->redirectToRoute('app.common.user_settings');
         }
@@ -44,7 +50,7 @@ class UserSettingsController extends AbstractController
         $userForm = $this->createForm(RegistrationFormType::class, $user);
         $userForm->handleRequest($request);
 
-        if($this->handleUserForm($userForm, $user)) {
+        if($userFormHandler->handleUserForm($userForm)) {
             $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.user_info_changed');
             return $this->redirectToRoute('app.common.user_settings');
         }
@@ -66,36 +72,9 @@ class UserSettingsController extends AbstractController
         ]);
     }
 
-    private function handleAddressForm(FormInterface $form, Address $address, User $user): bool
+    public function handlePasswordForm(FormInterface $form, User $user): bool
     {
         if (!$form->isSubmitted() || !$form->isValid()) {
-            return false;
-        }
-
-        $user->setAddress($address);
-        $this->entityManager->persist($address);
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-
-        return true;
-    }
-
-    private function handleUserForm(FormInterface $form, User $user): bool
-    {
-        if (!$form->isSubmitted() || !$form->isValid()) {
-            return false;
-        }
-
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
-
-        return true;
-    }
-
-    private function handlePasswordForm(FormInterface $form, User $user): bool
-    {
-        if (!$form->isSubmitted() || !$form->isValid()) {
-
             return false;
         }
 
@@ -103,7 +82,6 @@ class UserSettingsController extends AbstractController
         $hashedOldPassword = $this->passwordHasher->hashPassword($user, $oldPassword);
         $password = $form->get('password')->getViewData();
         $passwordRepeated = $form->get('passwordRepeat')->getViewData();
-
         if ($hashedOldPassword !== $user->getPassword()) {
             $this->addFlash(FlashTypeDictionary::ERROR, 'app.flash_messages.old_password_not_same');
             return false;

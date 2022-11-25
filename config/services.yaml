@@ -29,6 +29,10 @@ services:
             public: true,
             tags: [ 'app.course_student.filter' ]
 
+        App\Filter\UserManagement\Filters\UserFilterInterface:
+            public: true,
+            tags: [ 'app.user.filter' ]
+
     App\Filter\CourseStudent\CourseStudentFilterGenerator:
         arguments:
             - !tagged_iterator app.course_student.filter
@@ -41,3 +45,10 @@ services:
         arguments:
             - !tagged_iterator app.course.filter
 
+    App\Filter\UserManagement\UserFilterGenerator:
+        arguments:
+            - !tagged_iterator app.user.filter
+
+    App\Filter\UserManagement\UserFilterResolver:
+        arguments:
+            - !tagged_iterator app.user.filter

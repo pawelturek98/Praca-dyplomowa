@@ -21,7 +21,7 @@ security:
                 enable_csrf: true
                 login_path: app.security.login
                 check_path: app.security.login
-
+                success_handler: App\Handler\AuthenticationSuccessHandler
             logout:
                 path: app.security.logout
             # activate different ways to authenticate

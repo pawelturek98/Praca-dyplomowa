@@ -15,4 +15,10 @@ final class UserDictionary
         self::ROLE_TEACHER => 'teacher',
         self::ROLE_STUDENT => 'student'
     ];
+
+    public const POSSIBLE_ROLES_TRANSLATED = [
+        'app.user.type.administrator' => self::ROLE_ADMINISTRATOR,
+        'app.user.type.teacher' => self::ROLE_TEACHER,
+        'app.user.type.student' => self::ROLE_STUDENT,
+    ];
 }
