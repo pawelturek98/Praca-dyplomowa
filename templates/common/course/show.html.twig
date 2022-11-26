@@ -36,6 +36,7 @@
                     </a>
                 </li>
                 {% endif %}
+                {% if site_settings.resolve.forumEnabled %}
                 <li class="nav-item">
                     <a
                         href="{{ path('app.common.course.show', {'id': course.id, 'slug': 'forum'}) }}"
@@ -44,6 +45,7 @@
                         {{ 'app.course_list.forum' | trans }}
                     </a>
                 </li>
+                {% endif %}
             </ul>
         </div>
     </div>

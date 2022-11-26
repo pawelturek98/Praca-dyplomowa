@@ -17,6 +17,7 @@ class UserTypeFilter implements UserFilterInterface
 
     public function modifyQueryBuilder(QueryBuilder $queryBuilder, array $data): void
     {
-        // TODO: Implement modifyQueryBuilder() method.
+        $queryBuilder->andWhere('u.type = :userType')
+            ->setParameter('userType', $data[self::NAME]);
     }
 }

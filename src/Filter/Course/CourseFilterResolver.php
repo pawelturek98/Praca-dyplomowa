@@ -2,23 +2,23 @@
 
 declare(strict_types=1);
 
-namespace App\Filter\UserManagement;
+namespace App\Filter\Course;
 
-use App\Filter\UserManagement\Filters\UserFilterInterface;
+use App\Filter\Course\Filters\CourseFilterInterface;
 
-class UserFilterResolver
+class CourseFilterResolver
 {
     private ?array $data = [];
 
     public function __construct(
-        private readonly iterable $userFilter
+        private readonly iterable $courseFilter
     ) {
     }
 
     public function resolve(?array $filterData): ?array
     {
-        /** @var UserFilterInterface $filter */
-        foreach ($this->userFilter as $filter) {
+        /** @var CourseFilterInterface $filter */
+        foreach ($this->courseFilter as $filter) {
             $key = $filter::NAME;
             if (isset($filterData[$key])) {
                 $data = $filterData[$key];

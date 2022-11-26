@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\UuidV4;
 
 #[ORM\Entity]
-class PageSettings
+class Settings
 {
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: true)]

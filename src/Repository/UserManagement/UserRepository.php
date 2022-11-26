@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Repository\UserManagement;
 
 use App\Dictionary\UserManagement\UserDictionary;
-use App\Entity\Platform\CourseStudent;
 use App\Entity\UserManagement\User;
 use App\Repository\FilterableRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -39,7 +38,7 @@ class UserRepository extends ServiceEntityRepository implements FilterableReposi
         return $this->getEntityManager()
             ->createQueryBuilder()
             ->select('count(u.id)')
-            ->from(CourseStudent::class, 'u');
+            ->from(User::class, 'u');
     }
 
     public function countResultsByQueryBuilder(QueryBuilder $queryBuilder): int

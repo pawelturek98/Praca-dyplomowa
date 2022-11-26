@@ -172,6 +172,7 @@ app:
     password_not_same: Podane hasła różnią się!
     post_created: Pomyśnie dodano nowy wpis!
     user_info_changed: Pomyślnie zmieniono dane użytkownika!
+    site_settings_saved: Pomyślnie zapisano ustawienia strony!
   list:
     action:
       delete: Usuń
@@ -185,6 +186,7 @@ app:
     messages: Wiadomości
     settings: Ustawienia
     user_list: Lista użytkowników
+    site_settings: Ustawienia strony
   marks:
     list:
       label: Lista ocen
@@ -205,6 +207,15 @@ app:
     lecture: "Czy na pewno chcesz usunąć wykład: {lectureName}?"
   save: Zapisz
   settings:
+    site_name: Nazwa strony
+    site_description: Opis strony
+    enable_registration: Włączyć rejestrację?
+    default_registration_role: Domyślna rola
+    enable_forum: Włączyć forum?
+    enable_messages: Włączyć prywatne wiadomości?
+    enable_notifications: Włączyć powiadomienia?
+    favicon: Favicon
+    site_keywords: Słowa kluczowe strony
     default:
       title: Platforma e-learningowa
   security:
@@ -236,3 +247,5 @@ app:
       teacher: Nauczyciel
       administrator: Administrator
       student: Student
+  yes: Tak
+  no: Nie

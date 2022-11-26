@@ -10,7 +10,7 @@
 <html lang="pl">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}{{ 'app.settings.default.title' | trans }}{% endblock %}</title>
+        <title>{% block title %}{{ site_settings.resolve.siteName }}{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -28,7 +28,17 @@
                     </div>
                     <div class="profile-info-item profile-info__data">
                         <span class="full-name">{{ app.user.fullName }}</span>
-                        <span class="occupation">Student</span>
+                        <span class="occupation">
+                            {% if app.user.type is same as administratorRole %}
+                                {{ 'app.user.type.administrator' | trans }}
+                            {% endif %}
+                            {% if app.user.type is same as teacherRole %}
+                                {{ 'app.user.type.teacher' | trans }}
+                            {% endif %}
+                            {% if app.user.type is same as studentRole %}
+                                {{ 'app.user.type.student' }}
+                            {% endif %}
+                        </span>
                     </div>
                 </div>
                 <nav class="nav flex-column">

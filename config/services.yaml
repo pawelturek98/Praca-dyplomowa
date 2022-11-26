@@ -45,6 +45,10 @@ services:
         arguments:
             - !tagged_iterator app.course.filter
 
+    App\Filter\CourseStudent\CourseFilterResolver:
+        arguments:
+            - !tagged_iterator app.course.filter
+
     App\Filter\UserManagement\UserFilterGenerator:
         arguments:
             - !tagged_iterator app.user.filter

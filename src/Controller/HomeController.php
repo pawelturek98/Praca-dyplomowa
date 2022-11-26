@@ -17,6 +17,7 @@ class HomeController extends AbstractController
         if (null === $this->getUser()) {
             return $this->redirectToRoute('app.security.login');
         }
+
         $userRole = current($this->getUser()->getRoles());
         $role = UserDictionary::POSSIBLE_ROLES[$userRole];
 

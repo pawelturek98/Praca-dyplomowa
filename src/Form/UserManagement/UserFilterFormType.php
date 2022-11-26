@@ -22,15 +22,18 @@ class UserFilterFormType extends AbstractType
             ->add(EmailFilter::NAME, EmailType::class, [
                 'label' => 'app.user.filter.email',
                 'mapped' => false,
+                'required' => false,
             ])
             ->add(FullnameFilter::NAME, TextType::class, [
                 'label' => 'app.user.filter.fullname',
                 'mapped' => false,
+                'required' => false,
             ])
             ->add(UserTypeFilter::NAME, ChoiceType::class, [
                 'choices' => UserDictionary::POSSIBLE_ROLES_TRANSLATED,
                 'label' => 'app.user.filter.type',
                 'mapped' => false,
+                'required' => false,
             ]);
     }
 }
