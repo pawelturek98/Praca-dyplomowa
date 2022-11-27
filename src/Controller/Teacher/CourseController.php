@@ -122,6 +122,11 @@ class CourseController extends AbstractController
             return false;
         }
 
+        if ($course->getStartDate() > $course->getCloseDate()) {
+            $this->addFlash(FlashTypeDictionary::ERROR, 'app.flash_messages.date_start_bigger');
+            return false;
+        }
+
         $course->setLeadingTeacher($leadingTeacher);
 
         $this->entityManager->persist($course);

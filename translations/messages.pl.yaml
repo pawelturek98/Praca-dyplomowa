@@ -117,6 +117,7 @@ app:
       active: Aktywny
       inactive: Nieaktywny
       suspended: Zawieszony
+      deleted: Usunięty
   delete: Usuń
   filters: Filtrowanie
   filter:
@@ -145,6 +146,7 @@ app:
           name: Nazwa wątka
           created_at: Dodano dnia
           status: Status
+          empty: Brak wątków
       close: Zamknij
       closed: Zamknięte
       open: Otwórz
@@ -178,6 +180,7 @@ app:
     site_settings_saved: Pomyślnie zapisano ustawienia strony!
     student_marked: Pomyślnie oceniono studenta!
     message_sent: Wiadomość wysłana!
+    date_start_bigger: Data startu nie może być większa niż data zakończenia!
   list:
     action:
       delete: Usuń

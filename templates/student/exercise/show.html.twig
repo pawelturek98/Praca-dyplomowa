@@ -100,6 +100,7 @@
                         </tbody>
                     </table>
                 </div>
+                {% if solution %}
                 <div class="card-footer text-right">
                     {% if not solution.isSaved %}
                         <a href="{{ path('app.student.course.solution.dispose', {'id': solution.id}) }}" class="btn btn-primary remove">
@@ -111,6 +112,7 @@
                         </a>
                     {% endif %}
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>

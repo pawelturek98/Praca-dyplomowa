@@ -40,7 +40,7 @@ class MarksController extends AbstractController
     ): Response {
         $exercises = $exerciseResolver->resolve($course, $this->getUser());
 
-        return $this->render('teacher/mark/show.html.twig', [
+        return $this->render('student/mark/show.html.twig', [
             'exercises' => $exercises,
             'course' => $course,
         ]);

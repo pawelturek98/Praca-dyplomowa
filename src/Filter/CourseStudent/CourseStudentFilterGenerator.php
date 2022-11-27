@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filter\CourseStudent;
 
+use App\Dictionary\Platform\StatusDictionary;
 use App\Filter\CourseStudent\Filters\CourseStudentFilterInterface;
 use App\Filter\FilterGeneratorInterface;
 use App\Repository\Platform\CourseStudentRepository;
@@ -26,6 +27,8 @@ class CourseStudentFilterGenerator implements FilterGeneratorInterface
         $qb = $this->courseStudentRepository->getFindAllQueryBuilder();
         if (!in_array('csc', $qb->getAllAliases())) {
             $qb->leftJoin('cs.course', 'csc');
+            $qb->andWhere('csc.status <> :statusDeleted')
+                ->setParameter('statusDeleted', StatusDictionary::STATUS_DELETED);
         }
 
         if (!in_array('css', $qb->getAllAliases())) {
@@ -48,6 +51,12 @@ class CourseStudentFilterGenerator implements FilterGeneratorInterface
     public function countResults(): int
     {
         $qb = $this->courseStudentRepository->getCountResultsQueryBuilder();
+
+        if (!in_array('csc', $qb->getAllAliases())) {
+            $qb->leftJoin('cs.course', 'csc');
+            $qb->andWhere('csc.status <> :statusDeleted')
+                ->setParameter('statusDeleted', StatusDictionary::STATUS_DELETED);
+        }
 
         return $this->courseStudentRepository->countResultsByQueryBuilder(
             $this->getModifiedQueryBuilder($qb)

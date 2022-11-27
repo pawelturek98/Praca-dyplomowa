@@ -55,6 +55,7 @@ class LectureController extends AbstractController
         return $this->render('teacher/lecture/create.html.twig', [
             'lectureForm' => $lectureForm->createView(),
             'course' => $course,
+            'lecture' => $lecture,
         ]);
     }
 
