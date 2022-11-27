@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block breadcrumbs %}
+<ul>
+    <li>
+        <a href="{{ path('app.common.messages') }}">{{ 'app.navigation.messages' | trans }}</a>
+    </li>
+    <li>
+        {{ 'app.messages.create.label' | trans }}
+    </li>
+</ul>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    {{ 'app.messages.create.label' | trans }}
+                </div>
+                <div class="card-body">
+                    {{ form_start(messageForm) }}
+                    <div class="form-group">
+                        {{ form_row(messageForm.title) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(messageForm.receiver) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(messageForm.content) }}
+                    </div>
+                    <div class="form-group text-right">
+                        <button class="btn btn-success" type="submit">
+                            {{ 'app.messages.send' | trans }}
+                        </button>
+                    </div>
+                    {{ form_end(messageForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

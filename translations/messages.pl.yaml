@@ -177,6 +177,7 @@ app:
     user_info_changed: Pomyślnie zmieniono dane użytkownika!
     site_settings_saved: Pomyślnie zapisano ustawienia strony!
     student_marked: Pomyślnie oceniono studenta!
+    message_sent: Wiadomość wysłana!
   list:
     action:
       delete: Usuń
@@ -204,6 +205,24 @@ app:
         student: Student
     show:
       label: "Lista ocen: {courseName}"
+  messages:
+    answer: Odpowiedź
+    answers:
+      add: Wyślij odpowiedź
+    create:
+      label: Tworzenie nowej wiadomości
+      button: Stwórz wiadomość
+    content: Treść wiadomości
+    received: Otrzymane wiadomości
+    sent: Wysłane wiadomości
+    title: Tytuł wiadomości
+    sender: Wysyłający
+    sent_at: Wysłano dnia
+    is_seen: Zobaczona
+    empty: Brak wiadomości do wyświetlenia
+    receiver: Odbiorca
+    send: Wyślij
+    show: Pokaż wiadomość
   pagination:
     page: Strona {currentPage} z {lastPage}
   remove:

@@ -3,6 +3,7 @@ twig:
     form_themes: ['bootstrap_5_layout.html.twig']
     globals:
         site_settings: '@App\Resolver\Page\SiteSettingsResolver'
+        messages_count: '@App\Counter\Message\UserNewMessagesCounter'
 
 when@test:
     twig:

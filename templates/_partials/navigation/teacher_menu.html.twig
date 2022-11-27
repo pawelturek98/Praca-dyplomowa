@@ -1,3 +1,10 @@
 <a href="{{ path('app.teacher.course.list') }}" class="nav-link">{{ 'app.navigation.course_list' | trans }}</a>
 <a href="{{ path('app.teacher.marks') }}" class="nav-link">{{ 'app.navigation.marks_list' | trans }}</a>
+<a href="{{ path('app.common.messages') }}" class="nav-link">
+    {{ 'app.navigation.messages' | trans }}
+
+    {% if messages_count.count %}
+        <span class="badge bg-primary">{{ messages_count.count }}</span>
+    {% endif %}
+</a>
 <a href="{{ path('app.common.user_settings') }}" class="nav-link">{{ 'app.navigation.settings' | trans }}</a>
