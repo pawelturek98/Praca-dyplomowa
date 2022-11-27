@@ -1,0 +1,40 @@
+<div class="card">
+    <div class="card-header">
+        {{ 'app.course.exercise.solution_list.title' | trans }}
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>{{ 'app.course.exercise.solution_list.student' | trans }}</th>
+                <th>{{ 'app.course.exercise.solution_list.disposed_at' | trans }}</th>
+                <th>{{ 'app.course.exercise.solution_list.mark' | trans }}</th>
+                <th>{{ 'app.list.action.label' | trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for solution in solutions %}
+                <tr>
+                    <td>{{ solution.student.fullName }}</td>
+                    <td>{{ solution.disposedAt | date('Y.m.d') }}</td>
+                    <td>{{ solution.marksDictionary.name | default('-') }}</td>
+                    <td>
+                        <a
+                            href="{{ path('app.teacher.course.solution.show', {'id': solution.id}) }}"
+                            class="btn btn-primary"
+                        >
+                            {{ 'app.show' | trans }}
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">
+                        {{ 'app.course.exercise.solution_list.empty' | trans }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

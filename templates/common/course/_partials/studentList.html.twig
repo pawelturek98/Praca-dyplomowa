@@ -1,0 +1,45 @@
+<div class="card">
+    <div class="card-header">{{ 'app.course.student_list.label' | trans }}</div>
+    <div class="card-body">
+        <table class="table table-bordered table-center">
+            <thead>
+            <tr>
+                <th>{{ 'app.course.student_list.table.fullname' | trans }}</th>
+                <th>{{ 'app.list.action.label' | trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for courseStudent in courseStudents %}
+            <tr>
+                <td>{{ courseStudent.student.fullname }}</td>
+                <td>
+                    <a
+                        href="{{ path('app.teacher.course_student.delete', {'id': courseStudent.id}) }}"
+                        class="btn btn-danger remove"
+                        data-message="{{ 'app.course.student_list.table.remove_confirm' | trans({'{fullname}': courseStudent.student.fullname}) }}"
+                    >
+                        {{ 'app.list.action.delete' | trans }}
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="2">{{ 'app.course.student_list.table.empty' | trans }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer">
+        {{ form_start(courseStudentForm) }}
+        <div class="row">
+            <div class="col-10">
+                {{ form_row(courseStudentForm.student) }}
+            </div>
+            <div class="col-2 student-list-button">
+                <button class="btn btn-success w-100">{{ 'app.save' | trans }}</button>
+            </div>
+        </div>
+        {{ form_end(courseStudentForm) }}
+    </div>
+</div>

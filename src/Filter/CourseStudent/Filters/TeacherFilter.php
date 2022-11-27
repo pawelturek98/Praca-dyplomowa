@@ -19,7 +19,7 @@ class TeacherFilter implements CourseStudentFilterInterface
     public function modifyQueryBuilder(QueryBuilder $queryBuilder, array $data): void
     {
         $queryBuilder
-            ->andWhere('css.leadingTeacher = :teacher')
+            ->andWhere('cs.leadingTeacher = :teacher')
             ->setParameter('teacher', $data[self::NAME]);
     }
 }

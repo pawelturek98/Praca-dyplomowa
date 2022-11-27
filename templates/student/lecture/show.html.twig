@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% set videoType = constant('App\\Dictionary\\Platform\\LectureTypeDictionary::VIDEO_TYPE') %}
+{% set textType = constant('App\\Dictionary\\Platform\\LectureTypeDictionary::TEXT_TYPE') %}
+{% set attachementType = constant('App\\Dictionary\\Platform\\LectureTypeDictionary::ATTACHMENT_TYPE') %}
+
+{% block breadcrumbs %}
+    <ul>
+        <li>
+            <a href="{{ path('app.student.course.list') }}">
+                {{ 'app.navigation.course_list' | trans }}
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('app.common.course.show', {'id': lecture.course.id}) }}">
+                {{ lecture.course.name }}
+            </a>
+        </li>
+        <li>
+            {{ lecture.name }}
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    {{ lecture.name }}
+                </div>
+                <div class="card-body text-center">
+                    {% if lecture.type is same as videoType %}
+                        <iframe
+                                width="1000"
+                                height="700"
+                                src="{{ lecture.content }}"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen
+                        ></iframe>
+                    {% endif %}
+
+                    {% if lecture.type is same as textType %}
+                    <p>
+                        {{ lecture.content }}
+                    </p>
+                    {% endif %}
+
+                    {% if lecture.type is same as attachementType %}
+                        <a href="">
+                            {{ 'app.course.lecture.download_attachement' | trans }}
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

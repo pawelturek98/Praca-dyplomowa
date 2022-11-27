@@ -4,24 +4,16 @@ declare(strict_types=1);
 
 namespace App\Entity\Platform;
 
+use App\Entity\Files\Storage;
+use App\Repository\Platform\LectureRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\UuidV4;
 
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: LectureRepository::class)]
 class Lecture
 {
-    public const VIDEO_TYPE = 'video';
-    public const TEXT_TYPE = 'text';
-    public const PDF_TYPE = 'pdf';
-
-    public const POSSIBLE_LECTURE_TYPES = [
-        self::VIDEO_TYPE,
-        self::TEXT_TYPE,
-        self::PDF_TYPE
-    ];
-
     #[ORM\Id]
     #[ORM\Column(type: 'uuid', unique: True)]
     private UuidV4 $id;
@@ -33,13 +25,17 @@ class Lecture
     private string $type;
 
     #[ORM\Column(type: 'text')]
-    private string $content;
+    private string $content = '';
 
-    #[ORM\ManyToOne(targetEntity: Course::class, cascade: ['remove'])]
+    #[ORM\ManyToOne(targetEntity: Course::class, cascade: ['persist'])]
     private Course $course;
 
     #[ORM\Column(type: 'datetime')]
     private DateTime $createdAt;
+
+    #[ORM\OneToOne(targetEntity: Storage::class, cascade: ['remove', 'persist'])]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Storage $lectureFile = null;
 
     public function __construct()
     {
@@ -104,6 +100,17 @@ class Lecture
     public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    public function getLectureFile(): ?Storage
+    {
+        return $this->lectureFile;
+    }
+
+    public function setLectureFile(?Storage $lectureFile): self
+    {
+        $this->lectureFile = $lectureFile;
         return $this;
     }
 }

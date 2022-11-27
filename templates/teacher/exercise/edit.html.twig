@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block breadcrumbs %}
+    <ul>
+        <li>
+            <a href="{{ path('app.teacher.course.list') }}">{{ 'app.navigation.course_list' | trans }}</a>
+        </li>
+        <li>
+            <a href="{{ path('app.common.course.show', {'id': course.id}) }}">{{ course.name }}</a>
+        </li>
+        <li>
+            {{ 'app.course.exercise.edit' | trans({'{exerciseName}': exercise.exerciseName}) }}
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="row mt-3 mb-3">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    {{ 'app.course.exercise.edit' | trans({'{exerciseName}': exercise.exerciseName}) }}
+                </div>
+                <div class="card-body">
+                    {% include 'teacher/exercise/_form.html.twig' %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {% include 'teacher/exercise/_solutionList.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

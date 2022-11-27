@@ -8,7 +8,7 @@ use Doctrine\ORM\QueryBuilder;
 
 class TeacherFilter implements CourseFilterInterface
 {
-    public const NAME = 'courseTeacher';
+    public const NAME = 'leadingTeacher';
 
     public function support(array $data): bool
     {
@@ -17,7 +17,11 @@ class TeacherFilter implements CourseFilterInterface
 
     public function modifyQueryBuilder(QueryBuilder $queryBuilder, array $data): void
     {
-        $queryBuilder->andWhere('c.leadingTeacher = :courseTeacher')
-            ->setParameter('courseTeacher', $data[self::NAME]);
+        if (!in_array('ct', $queryBuilder->getAllAliases())) {
+            $queryBuilder->leftJoin('c.leadingTeacher', 'ct');
+        }
+
+        $queryBuilder->andWhere('ct.id = :leadingTeacher')
+            ->setParameter('leadingTeacher', $data[self::NAME], 'uuid');
     }
 }

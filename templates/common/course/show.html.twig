@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% set teacherRole = constant('App\\Dictionary\\UserManagement\\UserDictionary::ROLE_TEACHER') %}
+{% set studentRole = constant('App\\Dictionary\\UserManagement\\UserDictionary::ROLE_STUDENT') %}
+
+{% block breadcrumbs %}
+    <ul>
+        <li>
+            <a href="{{ path('app.teacher.course.list') }}">{{ 'app.navigation.course_list' | trans }}</a>
+        </li>
+        <li>
+            {{ course.name }}
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="row mt-3">
+        <div class="col">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a
+                        href="{{ path('app.common.course.show', {'id': course.id, 'slug': 'course-show'}) }}"
+                        class="nav-link first-link {% if slug is same as 'course-show' %}active{% endif %}"
+                    >
+                        {{ 'app.course_list.general_information' | trans }}
+                    </a>
+                </li>
+                {% if app.user.type  in {teacherRole, administratorRole} %}
+                <li class="nav-item">
+                    <a
+                        href="{{ path('app.common.course.show', {'id': course.id, 'slug': 'student-list'}) }}"
+                        class="nav-link {% if slug is same as 'student-list' %}active{% endif %}"
+                    >
+                        {{ 'app.course_list.student_list' | trans }}
+                    </a>
+                </li>
+                {% endif %}
+                {% if site_settings.resolve.enableForum %}
+                <li class="nav-item">
+                    <a
+                        href="{{ path('app.common.course.show', {'id': course.id, 'slug': 'forum'}) }}"
+                        class="nav-link {% if slug is same as 'forum' %}active{% endif %}"
+                    >
+                        {{ 'app.course_list.forum' | trans }}
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+    {% if slug is same as 'course-show' %}
+    <div class="row">
+        <div class="col">
+            {% include 'common/course/_partials/description.html.twig' %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            {% include 'common/course/_partials/lectureList.html.twig' %}
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            {% include 'common/course/_partials/exerciseList.html.twig' %}
+        </div>
+    </div>
+    {% endif %}
+    {% if slug is same as 'student-list' %}
+    <div class="row mt-3">
+        <div class="col">
+            {% include 'common/course/_partials/studentList.html.twig' %}
+        </div>
+    </div>
+    {% endif %}
+    {% if slug is same as 'forum' %}
+        {% if forumId %}
+            {{ render(controller(
+                'App\\Controller\\Common\\ForumController::posts', {forumId: forumId}
+            )) }}
+        {% else %}
+            {% include 'common/_partials/forumList.html.twig' %}
+        {% endif %}
+    {% endif %}
+{% endblock %}

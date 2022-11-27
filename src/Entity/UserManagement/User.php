@@ -174,6 +174,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getFriendlyType(): string
+    {
+        return match ($this->getType()) {
+            UserDictionary::ROLE_TEACHER => 'app.user.type.teacher',
+            UserDictionary::ROLE_ADMINISTRATOR => 'app.user.type.administrator',
+            default => 'app.user.type.student',
+        };
+    }
+
     public function getType(): string
     {
         return $this->type;
@@ -207,12 +216,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getLastSeen(): DateTime
+    public function getLastSeen(): ?DateTime
     {
         return $this->lastSeen;
     }
 
-    public function setLastSeen(DateTime $lastSeen): self
+    public function setLastSeen(?DateTime $lastSeen): self
     {
         $this->lastSeen = $lastSeen;
         return $this;
@@ -240,5 +249,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getFullNameReversed(): string
     {
         return sprintf('%s %s', $this->getLastname(), $this->getFirstname());
+    }
+
+    public function __toString(): string
+    {
+        return $this->getFullName();
     }
 }

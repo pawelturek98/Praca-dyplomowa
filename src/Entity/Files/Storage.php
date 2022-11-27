@@ -7,6 +7,7 @@ namespace App\Entity\Files;
 use App\Entity\UserManagement\User;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\UuidV4;
 
 #[ORM\Entity]
@@ -20,7 +21,7 @@ class Storage
     private string $name;
 
     #[ORM\Column(type: 'string')]
-    private string $verboseName;
+    private string $verboseName = '';
 
     #[ORM\Column(type: 'string')]
     private string $extension;
@@ -29,7 +30,7 @@ class Storage
     private string $type;
 
     #[ORM\Column(type: 'integer')]
-    private int $size;
+    private int $size = 0;
 
     #[ORM\Column(type: 'string')]
     private string $hash;
@@ -148,7 +149,7 @@ class Storage
         return $this->createdBy;
     }
 
-    public function setCreatedBy(User $createdBy): self
+    public function setCreatedBy(UserInterface|User $createdBy): self
     {
         $this->createdBy = $createdBy;
         return $this;

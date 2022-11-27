@@ -1,0 +1,24 @@
+<div class="card">
+    <div class="card-header">
+        {{ 'app.user.settings.personal' | trans }}
+    </div>
+    <div class="card-body">
+        {{ form_start(userForm) }}
+        <div class="form-group">
+            {{ form_row(userForm.firstname) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(userForm.lastname) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(userForm.email) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(userForm.username) }}
+        </div>
+        <div class="form-group text-right">
+            <button class="btn btn-success">{{ 'app.save' | trans }}</button>
+        </div>
+        {{ form_end(userForm, {render_rest: false}) }}
+    </div>
+</div>
