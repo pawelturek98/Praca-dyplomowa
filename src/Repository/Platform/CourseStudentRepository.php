@@ -17,7 +17,7 @@ class CourseStudentRepository extends ServiceEntityRepository implements Filtera
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Course::class);
+        parent::__construct($registry, CourseStudent::class);
     }
 
     public function getFindAllQueryBuilder(): QueryBuilder

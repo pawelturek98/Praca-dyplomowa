@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace App\Entity\Files;
 
 use App\Entity\Platform\Solution;
+use App\Repository\Files\SolutionAttachmentsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\UuidV4;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: SolutionAttachmentsRepository::class)]
 class SolutionAttachment
 {
     #[ORM\Id]

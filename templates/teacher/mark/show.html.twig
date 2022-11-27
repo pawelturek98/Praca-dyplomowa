@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block breadcrumbs %}
+    <ul>
+        <li>
+            <a href="{{ 'app.marks.list.label' | trans }}">{{ 'app.navigation.marks_list' | trans }}</a>
+        </li>
+        <li>
+            {{ courseStudent.student.fullname }}
+        </li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    {{ 'app.course.end_mark' | trans }}
+                </div>
+                <div class="card-body">
+                    <p>
+                        <strong>{{ 'app.course.proposed_mark' | trans }}:</strong>
+                        {{ courseStudent.marksDictionary.name | default('-') }} ({{ courseStudent.marksDictionary.importance | default('-') }})
+                    </p>
+                    {{ form_start(markForm, {'attr': {'class': 'row'}}) }}
+                    <div class="form-group col-4">
+                        {{ form_row(markForm.mark) }}
+                    </div>
+                    <div class="form-group col-3" style="padding-top: 33px">
+                        <button class="btn btn-success" type="submit">
+                            {{ 'app.save' | trans }}
+                        </button>
+                    </div>
+                    {{ form_end(markForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    {{ 'app.navigation.course_list' | trans }}
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                        <tr>
+                            <th>{{ 'app.course.exercise_list.table.name' | trans }}</th>
+                            <th>{{ 'app.course.exercise.solution_list.disposed_at' | trans }}</th>
+                            <th>{{ 'app.course.exercise_list.table.mark' | trans }}</th>
+                            <th>{{ 'app.course.exercise_list.table.status' | trans }}</th>
+                            <th>{{ 'app.list.action.label' | trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for exercise in exercises %}
+                            <tr>
+                                <td>{{ exercise.name }}</td>
+                                <td>{{ exercise.disposedAt | date('H:i d.m.Y') }}</td>
+                                <td>{{ exercise.mark | default('-') }}</td>
+                                <td>
+                                    {% if exercise.mark %}
+                                        {{ 'app.filter.status.marked' | trans }}
+                                    {% else %}
+                                        {{ 'app.filter.status.unmarked' | trans }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a
+                                        href="{{ path('app.teacher.course.exercise.edit', {'id': exercise.id}) }}"
+                                        class="btn btn-primary"
+                                    >
+                                        {{ 'app.show' | trans }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="5">{{ 'app.course.exercise_list.table.empty' | trans }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

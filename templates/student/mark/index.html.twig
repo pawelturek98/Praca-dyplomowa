@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block breadcrumbs %}
+    <ul>
+        <li>{{ 'app.marks.list.label' | trans }}</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    {{ 'app.marks.list.label' | trans }}
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered text-center">
+                        <thead>
+                        <tr>
+                            <th>{{ 'app.marks.list.table.course_name' | trans }}</th>
+                            <th>{{ 'app.marks.list.table.leader' | trans }}</th>
+                            <th>{{ 'app.marks.list.table.component_mark' | trans }}</th>
+                            <th>{{ 'app.marks.list.table.mark' | trans }}</th>
+                            <th>{{ 'app.marks.list.table.status' | trans }}</th>
+                            <th>{{ 'app.list.action.label' | trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for mark in marks %}
+                        <tr>
+                            <td>{{ mark.courseName }}</td>
+                            <td>{{ mark.leadingTeacher }}</td>
+                            <td>{{ mark.componentMark }}</td>
+                            <td>{{ mark.mark | default('-') }}</td>
+                            <td>{{ mark.status }}</td>
+                            <td>
+                                <a href="{{ path('app.student.marks.show', {'id': mark.courseId}) }}" class="btn btn-primary">
+                                    {{ 'app.show' | trans }}
+                                </a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6"> {{ 'app.marks.list.table.empty' | trans }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

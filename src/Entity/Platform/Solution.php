@@ -6,11 +6,13 @@ namespace App\Entity\Platform;
 
 use App\Entity\Dictionary\MarksDictionary;
 use App\Entity\UserManagement\User;
+use App\Repository\Platform\SolutionRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\UuidV4;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: SolutionRepository::class)]
 class Solution
 {
     #[ORM\Id]
@@ -23,14 +25,15 @@ class Solution
     #[ORM\ManyToOne(targetEntity: Exercise::class, cascade: ['remove'])]
     private Exercise $exercise;
 
-    #[ORM\ManyToOne(targetEntity: Exercise::class, cascade: ['remove'])]
-    private MarksDictionary $marksDictionary;
+    #[ORM\ManyToOne(targetEntity: MarksDictionary::class, cascade: ['remove'])]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?MarksDictionary $marksDictionary = null;
 
-    #[ORM\Column(type: 'datetime')]
-    private DateTime $disposedAt;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?DateTime $disposedAt = null;
 
-    #[ORM\Column(type: 'boolean')]
-    private bool $isSaved;
+    #[ORM\Column(type: 'boolean', options: ['default' => false])]
+    private bool $isSaved = false;
 
     public function __construct()
     {
@@ -47,7 +50,7 @@ class Solution
         return $this->student;
     }
 
-    public function setStudent(User $student): self
+    public function setStudent(User|UserInterface $student): self
     {
         $this->student = $student;
         return $this;
@@ -64,23 +67,23 @@ class Solution
         return $this;
     }
 
-    public function getMarksDictionary(): MarksDictionary
+    public function getMarksDictionary(): ?MarksDictionary
     {
         return $this->marksDictionary;
     }
 
-    public function setMarksDictionary(MarksDictionary $marksDictionary): self
+    public function setMarksDictionary(?MarksDictionary $marksDictionary): self
     {
         $this->marksDictionary = $marksDictionary;
         return $this;
     }
 
-    public function getDisposedAt(): DateTime
+    public function getDisposedAt(): ?DateTime
     {
         return $this->disposedAt;
     }
 
-    public function setDisposedAt(DateTime $disposedAt): self
+    public function setDisposedAt(?DateTime $disposedAt): self
     {
         $this->disposedAt = $disposedAt;
         return $this;

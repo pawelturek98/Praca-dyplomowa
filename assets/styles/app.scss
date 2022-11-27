@@ -19,12 +19,23 @@ body {
 }
 
 .navigation {
-    position: absolute;
+    position: fixed;
     background: $navigation-color;
     left: 0;
     top: 0;
     bottom: 0;
     width: 300px;
+
+    .nav-link {
+        color: whitesmoke;
+        background: #273F23;
+        margin-bottom: 5px;
+
+        &:hover {
+            background: seagreen;
+            color: white;
+        }
+    }
 
     .logout {
         position: absolute;
@@ -41,17 +52,6 @@ body {
 .clearfix-menu {
     width: 300px;
     height: 400px;
-}
-
-.nav-link {
-    color: whitesmoke;
-    background: #273F23;
-    margin-bottom: 5px;
-
-    &:hover {
-        background: seagreen;
-        color: white;
-    }
 }
 
 .profile-info {
@@ -91,6 +91,16 @@ body {
         list-style: none;
         padding: 0;
         margin: 0;
+
+        li {
+            display: inline;
+        }
+
+        li+li:before {
+            padding: 3px;
+            color: black;
+            content: "/\00a0";
+        }
     }
 }
 
@@ -114,6 +124,66 @@ body {
     }
 }
 
-.display-block {
+.display {
+    &-block {
+        display: block;
+    }
+
+    &-hidden {
+        display: none;
+    }
+}
+
+.nav-pills {
+    background: whitesmoke;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.1);
+
+    .nav-link {
+        border-radius: 0;
+        &.first-link {
+            border-radius: 10px 0 0 10px;
+        }
+
+        &:hover {
+            background: seagreen;
+            color: white;
+        }
+
+        &.active {
+            background: #273F23;
+            color: white;
+        }
+    }
+}
+
+.select2-selection {
     display: block;
+    height: 42px !important;
+    padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+
+    .select2-selection__arrow {
+        height: 39px !important;
+        right: 6px !important;
+    }
+}
+
+.student-list-button {
+    padding-top: 33px;
+}
+
+.pagination {
+    .card-body {
+        max-height: 68px;
+        gap: 20px;
+        justify-content: end;
+    }
+
+    .pages-info {
+        padding: 6px;
+    }
+}
+
+.table-center {
+    text-align: center;
 }

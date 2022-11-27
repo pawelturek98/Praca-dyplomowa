@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Filter\Course;
 
+use App\Dictionary\Platform\StatusDictionary;
 use App\Filter\Course\Filters\CourseFilterInterface;
 use App\Filter\FilterGeneratorInterface;
 use App\Repository\Platform\CourseRepository;
@@ -32,6 +33,10 @@ class CourseFilterGenerator implements FilterGeneratorInterface
         $qb->addSelect($qb->getAllAliases());
         $qb = $this->getModifiedQueryBuilder($qb);
 
+        $qb
+            ->andWhere('c.status != :deletedStatus')
+            ->setParameter(':deletedStatus', StatusDictionary::STATUS_DELETED);
+
         if (null !== $this->paginator) {
             $qb->setMaxResults($this->paginator->pageLimit);
             $qb->setFirstResult($this->paginator->offset);
@@ -44,6 +49,9 @@ class CourseFilterGenerator implements FilterGeneratorInterface
     public function countResults(): int
     {
         $qb = $this->courseRepository->getCountResultsQueryBuilder();
+        $qb
+            ->andWhere('c.status != :deletedStatus')
+            ->setParameter(':deletedStatus', StatusDictionary::STATUS_DELETED);
 
         return $this->courseRepository->countResultsByQueryBuilder(
             $this->getModifiedQueryBuilder($qb)

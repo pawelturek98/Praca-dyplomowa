@@ -1,0 +1,76 @@
+{{ form_start(userForm, {'attr': {'class': 'row'}}) }}
+<input type="hidden" name="token" value="{{ csrf_token('_token') }}"/>
+<div class="col-6">
+    <div class="card">
+        <div class="card-header">
+            {{ 'app.user.settings.address' | trans }}
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                {{ form_row(userForm.address.street) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(userForm.address.streetNumber) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(userForm.address.vatNumber) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(userForm.address.pesel) }}
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    {{ form_row(userForm.address.postalCode) }}
+                </div>
+                <div class="col-8">
+                    {{ form_row(userForm.address.city) }}
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-6">
+                    {{ form_row(userForm.address.district) }}
+                </div>
+                <div class="col-6">
+                    {{ form_row(userForm.address.province) }}
+                </div>
+            </div>
+            <div class="form-group">
+                {{ form_row(userForm.address.countryCode) }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-6">
+    <div class="card">
+        <div class="card-header">
+            {{ 'app.user.settings.personal' | trans }}
+        </div>
+        <div class="card-body">
+            <div class="form-group">
+                {{ form_row(userForm.firstname) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(userForm.lastname) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(userForm.email) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(userForm.username) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(userForm.type) }}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-12 mt-3">
+    <div class="card">
+        <div class="card-body">
+            <div class="form-group text-right">
+                <button class="btn btn-success">{{ 'app.save' | trans }}</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(userForm, {render_rest: false}) }}

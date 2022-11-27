@@ -8,6 +8,7 @@ use App\Entity\UserManagement\User;
 use App\Repository\Platform\CourseRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\UuidV4;
 
 #[ORM\Entity(repositoryClass: CourseRepository::class)]
@@ -33,7 +34,7 @@ class Course
     private string $status;
 
     #[ORM\ManyToOne(targetEntity: User::class)]
-    private User $leadingTeacher;
+    private UserInterface $leadingTeacher;
 
     public function __construct()
     {
@@ -100,12 +101,12 @@ class Course
         return $this;
     }
 
-    public function getLeadingTeacher(): User
+    public function getLeadingTeacher(): UserInterface
     {
         return $this->leadingTeacher;
     }
 
-    public function setLeadingTeacher(User $leadingTeacher): self
+    public function setLeadingTeacher(UserInterface $leadingTeacher): self
     {
         $this->leadingTeacher = $leadingTeacher;
         return $this;

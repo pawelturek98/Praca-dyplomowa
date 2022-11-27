@@ -11,6 +11,7 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class CourseRepository extends ServiceEntityRepository implements FilterableRepositoryInterface
 {
@@ -47,5 +48,12 @@ class CourseRepository extends ServiceEntityRepository implements FilterableRepo
         } catch (NonUniqueResultException|NoResultException) {
             return 0;
         }
+    }
+
+    public function getAllForTeacherCoursesQueryBuilder(UserInterface $teacher): QueryBuilder
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.leadingTeacher = :leadingTeacher')
+            ->setParameter('leadingTeacher', $teacher->getId(), 'uuid');
     }
 }

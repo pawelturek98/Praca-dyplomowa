@@ -1,0 +1,82 @@
+{% set teacherRole = constant('App\\Dictionary\\UserManagement\\UserDictionary::ROLE_TEACHER') %}
+{% set administratorRole = constant('App\\Dictionary\\UserManagement\\UserDictionary::ROLE_ADMINISTRATOR') %}
+<div class="row mt-3">
+    <div class="col-10 m-auto">
+        <div class="card">
+            <div class="card-body forum d-flex p-0">
+                <div class="left-section p-4 bg-light d-flex flex-column">
+                    <img src="https://i.pravatar.cc/120" alt="avatar" class="border-2 border-opacity-10 border border-dark">
+                    <div class="d-flex flex-column mt-2">
+                        <span class="px-2 display-block text-center fw-bold">{{ forum.author.fullName }}</span>
+                        <span class="text-center display-block text-secondary">{{ forum.createdAt | date('d.m.Y H:i') }}</span>
+                    </div>
+                </div>
+                <div class="right-section p-3">
+                    {{ forum.description }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% for post in posts %}
+    <div class="row mt-3">
+        <div class="col-10 m-auto">
+            <div class="card">
+                <div class="card-body forum d-flex p-0">
+                    <div class="left-section p-4 bg-light d-flex flex-column">
+                        <img src="https://i.pravatar.cc/120" alt="avatar" class="border-2 border-opacity-10 border border-dark">
+                        <div class="d-flex flex-column mt-2">
+                            <span class="px-2 display-block text-center fw-bold">{{ post.author.fullName }}</span>
+                            <span class="text-center display-block text-secondary">{{ post.createdAt | date('d.m.Y H:i') }}</span>
+                        </div>
+                    </div>
+                    <div class="right-section p-3">
+                        {{ post.content }}
+                    </div>
+                </div>
+                {% if app.user.type in {teacherRole, administratorRole} %}
+                <div class="card-footer text-right">
+                    <a
+                        href="{{ path('app.teacher.forum.post.delete', {'id': post.id}) }}"
+                        class="btn btn-danger remove"
+                        data-message="{{ 'app.forum.posts.remove_confirm' | trans }}"
+                    >
+                        {{ 'app.delete' | trans }}
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+<div class="row mt-5">
+    <div class="col-10 m-auto">
+        <div class="card">
+            <div class="card-header">
+                {{ 'app.forum.posts.add_response' | trans }}
+            </div>
+            {% if not forum.isClosed %}
+            <div class="card-body">
+                {{ form_start(postForm, {'action':
+                    path('app.common.course.forum.post_create', {
+                        'id': forum.id,
+                        'courseId': course.id
+                    })
+                }) }}
+                <div class="form-group">
+                    {{ form_row(postForm.content) }}
+                </div>
+                <div class="form-group text-right">
+                    <button class="btn btn-success">{{ 'app.save' | trans }}</button>
+                </div>
+                {{ form_end(postForm) }}
+            </div>
+            {% else %}
+                <span class="alert alert-warning m-4">
+                    {{ 'app.forum.already_closed' | trans }}
+                </span>
+            {% endif %}
+        </div>
+    </div>
+</div>

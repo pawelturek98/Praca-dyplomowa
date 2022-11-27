@@ -1,0 +1,78 @@
+<div class="card mt-3">
+    <div class="card-header">
+        {{ 'app.course.exercise_list.label' | trans }}
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered table-center">
+            <thead>
+            <tr>
+                <th>{{ 'app.course.exercise_list.table.name' | trans }}</th>
+                <th>{{ 'app.course.exercise_list.table.created_at' | trans }}</th>
+                <th>{{ 'app.course.exercise_list.table.close_date' | trans }}</th>
+                {% if app.user.type is same as studentRole %}
+                    <th>{{ 'app.course.exercise_list.table.status' | trans }}</th>
+                    <th>{{ 'app.course.exercise_list.table.mark' | trans }}</th>
+                {% endif %}
+                <th>{{ 'app.list.action.label' | trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for exercise in exercises %}
+                <tr>
+                    <td>{{ exercise.name }}</td>
+                    <td>{{ exercise.createdAt | date('d.m.Y') }}</td>
+                    <td>{{ exercise.closedAt | date('d.m.Y') }}</td>
+                    {% if app.user.type in {teacherRole, administratorRole} %}
+                    <td>
+                        <a
+                            href="{{ path('app.teacher.course.exercise.edit', {'id': exercise.id}) }}"
+                            class="btn btn-primary"
+                        >
+                            {{ 'app.list.action.edit' | trans }}
+                        </a>
+
+                        <a
+                            href="{{ path('app.teacher.course.exercise.delete', {'id': exercise.id, 'courseId': course.id}) }}"
+                            class="btn btn-danger remove"
+                            data-message="{{ 'app.remove.exercise' | trans({'{exerciseName}': exercise.name}) }}"
+                        >
+                            {{ 'app.list.action.delete' | trans }}
+                        </a>
+                    </td>
+                    {% else %}
+                    <td>
+                        {% if exercise.isDisposed %}
+                            {{ 'app.course.exercise.disposed' | trans }}
+                        {% else %}
+                            {{ 'app.course.exercise.not_disposed' | trans }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ exercise.mark | default('-') }}
+                    </td>
+                    <td>
+                        <a
+                            href="{{ path('app.student.course.exercise.show', {'id': exercise.id}) }}"
+                            class="btn btn-primary"
+                        >
+                            {{ 'app.course.exercise_list.table.show' | trans }}
+                        </a>
+                    </td>
+                    {% endif %}
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">{{ 'app.course.exercise_list.table.empty' | trans }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% if app.user.type is same as teacherRole %}
+        <div class="text-right">
+            <a href="{{ path('app.teacher.course.exercise.add', {'id': course.id}) }}" class="btn btn-success">
+                {{ 'app.course.exercise.add' | trans }}
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</div>

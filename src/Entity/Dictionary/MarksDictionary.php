@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Entity\Dictionary;
 
+use App\Repository\Dictionary\MarksDictionaryRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\UuidV4;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: MarksDictionaryRepository::class)]
 class MarksDictionary
 {
     #[ORM\Id]
@@ -20,6 +21,9 @@ class MarksDictionary
 
     #[ORM\Column(type: 'integer')]
     private int $position;
+
+    #[ORM\Column(type: 'integer')]
+    private int $importance;
 
     #[ORM\Column(type: 'datetime')]
     private DateTime $createdAt;
@@ -58,6 +62,17 @@ class MarksDictionary
     public function setPosition(int $position): self
     {
         $this->position = $position;
+        return $this;
+    }
+
+    public function getImportance(): int
+    {
+        return $this->importance;
+    }
+
+    public function setImportance(int $importance): self
+    {
+        $this->importance = $importance;
         return $this;
     }
 
