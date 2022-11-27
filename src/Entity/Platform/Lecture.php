@@ -22,7 +22,7 @@ class Lecture
     private string $name;
 
     #[ORM\Column(type: 'string')]
-    private string $type;
+    private string $type = '';
 
     #[ORM\Column(type: 'text')]
     private string $content = '';

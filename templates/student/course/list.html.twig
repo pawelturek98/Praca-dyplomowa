@@ -43,8 +43,8 @@
             <div class="card course-list">
                 <div class="card-header">{{ 'app.course_list.table.title' | trans }}</div>
                 <div class="card-body">
-                    <table class="table table-bordered">
-                        <tr class="text-center">
+                    <table class="table table-bordered text-center">
+                        <tr>
                             <th>{{ 'app.course_list.table.name' | trans }}</th>
                             <th>{{ 'app.course_list.table.teacher' | trans }}</th>
                             <th>{{ 'app.course_list.table.start_date' | trans }}</th>
@@ -58,9 +58,12 @@
                                 <td>{{ courseStudent.course.leadingTeacher.fullName }}</td>
                                 <td>{{ courseStudent.course.startDate | date('d.m.Y') }}</td>
                                 <td>{{ courseStudent.course.closeDate | date('d.m.Y') }}</td>
-                                <td>{{ courseStudent.course.status }}</td>
+                                <td>{{ ('app.dictionary.status.' ~ courseStudent.course.status) | trans }}</td>
                                 <td>
-                                    <a href="{{ path('app.common.course.show', {'id': courseStudent.course.id}) }}">
+                                    <a
+                                        href="{{ path('app.common.course.show', {'id': courseStudent.course.id}) }}"
+                                        class="btn btn-primary"
+                                    >
                                         {{ 'app.course_list.table.show_course' | trans }}
                                     </a>
                                 </td>

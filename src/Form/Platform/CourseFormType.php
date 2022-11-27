@@ -27,9 +27,11 @@ class CourseFormType extends AbstractType
             ])
             ->add('start_date', DateType::class, [
                 'label' => 'app.course.form.start_date',
+                'widget' => 'single_text',
             ])
             ->add('close_date', DateType::class, [
-                'label' => 'app.course.form.close_date'
+                'label' => 'app.course.form.close_date',
+                'widget' => 'single_text',
             ])
             ->add('status', ChoiceType::class, [
                 'choices' => StatusDictionary::AVAILABLE_STATUSES,

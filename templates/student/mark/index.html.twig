@@ -32,7 +32,7 @@
                             <td>{{ mark.leadingTeacher }}</td>
                             <td>{{ mark.componentMark }}</td>
                             <td>{{ mark.mark | default('-') }}</td>
-                            <td>{{ mark.status }}</td>
+                            <td>{{ ('app.dictionary.status.' ~ mark.status) | trans }}</td>
                             <td>
                                 <a href="{{ path('app.student.marks.show', {'id': mark.courseId}) }}" class="btn btn-primary">
                                     {{ 'app.show' | trans }}

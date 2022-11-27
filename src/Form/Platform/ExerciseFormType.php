@@ -20,20 +20,21 @@ class ExerciseFormType extends AbstractType
     {
         $builder
             ->add('exerciseName', TextType::class, [
-                'label' => 'app.course.exercise.form.name'
+                'label' => 'app.course.exercise.form.name',
             ])
             ->add('exerciseContent', TextareaType::class, [
-                'label' => 'app.course.exercise.form.description'
+                'label' => 'app.course.exercise.form.description',
             ])
             ->add('closeDate', DateType::class, [
-                'label' => 'app.course.exercise.form.close_date'
+                'label' => 'app.course.exercise.form.close_date',
+                'widget' => 'single_text',
             ])
             ->add('state', ChoiceType::class, [
                 'label' => 'app.course.exercise.form.state',
                 'choices' => StatusDictionary::AVAILABLE_STATUSES,
                 'choice_label' => function(string $value): string {
                     return sprintf('app.dictionary.status.%s', $value);
-                }
+                },
             ]);
     }
 
