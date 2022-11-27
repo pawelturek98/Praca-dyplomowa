@@ -46,13 +46,11 @@ class ExerciseController extends AbstractController
         ]);
     }
 
-    #[Route('{id}/{courseId}/exercise/edit', name: 'app.teacher.course.exercise.edit')]
+    #[Route('{id}/exercise/edit', name: 'app.teacher.course.exercise.edit')]
     public function edit(
         Exercise $exercise,
-        string $courseId,
         Request $request,
         SolutionRepository $solutionRepository,
-        CourseRepository $courseRepository
     ): Response {
         $exerciseForm = $this->createForm(ExerciseFormType::class, $exercise);
         $exerciseForm->handleRequest($request);
@@ -63,7 +61,7 @@ class ExerciseController extends AbstractController
         }
 
         $solutions = $solutionRepository->findBy(['exercise' => $exercise, 'isSaved' => true]);
-        $course = $courseRepository->find($courseId);
+        $course = $exercise->getCourse();
 
         return $this->render('teacher/exercise/edit.html.twig', [
             'exerciseForm' => $exerciseForm->createView(),

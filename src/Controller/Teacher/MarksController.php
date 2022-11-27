@@ -4,14 +4,20 @@ declare(strict_types=1);
 
 namespace App\Controller\Teacher;
 
+use App\Dictionary\Main\FlashTypeDictionary;
 use App\Entity\Platform\Course;
+use App\Entity\Platform\CourseStudent;
 use App\Entity\UserManagement\User;
+use App\Factory\Pagination\PaginatorFactory;
 use App\Filter\CourseStudent\CourseStudentFilterResolver;
 use App\Form\Dictionary\MarkFormType;
 use App\Form\Platform\Filter\MarkFilterFormType;
+use App\Repository\Dictionary\MarksDictionaryRepository;
+use App\Repository\Platform\CourseStudentRepository;
 use App\Resolver\Platform\ExerciseResolver;
 use App\Resolver\Platform\MarksResolver;
 use App\Service\Pagination\Paginator;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,10 +30,9 @@ class MarksController extends AbstractController
         MarksResolver $marksResolver,
         Request $request,
         CourseStudentFilterResolver $courseStudentFilterResolver,
+        PaginatorFactory $paginatorFactory,
     ): Response {
-        $page = (int) $request->get('page', 1);
-        $pageLimit = (int) $request->get('pageLimit', 30);
-        $paginator = new Paginator($page, $pageLimit);
+        $paginator = $paginatorFactory->createFromRequest($request);
         $filterForm = $this->createForm(MarkFilterFormType::class);
 
         $filterData = [];
@@ -42,20 +47,37 @@ class MarksController extends AbstractController
         ]);
     }
 
-    #[Route('teacher/marks/{id}/show', name: 'app.teacher.marks.show')]
+    #[Route('teacher/marks/{courseId}/{studentId}/show', name: 'app.teacher.marks.show')]
     public function show(
-        Course $course,
+        string $courseId,
+        string $studentId,
         Request $request,
         ExerciseResolver $exerciseResolver,
+        CourseStudentRepository $courseStudentRepository,
+        MarksDictionaryRepository $marksDictionaryRepository,
+        EntityManagerInterface $entityManager,
     ): Response {
-        $exercises = $exerciseResolver->resolve($course, $this->getUser());
-
+        /** @var CourseStudent $courseStudent */
+        $courseStudent = $courseStudentRepository->findOneBy(['course' => $courseId, 'student' => $studentId]);
         $markForm = $this->createForm(MarkFormType::class);
         $markForm->handleRequest($request);
 
-        return $this->render('student/mark/show.html.twig', [
+        if ($markForm->isSubmitted() && $markForm->isValid()) {
+            $mark = $marksDictionaryRepository->find($markForm->get('mark')->getViewData());
+            $courseStudent->setMarksDictionary($mark);
+
+            $entityManager->persist($courseStudent);
+            $entityManager->flush();
+
+            $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.student_marked');
+            return $this->redirectToRoute('app.teacher.marks.show', ['courseId' => $courseId, 'studentId' => $studentId]);
+        }
+
+        $exercises = $exerciseResolver->resolve($courseStudent->getCourse(), $courseStudent->getStudent());
+
+        return $this->render('teacher/mark/show.html.twig', [
+            'courseStudent' => $courseStudent,
             'exercises' => $exercises,
-            'course' => $course,
             'markForm' => $markForm->createView(),
         ]);
     }

@@ -19,7 +19,7 @@
                 <td>{{ ('app.course.lecture.type.' ~ lecture.type) | trans }}</td>
                 <td>{{ lecture.createdAt | date('d.m.Y') }}</td>
                 <td>
-                    {% if app.user.type is same as teacherRole %}
+                    {% if app.user.type in {teacherRole, administratorRole} %}
                     <a
                         href="{{ path('app.teacher.course.lecture.edit', {'id': lecture.id, 'courseId': course.id}) }}"
                         class="btn btn-primary"

@@ -35,7 +35,7 @@ security:
     access_control:
 #         - { path: ^/login, roles: ROLE_ANONYMOUS }
 #         - { path: ^/register, roles: ROLE_ANONYMOUS }
-         - { path: ^/teacher, roles: [ ROLE_TEACHER ] }
+         - { path: ^/teacher, roles: [ ROLE_TEACHER, ROLE_ADMINISTRATOR ] }
          - { path: ^/student, roles: ROLE_STUDENT }
 
 when@test:

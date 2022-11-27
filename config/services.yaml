@@ -45,7 +45,7 @@ services:
         arguments:
             - !tagged_iterator app.course.filter
 
-    App\Filter\CourseStudent\CourseFilterResolver:
+    App\Filter\Course\CourseFilterResolver:
         arguments:
             - !tagged_iterator app.course.filter
 

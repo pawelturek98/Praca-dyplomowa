@@ -33,7 +33,7 @@
                             >
                                 {{ 'app.show' | trans }}
                             </a>
-                            {% if app.user.type is same as teacherRole %}
+                            {% if app.user.type in {teacherRole, administratorRole} %}
                                 <a
                                     href="{{ path('app.teacher.forum.change_status', {'id': forum.id}) }}"
                                     class="btn {% if forum.isClosed %}btn-success {% else %}btn-danger{% endif %}"

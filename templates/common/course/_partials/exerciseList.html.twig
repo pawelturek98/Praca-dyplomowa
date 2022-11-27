@@ -22,10 +22,10 @@
                     <td>{{ exercise.name }}</td>
                     <td>{{ exercise.createdAt | date('d.m.Y') }}</td>
                     <td>{{ exercise.closedAt | date('d.m.Y') }}</td>
-                    {% if app.user.type is same as teacherRole %}
+                    {% if app.user.type in {teacherRole, administratorRole} %}
                     <td>
                         <a
-                            href="{{ path('app.teacher.course.exercise.edit', {'id': exercise.id, 'courseId': course.id}) }}"
+                            href="{{ path('app.teacher.course.exercise.edit', {'id': exercise.id}) }}"
                             class="btn btn-primary"
                         >
                             {{ 'app.list.action.edit' | trans }}

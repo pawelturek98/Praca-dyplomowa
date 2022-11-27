@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Form\Platform\Filter;
 
 use App\Dictionary\Platform\StatusDictionary;
+use App\Dictionary\UserManagement\UserDictionary;
 use App\Entity\Platform\Course;
 use App\Entity\UserManagement\User;
 use App\Filter\CourseStudent\Filters\CourseFilter;
@@ -50,7 +51,7 @@ class MarkFilterFormType extends AbstractType
             ->add(StudentFilter::NAME, EntityType::class, [
                 'required' => false,
                 'class' => User::class,
-                'query_builder' => $this->userRepository->getStudentsQueryBuilder(),
+                'query_builder' => $this->userRepository->getByTypeQueryBuilder(UserDictionary::ROLE_STUDENT),
                 'label' => 'app.filter.student',
                 'choice_label' => function(User $user): string {
                     return $user->getFullName();

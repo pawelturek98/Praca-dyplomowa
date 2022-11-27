@@ -56,11 +56,8 @@ class UserManagementController extends AbstractController
         return $this->render('administrator/user/list.html.twig', [
             'users' => $users,
             'filterForm' => $filterForm->createView(),
-            'total' => $total,
             'paginator' => $paginator,
-            'pageLimit' => $pageLimit,
             'lastPage' => ceil($total / $pageLimit),
-            'currentPage' => $page,
             'filterData' => $filterData,
         ]);
     }

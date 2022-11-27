@@ -8,7 +8,9 @@ use App\Dictionary\Main\FlashTypeDictionary;
 use App\Dictionary\Platform\StatusDictionary;
 use App\Entity\Platform\Course;
 use App\Entity\Platform\CourseStudent;
+use App\Factory\Pagination\PaginatorFactory;
 use App\Filter\Course\CourseFilterGenerator;
+use App\Filter\Course\CourseFilterResolver;
 use App\Filter\Course\Filters\TeacherFilter;
 use App\Form\Platform\CourseFormType;
 use App\Form\Platform\Filter\CourseFilterFormType;
@@ -32,18 +34,20 @@ class CourseController extends AbstractController
     #[Route('list', name: 'app.teacher.course.list')]
     public function list(
         Request $request,
-        CourseFilterGenerator $courseFilterGenerator
+        CourseFilterGenerator $courseFilterGenerator,
+        CourseFilterResolver $courseFilterResolver,
+        PaginatorFactory $paginatorFactory,
     ): Response {
-        $page = (int) $request->get('page', 1);
-        $pageLimit = (int) $request->get('pageLimit', 30);
-        $paginator = new Paginator($page, $pageLimit);
+        $paginator = $paginatorFactory->createFromRequest($request);
 
         $filterForm = $this->createForm(CourseFilterFormType::class);
 
-        $filterData[TeacherFilter::NAME] = $this->getUser()->getId();
-        if (null !== $request->get('filter')) {
-            $filterData = $request->get('filter');
+        if ($request->get($filterForm->getName())) {
+            $filterData = $courseFilterResolver->resolve(
+                $request->get($filterForm->getName())
+            );
         }
+        $filterData[TeacherFilter::NAME] = $this->getUser()->getId();
 
         $courses = $courseFilterGenerator
             ->setData($filterData)
@@ -54,12 +58,10 @@ class CourseController extends AbstractController
 
         return $this->render('teacher/course/list.html.twig', [
             'courses' => $courses,
-            'total' => $allCoursesAmount,
             'paginator' => $paginator,
             'filterForm' => $filterForm->createView(),
-            'pageLimit' => $pageLimit,
-            'lastPage' => ceil($allCoursesAmount / $pageLimit),
-            'currentPage' => $page,
+            'filterData' => $filterData,
+            'lastPage' => ceil($allCoursesAmount / $paginator->currentPage),
         ]);
     }
 

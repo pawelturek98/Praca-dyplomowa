@@ -7,10 +7,10 @@ namespace App\Form\Platform\Filter;
 use App\Dictionary\Platform\StatusDictionary;
 use App\Dictionary\UserManagement\UserDictionary;
 use App\Entity\UserManagement\User;
-use App\Filter\Course\Filters\CloseDateFilter;
-use App\Filter\Course\Filters\StartDateFilter;
-use App\Filter\Course\Filters\StatusFilter;
-use App\Filter\Course\Filters\TeacherFilter;
+use App\Filter\CourseStudent\Filters\CloseDateFilter;
+use App\Filter\CourseStudent\Filters\StartDateFilter;
+use App\Filter\CourseStudent\Filters\StatusFilter;
+use App\Filter\CourseStudent\Filters\TeacherFilter;
 use App\Repository\UserManagement\UserRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -18,7 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class CourseFilterFormType extends AbstractType
+class CourseStudentFilterFormType extends AbstractType
 {
     public function __construct(
         private readonly UserRepository $userRepository
@@ -42,7 +42,7 @@ class CourseFilterFormType extends AbstractType
                 'required' => false,
             ])
             ->add(StatusFilter::NAME, ChoiceType::class, [
-                'label' => 'app.filter.status.label',
+                'label' => 'app.filter.status',
                 'choices' => StatusDictionary::AVAILABLE_STATUSES_TRANSLATED,
                 'placeholder' => 'app.form.placeholder',
                 'required' => false,
@@ -53,7 +53,7 @@ class CourseFilterFormType extends AbstractType
                 'required' => false,
             ])
             ->add(CloseDateFilter::NAME, DateType::class, [
-                'label' => 'app.filter.close_date',
+                'label' => 'app.filter.status',
                 'widget' => 'single_text',
                 'required' => false,
             ])

@@ -11,19 +11,12 @@ use Symfony\Component\Uid\Uuid;
 class ExerciseDTO
 {
     private Uuid $id;
-
     private string $name;
-
     private DateTime $createdAt;
-
     private DateTime $closedAt;
-
     private ?DateTime $disposedAt = null;
-
     private bool $isDisposed = false;
-
     private ?string $mark = '';
-
     private Course $course;
 
     public function getId(): Uuid

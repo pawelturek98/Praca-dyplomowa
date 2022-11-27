@@ -26,7 +26,7 @@
                         {{ 'app.course_list.general_information' | trans }}
                     </a>
                 </li>
-                {% if app.user.type is same as teacherRole %}
+                {% if app.user.type  in {teacherRole, administratorRole} %}
                 <li class="nav-item">
                     <a
                         href="{{ path('app.common.course.show', {'id': course.id, 'slug': 'student-list'}) }}"
@@ -36,7 +36,7 @@
                     </a>
                 </li>
                 {% endif %}
-                {% if site_settings.resolve.forumEnabled %}
+                {% if site_settings.resolve.enableForum %}
                 <li class="nav-item">
                     <a
                         href="{{ path('app.common.course.show', {'id': course.id, 'slug': 'forum'}) }}"

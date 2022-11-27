@@ -1,4 +1,5 @@
 {% set teacherRole = constant('App\\Dictionary\\UserManagement\\UserDictionary::ROLE_TEACHER') %}
+{% set administratorRole = constant('App\\Dictionary\\UserManagement\\UserDictionary::ROLE_ADMINISTRATOR') %}
 <div class="row mt-3">
     <div class="col-10 m-auto">
         <div class="card">
@@ -33,7 +34,7 @@
                         {{ post.content }}
                     </div>
                 </div>
-                {% if app.user.type is same as teacherRole %}
+                {% if app.user.type in {teacherRole, administratorRole} %}
                 <div class="card-footer text-right">
                     <a
                         href="{{ path('app.teacher.forum.post.delete', {'id': post.id}) }}"

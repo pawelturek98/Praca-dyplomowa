@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Form\Platform;
 
+use App\Dictionary\UserManagement\UserDictionary;
 use App\Entity\Platform\CourseStudent;
 use App\Entity\UserManagement\User;
 use App\Repository\UserManagement\UserRepository;
@@ -25,7 +26,7 @@ class CourseStudentFormType extends AbstractType
             ->add('student', EntityType::class, [
                 'label' => 'app.course.student_list.student',
                 'class' => User::class,
-                'query_builder' => $this->userRepository->getStudentsQueryBuilder(),
+                'query_builder' => $this->userRepository->getByTypeQueryBuilder(UserDictionary::ROLE_STUDENT),
                 'choice_label' => function (User $user): string {
                     return $user->getFullName();
                 },

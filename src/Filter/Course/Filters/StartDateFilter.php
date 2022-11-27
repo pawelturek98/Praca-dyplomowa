@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Filter\CourseStudent\Filters;
+namespace App\Filter\Course\Filters;
 
-use App\Entity\UserManagement\User;
 use Doctrine\ORM\QueryBuilder;
 
-class TeacherFilter implements CourseStudentFilterInterface
+class StartDateFilter implements CourseFilterInterface
 {
-    public const NAME = 'teacher';
+    public const NAME = 'startDate';
 
     public function support(array $data): bool
     {
@@ -19,7 +18,7 @@ class TeacherFilter implements CourseStudentFilterInterface
     public function modifyQueryBuilder(QueryBuilder $queryBuilder, array $data): void
     {
         $queryBuilder
-            ->andWhere('cs.leadingTeacher = :teacher')
-            ->setParameter('teacher', $data[self::NAME]);
+            ->andWhere('c.startDate = :startDate')
+            ->setParameter('startDate', $data[self::NAME]);
     }
 }

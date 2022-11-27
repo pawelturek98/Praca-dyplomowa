@@ -20,6 +20,13 @@ final class StatusDictionary
         self::STATUS_SUSPENDED,
     ];
 
+    public const AVAILABLE_STATUSES_TRANSLATED = [
+        'app.dictionary.status.active' => self::STATUS_ACTIVE,
+        'app.dictionary.status.inactive' => self::STATUS_INACTIVE,
+        'app.dictionary.status.suspended' => self::STATUS_SUSPENDED,
+        'app.dictionary.status.deleted' => self::STATUS_DELETED,
+    ];
+
     public const AVAILABLE_MARK_STATUSES = [
         self::STATUS_MARKED,
         self::STATUS_UNMARKED,

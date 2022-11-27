@@ -95,6 +95,8 @@ app:
         remove_confirm: Czy na pewno chcesz usunąć kursanta {fullname}?
       student: Student
     remove_confirm: "Czy na pewno chcesz usunąć kurs: {name}?"
+    proposed_mark: Proponowana ocena
+    end_mark: Ocena końcowa
   course_list:
     forum: Forum
     general_information: Informacje ogólne
@@ -120,6 +122,7 @@ app:
   filter:
     course: Kurs
     close_date: Data zakończenia
+    teacher: Nauczyciel
     status:
       label: Status
       marked: Oceniona
@@ -173,6 +176,7 @@ app:
     post_created: Pomyśnie dodano nowy wpis!
     user_info_changed: Pomyślnie zmieniono dane użytkownika!
     site_settings_saved: Pomyślnie zapisano ustawienia strony!
+    student_marked: Pomyślnie oceniono studenta!
   list:
     action:
       delete: Usuń

@@ -50,16 +50,16 @@ class UserRepository extends ServiceEntityRepository implements FilterableReposi
         }
     }
 
-    public function getStudentsQueryBuilder(): QueryBuilder
+    public function getByTypeQueryBuilder(string $type): QueryBuilder
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.type = :userType')
-            ->setParameter('userType', UserDictionary::ROLE_STUDENT);
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.type = :userType')
+            ->setParameter('userType', $type);
     }
 
     public function getAllStudents(): array
     {
-        return $this->getStudentsQueryBuilder()
+        return $this->getByTypeQueryBuilder(UserDictionary::ROLE_STUDENT)
             ->getQuery()
             ->execute();
     }

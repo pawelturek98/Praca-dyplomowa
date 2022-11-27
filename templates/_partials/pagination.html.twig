@@ -4,14 +4,14 @@
         <div class="card pagination">
             <div class="card-body text-right d-flex w-100">
                 <div class="flex-column pages-info">
-                    {{ 'app.pagination.page' | trans({'{currentPage}': currentPage, '{lastPage}': lastPage}) }}
+                    {{ 'app.pagination.page' | trans({'{currentPage}': paginator.currentPage, '{lastPage}': lastPage}) }}
                 </div>
                 <nav class="flex-column">
                     <ul class="pagination justify-content-end">
-                        {% if currentPage > 1 %}
+                        {% if paginator.currentPage > 1 %}
                             <li class="page-item">
                                 <a class="page-link"
-                                   href="{{ path(paginationPath, {'page': currentPage - 1}) }}"
+                                   href="{{ path(paginationPath, {'page': paginator.currentPage - 1}) }}"
                                    tabindex="-1"
                                 >
                                     <<
@@ -25,10 +25,10 @@
                                 </a>
                             </li>
                         {% endfor %}
-                        {% if currentPage < lastPage %}
+                        {% if paginator.currentPage < lastPage %}
                             <li class="page-item">
                                 <a class="page-link"
-                                   href="{{ path(paginationPath, {'page': currentPage + 1}) }}"
+                                   href="{{ path(paginationPath, {'page': paginator.currentPage + 1}) }}"
                                    tabindex="-1"
                                 >
                                     >>
