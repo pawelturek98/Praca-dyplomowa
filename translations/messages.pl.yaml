@@ -158,29 +158,32 @@ app:
       content: Treść
       remove_confirm: Czy na pewno chcesz usunąć post?
   flash_messages:
-    address_data_changed: Pomyślnie zmieniono adres!
+    address_data_changed: Pomyślnie zmodyfikowano adres!
     course_created: Pomyślnie stworzono nowy kurs!
     course_deleted: Kurs został usunięty pomyślnie!
     course_deleted_error: Nie można usunąć kursu, nie jesteś właścicielem kursu!
-    course_edited: Pomyślnie zmieniono kurs!
+    course_edited: Pomyślnie zmodyfikowano kurs!
     course_student_added: Pomyślnie dodano kursanta!
     course_student_not_found: Nie znaleziono kursanta!
     course_student_removed: Pomyślnie usunięto kursanta!
     exercise_created: Pomyślnie stworzono zadanie!
-    exercise_edited: Pomyślnie zmieniono zadanie!
+    exercise_edited: Pomyślnie zmodyfikowano zadanie!
     exercise_delete_error: Nie można usunąć zadania, nie jesteś właścicielem kursu!
     exercise_deleted: Usunięto zadanie!
+    forum_created: Dodano nowy wątek!
     lecture_created: Stworzono wykład!
-    lecture_edited: Pomyślnie wyedytowano wykład!
+    lecture_edited: Pomyślnie zmodyfikowano wykład!
     old_password_not_same: Podano złe obecne hasło!
     solution_marked: Pomyślnie dodano ocenę do rozwiązania!
     password_not_same: Podane hasła różnią się!
     post_created: Pomyśnie dodano nowy wpis!
-    user_info_changed: Pomyślnie zmieniono dane użytkownika!
+    user_info_changed: Pomyślnie zmodyfikowano dane użytkownika!
     site_settings_saved: Pomyślnie zapisano ustawienia strony!
     student_marked: Pomyślnie oceniono studenta!
+    student_assigned_to_course: Student aktualnie jest zapisany do kursu!
     message_sent: Wiadomość wysłana!
     date_start_bigger: Data startu nie może być większa niż data zakończenia!
+    user_edited: Użytkownik został zmodyfikowany!
   list:
     action:
       delete: Usuń

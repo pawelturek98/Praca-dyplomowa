@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Helper;
 
-use JetBrains\PhpStorm\ArrayShape;
-
 class PersonNameHelper
 {
     public static function getPersonFullName(string $name): array
