@@ -13,7 +13,7 @@ class LocalFileUploaderStrategy extends AbstractUploader
     {
         try {
             $this->getFile()->move($this->targetDirectory);
-        } catch (FileException $e) {
+        } catch (FileException) {
         }
 
         return $this->getFilename();
