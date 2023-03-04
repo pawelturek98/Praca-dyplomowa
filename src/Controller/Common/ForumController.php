@@ -64,10 +64,6 @@ class ForumController extends AbstractController
         $forumForm = $this->createForm(ForumFormType::class, $forum);
         $forumForm->handleRequest($request);
 
-        $endpoint = 'app.student.course.show';
-        if ($this->getUser()->getType() === UserDictionary::ROLE_TEACHER) {
-            $endpoint = 'app.common.course.show';
-        }
 
         if ($forumForm->isSubmitted() && $forumForm->isValid()) {
             $forum->setAuthor($this->getUser());
@@ -77,7 +73,7 @@ class ForumController extends AbstractController
             $this->entityManager->flush();
 
             $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.forum_created');
-            return $this->redirectToRoute($endpoint, [
+            return $this->redirectToRoute('app.common.course.show', [
                 'id' => $course->getId(),
                 'slug' => 'forum',
                 'forumId' => $forum->getId()

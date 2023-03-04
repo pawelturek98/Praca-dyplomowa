@@ -3,7 +3,8 @@
         {{ 'app.course.exercise_list.label' | trans }}
     </div>
     <div class="card-body">
-        <table class="table table-bordered table-center">
+        <div class="w-100 overflow-auto">
+            <table class="table table-bordered table-center">
             <thead>
             <tr>
                 <th>{{ 'app.course.exercise_list.table.name' | trans }}</th>
@@ -67,6 +68,7 @@
             {% endfor %}
             </tbody>
         </table>
+        </div>
         {% if app.user.type is same as teacherRole %}
         <div class="text-right">
             <a href="{{ path('app.teacher.course.exercise.add', {'id': course.id}) }}" class="btn btn-success">

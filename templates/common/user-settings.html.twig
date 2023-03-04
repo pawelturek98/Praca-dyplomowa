@@ -10,10 +10,11 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-6">
+        <div class="col-md-6 col-sm-12">
+            {% include 'common/_partials/profileImageForm.html.twig' %}
             {% include 'common/_partials/addressForm.html.twig' %}
         </div>
-        <div class="col-6">
+        <div class="col-md-6 col-sm-12">
             {% include 'common/_partials/userForm.html.twig' %}
             {% include 'common/_partials/passwordForm.html.twig' %}
         </div>

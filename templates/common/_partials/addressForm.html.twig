@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card mb-3">
     <div class="card-header">
         {{ 'app.user.settings.address' | trans }}
     </div>
@@ -17,18 +17,18 @@
             {{ form_row(addressForm.pesel) }}
         </div>
         <div class="form-group row">
-            <div class="col-4">
+            <div class="col-md-4 col-sm-12">
                 {{ form_row(addressForm.postalCode) }}
             </div>
-            <div class="col-8">
+            <div class="col-md-8 col-sm-12">
                 {{ form_row(addressForm.city) }}
             </div>
         </div>
         <div class="form-group row">
-            <div class="col-6">
+            <div class="col-md-6 col-sm-12">
                 {{ form_row(addressForm.district) }}
             </div>
-            <div class="col-6">
+            <div class="col-md-6 col-sm-12">
                 {{ form_row(addressForm.province) }}
             </div>
         </div>

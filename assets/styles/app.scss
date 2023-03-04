@@ -2,57 +2,87 @@
 
 $navigation-color: green;
 
-body {
-    display: flex;
-    justify-content: flex-start;
-}
-
 .authorization-page {
     background: #E9FFCC;
 }
 
-.login-panel {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
 
-.navigation {
-    position: fixed;
-    background: $navigation-color;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 300px;
 
-    .nav-link {
-        color: whitesmoke;
-        background: #273F23;
-        margin-bottom: 5px;
+@media screen and (min-width: 701px) {
+    body {
+        display: flex;
+        justify-content: flex-start;
+    }
 
-        &:hover {
-            background: seagreen;
-            color: white;
+    .login-panel {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .navigation {
+        position: fixed;
+        background: $navigation-color;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 300px;
+
+        .nav-link {
+            color: whitesmoke;
+            background: #273F23;
+            margin-bottom: 5px;
+
+            &:hover {
+                background: seagreen;
+                color: white;
+            }
+        }
+
+        .logout {
+            position: absolute;
+            bottom: -5px;
+            width: 300px;
         }
     }
-
-    .logout {
-        position: absolute;
-        bottom: -5px;
+    .container {
+        margin-left: inherit;
+        max-width: 78%;
+    }
+    .clearfix-menu {
         width: 300px;
+        height: 400px;
+    }
+    .menu-mobile {
+        display: none;
+    }
+    .filter-form {
+        flex-direction: row;
     }
 }
 
-.container {
-    margin-left: inherit;
-    max-width: 78%;
+@media screen and (max-width: 700px) {
+    .navigation {
+        display: none;
+    }
+    .clearfix-menu {
+        display: none;
+    }
+    .menu-mobile {
+        margin-top: 0;
+    }
+     .filter-form {
+         flex-direction: column;
+     }
+    .table {
+        td, th {
+            white-space: nowrap;
+        }
+    }
 }
 
-.clearfix-menu {
-    width: 300px;
-    height: 400px;
-}
+
 
 .profile-info {
     margin: 10px 0;
@@ -106,7 +136,6 @@ body {
 
 .filter-form {
     display: flex;
-    flex-direction: row;
     column-gap: 15px;
 
     .filter-form__row {

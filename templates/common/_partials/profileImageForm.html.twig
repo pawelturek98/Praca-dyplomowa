@@ -1,0 +1,25 @@
+<div class="card mb-4">
+    <div class="card-header">
+        {{ 'app.user.settings.profile_image' | trans }}
+    </div>
+    <div class="card-body">
+        {% if user.profileImage %}
+            <div class="text-center mb-3">
+                <img
+                    src="{{ path('app.common.user.profile_image', {'id': user.id}) }}"
+                    alt="{{ user.fullName }}"
+                    width="164"
+                    class="border border-2"
+                >
+            </div>
+        {% endif %}
+        {{ form_start(profileImageForm) }}
+        <div class="form-group">
+            {{ form_widget(profileImageForm.profileImage) }}
+        </div>
+        <div class="form-group text-right mt-3">
+            <button class="btn btn-success" type="submit">{{ 'app.save' | trans }}</button>
+        </div>
+        {{ form_end(profileImageForm) }}
+    </div>
+</div>

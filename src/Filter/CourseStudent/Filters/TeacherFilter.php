@@ -18,8 +18,12 @@ class TeacherFilter implements CourseStudentFilterInterface
 
     public function modifyQueryBuilder(QueryBuilder $queryBuilder, array $data): void
     {
+        if (!in_array('csc', $queryBuilder->getAllAliases())) {
+            $queryBuilder->leftJoin('cs.course', 'csc');
+        }
+
         $queryBuilder
-            ->andWhere('cs.leadingTeacher = :teacher')
-            ->setParameter('teacher', $data[self::NAME]);
+            ->andWhere('csc.leadingTeacher = :teacher')
+            ->setParameter('teacher', $data[self::NAME], 'uuid');
     }
 }

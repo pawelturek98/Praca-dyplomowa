@@ -8,6 +8,11 @@ final class MimeTypeDictionary
 {
     public const POSSIBLE_MIME_TYPES = [
         'pdf' => 'application/pdf',
-        'xml' => 'application/xmp'
+        'xml' => 'application/xml',
+        'zip' => 'application/zip',
+        'jpg' => 'image/jpg',
+        'jpeg' => 'image/jpeg',
+        'gif' => 'image/gif',
+        'png' => 'image/png',
     ];
 }

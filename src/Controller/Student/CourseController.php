@@ -34,6 +34,7 @@ class CourseController extends AbstractController
                 $request->get($filterForm->getName())
             );
         }
+
         $filterData[StudentFilter::NAME] = $this->getUser()->getId();
 
         $courses = $courseStudentFilterGenerator

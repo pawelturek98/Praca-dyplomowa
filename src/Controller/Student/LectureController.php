@@ -15,7 +15,8 @@ class LectureController extends AbstractController
     public function show(Lecture $lecture): Response
     {
         return $this->render('student/lecture/show.html.twig', [
-            'lecture' => $lecture
+            'lecture' => $lecture,
+            'isPdf' => str_contains($lecture->getLectureFile()?->getType(), 'pdf')
         ]);
     }
 }

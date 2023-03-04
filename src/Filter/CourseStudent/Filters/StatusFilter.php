@@ -17,8 +17,12 @@ class StatusFilter implements CourseStudentFilterInterface
 
     public function modifyQueryBuilder(QueryBuilder $queryBuilder, array $data): void
     {
+        if (!in_array('csc', $queryBuilder->getAllAliases())) {
+            $queryBuilder->leftJoin('cs.course', 'csc');
+        }
+
         $queryBuilder
-            ->andWhere('css.status = :status')
+            ->andWhere('csc.status = :status')
             ->setParameter('status', $data[self::NAME]);
     }
 }

@@ -38,7 +38,7 @@ class SolutionController extends AbstractController
             $this->entityManager->persist($solution);
             $this->entityManager->flush();
 
-            $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_massages.solution_marked');
+            $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.solution_marked');
             return $this->redirectToRoute('app.teacher.course.solution.show', ['id' => $solution->getId()]);
         }
 

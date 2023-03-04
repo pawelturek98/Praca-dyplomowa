@@ -3,54 +3,56 @@
         {{ 'app.course.lecture_list.label' | trans }}
     </div>
     <div class="card-body">
-        <table class="table table-bordered table-center">
-            <thead>
-            <tr>
-                <th>{{ 'app.course.lecture_list.table.lesson' | trans }}</th>
-                <th>{{ 'app.course.lecture_list.table.type' | trans }}</th>
-                <th>{{ 'app.course.lecture_list.table.created_at' | trans }}</th>
-                <th>{{ 'app.list.action.label' | trans }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for lecture in lectures %}
-            <tr>
-                <td>{{ lecture.name }}</td>
-                <td>{{ ('app.course.lecture.type.' ~ lecture.type) | trans }}</td>
-                <td>{{ lecture.createdAt | date('d.m.Y') }}</td>
-                <td>
-                    {% if app.user.type in {teacherRole, administratorRole} %}
-                    <a
-                        href="{{ path('app.teacher.course.lecture.edit', {'id': lecture.id, 'courseId': course.id}) }}"
-                        class="btn btn-primary"
-                    >
-                        {{ 'app.list.action.edit' | trans }}
-                    </a>
+        <div class="w-100 overflow-auto">
+            <table class="table table-bordered table-center">
+                <thead>
+                <tr>
+                    <th>{{ 'app.course.lecture_list.table.lesson' | trans }}</th>
+                    <th>{{ 'app.course.lecture_list.table.type' | trans }}</th>
+                    <th>{{ 'app.course.lecture_list.table.created_at' | trans }}</th>
+                    <th>{{ 'app.list.action.label' | trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for lecture in lectures %}
+                    <tr>
+                        <td>{{ lecture.name }}</td>
+                        <td>{{ ('app.course.lecture.type.' ~ lecture.type) | trans }}</td>
+                        <td>{{ lecture.createdAt | date('d.m.Y') }}</td>
+                        <td>
+                            {% if app.user.type in {teacherRole, administratorRole} %}
+                                <a
+                                        href="{{ path('app.teacher.course.lecture.edit', {'id': lecture.id, 'courseId': course.id}) }}"
+                                        class="btn btn-primary"
+                                >
+                                    {{ 'app.list.action.edit' | trans }}
+                                </a>
 
-                    <a
-                        href="{{ path('app.teacher.course.lecture.delete', {'id': lecture.id, 'courseId': course.id}) }}"
-                        class="btn btn-danger remove"
-                    >
-                        {{ 'app.list.action.delete' | trans }}
-                    </a>
-                    {% else %}
-                        <a
-                            href="{{ path('app.student.course.lecture.show', {'id': lecture.id}) }}"
-                            class="btn btn-primary"
-                            data-message="{{ 'app.remove.lecture' | trans({'{lectureName}': lecture.name}) }}"
-                        >
-                            {{ 'app.course.lecture_list.table.show' | trans }}
-                        </a>
-                    {% endif %}
-                </td>
-            </tr>
-            {% else %}
-            <tr>
-                <td colspan="4">{{ 'app.course.lecture_list.table.empty' | trans }}</td>
-            </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                                <a
+                                        href="{{ path('app.teacher.course.lecture.delete', {'id': lecture.id, 'courseId': course.id}) }}"
+                                        class="btn btn-danger remove"
+                                >
+                                    {{ 'app.list.action.delete' | trans }}
+                                </a>
+                            {% else %}
+                                <a
+                                        href="{{ path('app.student.course.lecture.show', {'id': lecture.id}) }}"
+                                        class="btn btn-primary"
+                                        data-message="{{ 'app.remove.lecture' | trans({'{lectureName}': lecture.name}) }}"
+                                >
+                                    {{ 'app.course.lecture_list.table.show' | trans }}
+                                </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">{{ 'app.course.lecture_list.table.empty' | trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
         {% if app.user.type is same as teacherRole %}
         <div class="text-right">
             <a href="{{ path('app.teacher.course.lecture.add', {'id': course.id}) }}" class="btn btn-success">

@@ -42,7 +42,7 @@ class CourseStudentFilterFormType extends AbstractType
                 'required' => false,
             ])
             ->add(StatusFilter::NAME, ChoiceType::class, [
-                'label' => 'app.filter.status',
+                'label' => 'app.filter.status.label',
                 'choices' => StatusDictionary::AVAILABLE_STATUSES_TRANSLATED,
                 'placeholder' => 'app.form.placeholder',
                 'required' => false,
@@ -53,7 +53,7 @@ class CourseStudentFilterFormType extends AbstractType
                 'required' => false,
             ])
             ->add(CloseDateFilter::NAME, DateType::class, [
-                'label' => 'app.filter.status',
+                'label' => 'app.filter.close_date',
                 'widget' => 'single_text',
                 'required' => false,
             ])

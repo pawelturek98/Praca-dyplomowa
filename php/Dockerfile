@@ -1,12 +1,11 @@
-FROM php:8.1-fpm-buster
+FROM phpdockerio/php:8.1-fpm
 
-RUN apt update
-RUN apt install -y zlib1g-dev g++ git libicu-dev zip libzip-dev zip
-RUN docker-php-ext-install intl opcache pdo pdo_mysql
-RUN pecl install apcu
-RUN docker-php-ext-enable apcu
-RUN docker-php-ext-configure zip
-RUN docker-php-ext-install zip
+RUN apt-get update; \
+    apt-get -y --no-install-recommends install \
+        php8.1-intl \
+        php8.1-mysql; \
+    apt-get clean; \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 WORKDIR /var/www/home
 

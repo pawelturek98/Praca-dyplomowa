@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity\UserManagement;
 
 use App\Dictionary\UserManagement\UserDictionary;
+use App\Entity\Files\Storage;
 use App\Enum\UserManagement\UserTypeEnum;
 use App\Repository\UserManagement\UserRepository;
 use DateTime;
@@ -61,6 +62,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTime $lastSeen = null;
+
+    #[ORM\OneToOne(targetEntity: Storage::class, cascade: ['remove', 'persist'])]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Storage $profileImage = null;
 
     public function __construct()
     {
@@ -249,6 +254,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getFullNameReversed(): string
     {
         return sprintf('%s %s', $this->getLastname(), $this->getFirstname());
+    }
+
+    public function getProfileImage(): ?Storage
+    {
+        return $this->profileImage;
+    }
+
+    public function setProfileImage(?Storage $profileImage): self
+    {
+        $this->profileImage = $profileImage;
+
+        return $this;
     }
 
     public function __toString(): string

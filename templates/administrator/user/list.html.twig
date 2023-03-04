@@ -40,7 +40,8 @@
             <div class="card course-list">
                 <div class="card-header">{{ 'app.navigation.user_list' | trans }}</div>
                 <div class="card-body">
-                    <table class="table table-bordered text-center">
+                    <div class="w-100 overflow-auto">
+                        <table class="table table-bordered text-center">
                         <thead>
                         <tr>
                             <th>{{ 'app.administrator.user_list.table.name' | trans }}</th>
@@ -73,6 +74,7 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>

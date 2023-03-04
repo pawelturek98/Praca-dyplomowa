@@ -11,11 +11,13 @@ class LocalFileUploaderStrategy extends AbstractUploader
 {
     public function upload(): string
     {
+        $filename = "";
         try {
-            $this->getFile()->move($this->targetDirectory);
+            $filename = $this->getFilename();
+            $this->getFile()->move($this->targetDirectory, $filename);
         } catch (FileException) {
         }
 
-        return $this->getFilename();
+        return $filename;
     }
 }

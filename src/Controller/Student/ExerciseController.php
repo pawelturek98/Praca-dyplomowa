@@ -9,11 +9,14 @@ use App\Dictionary\Main\FlashTypeDictionary;
 use App\Entity\Files\SolutionAttachment;
 use App\Entity\Platform\Exercise;
 use App\Entity\Platform\Solution;
+use App\Enum\Storage\FileTypeEnum;
 use App\Factory\Storage\StorageFactory;
 use App\Form\Storage\StorageFormType;
 use App\Repository\Files\SolutionAttachmentsRepository;
+use App\Repository\Files\StorageRepository;
 use App\Repository\Platform\SolutionRepository;
 use App\Resolver\Platform\SolutionResolver;
+use App\Resolver\Storage\FilePathResolver;
 use App\Service\Uploader\Uploader;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,6 +42,7 @@ class ExerciseController extends AbstractController
         SolutionResolver $solutionResolver,
         StorageFactory $storageFactory,
         Uploader $uploader,
+        FilePathResolver $filePathResolver,
     ): Response {
         $solution = $solutionRepository->findOneBy(['exercise' => $exercise, 'student' => $this->getUser()]);
         $solutionFiles = $solutionAttachmentsRepository->findBy(['solution' => $solution]);
@@ -51,10 +55,9 @@ class ExerciseController extends AbstractController
             $this->entityManager->persist($solution);
 
             $file = $solutionForm->get('file')->getViewData();
-            // TODO: Maybe resolver for attachments would be better
             $filename = $uploader
                 ->setStrategy(FileUploaderStrategyDictionary::STRATEGY_LOCAL)
-                ->setTargetDirectory(sprintf('/uploaded/solution_attachments/%s/%s', $this->getUser()->getId(), $exercise->getId()))
+                ->setTargetDirectory($filePathResolver->resolve(FileTypeEnum::SolutionAttachment))
                 ->setFile($file)
                 ->upload();
 
@@ -68,7 +71,7 @@ class ExerciseController extends AbstractController
             $this->entityManager->persist($solutionFile);
             $this->entityManager->flush();
 
-            $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.added_solution_file');
+            $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.added_solution_attachment');
             return $this->redirectToRoute('app.student.course.exercise.show', ['id' => $exercise->getId()]);
         }
 
@@ -96,6 +99,23 @@ class ExerciseController extends AbstractController
         $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.solution_disposed');
         return $this->redirectToRoute('app.student.course.exercise.show', [
             'id' => $solution->getExercise()->getId()
+        ]);
+    }
+
+    #[Route('student/course/solution/attachment/{id}/delete', 'app.student.course.solution.delete_file')]
+    public function deleteFile(SolutionAttachment $solutionAttachment): Response
+    {
+        $solution = $solutionAttachment->getSolution();
+        if ($solution->getStudent() !== $this->getUser()) {
+            throw new NotFoundHttpException();
+        }
+
+        $this->entityManager->remove($solutionAttachment);
+        $this->entityManager->flush();
+
+        $this->addFlash(FlashTypeDictionary::SUCCESS, 'app.flash_messages.solution_attachment_remove');
+        return $this->redirectToRoute('app.student.course.exercise.show', [
+            'id' => $solution->getExercise()->getId(),
         ]);
     }
 }

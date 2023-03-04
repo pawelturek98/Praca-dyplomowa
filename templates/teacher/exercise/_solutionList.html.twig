@@ -3,7 +3,8 @@
         {{ 'app.course.exercise.solution_list.title' | trans }}
     </div>
     <div class="card-body">
-        <table class="table table-bordered">
+        <div class="w-100 overflow-auto">
+            <table class="table table-bordered">
             <thead>
             <tr>
                 <th>{{ 'app.course.exercise.solution_list.student' | trans }}</th>
@@ -36,5 +37,6 @@
             {% endfor %}
             </tbody>
         </table>
+        </div>
     </div>
 </div>

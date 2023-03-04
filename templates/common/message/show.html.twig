@@ -17,7 +17,11 @@
             <div class="card">
                 <div class="card-body forum d-flex p-0">
                     <div class="left-section p-4 bg-light d-flex flex-column">
-                        <img src="https://i.pravatar.cc/120" alt="avatar" class="border-2 border-opacity-10 border border-dark">
+                        <img src="{{ path('app.common.user.profile_image', {'id': message.sender.id}) }}"
+                             alt="avatar"
+                             class="border-2 border-opacity-10 border border-dark"
+                             width="153"
+                        >
                         <div class="d-flex flex-column mt-2">
                             <span class="px-2 display-block text-center fw-bold">{{ message.sender.fullname }}</span>
                             <span class="text-center display-block text-secondary">{{ message.sentAt | date('d.m.Y H:i') }}</span>
@@ -36,7 +40,10 @@
                 <div class="card">
                     <div class="card-body forum d-flex p-0">
                         <div class="left-section p-4 bg-light d-flex flex-column">
-                            <img src="https://i.pravatar.cc/120" alt="avatar" class="border-2 border-opacity-10 border border-dark">
+                            <img src="{{ path('app.common.user.profile_image', {'id': answer.sender.id}) }}"
+                                 alt="avatar"
+                                 class="border-2 border-opacity-10 border border-dark"
+                                 width="153">
                             <div class="d-flex flex-column mt-2">
                                 <span class="px-2 display-block text-center fw-bold">{{ answer.sender.fullname }}</span>
                                 <span class="text-center display-block text-secondary">{{ answer.sentAt | date('d.m.Y H:i') }}</span>

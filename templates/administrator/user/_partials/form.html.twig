@@ -1,6 +1,6 @@
 {{ form_start(userForm, {'attr': {'class': 'row'}}) }}
 <input type="hidden" name="token" value="{{ csrf_token('_token') }}"/>
-<div class="col-6">
+<div class="col-md-6 col-sm-12">
     <div class="card">
         <div class="card-header">
             {{ 'app.user.settings.address' | trans }}
@@ -40,7 +40,7 @@
         </div>
     </div>
 </div>
-<div class="col-6">
+<div class="col-md-6 col-sm-12">
     <div class="card">
         <div class="card-header">
             {{ 'app.user.settings.personal' | trans }}

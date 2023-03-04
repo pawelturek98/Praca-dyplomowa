@@ -1,11 +1,12 @@
 <div class="row mt-3">
-    <div class="col">
+    <div class="col col-sm-12">
         <div class="card">
             <div class="card-header">
                 {{ 'app.forum.list.title' | trans }}
             </div>
             <div class="card-body">
-                <table class="table table-bordered text-center">
+                <div class="w-100 overflow-auto">
+                    <table class="table table-bordered text-center">
                     <thead>
                     <tr>
                         <th>{{ 'app.forum.list.table.name' | trans }}</th>
@@ -54,6 +55,7 @@
                     {% endfor %}
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>
@@ -66,7 +68,7 @@
                 {{ 'app.forum.create.title' | trans }}
             </div>
             <div class="card-body text-center">
-                <div class="w-50 m-auto">
+                <div class="w-100 m-auto">
                     {{ form_start(forumForm, {'action': path('app.common.course.forum.create', {'id': course.id})}) }}
                     <div class="form-group">
                         {{ form_row(forumForm.name) }}

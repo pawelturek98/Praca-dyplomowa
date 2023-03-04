@@ -19,7 +19,8 @@
                     {{ 'app.marks.show.label' | trans({'{courseName}': course.name}) }}
                 </div>
                 <div class="card-body">
-                    <table class="table table-bordered text-center">
+                    <div class="w-100 overflow-auto">
+                        <table class="table table-bordered text-center">
                         <thead>
                         <tr>
                             <th>{{ 'app.course.exercise.form.name' | trans }}</th>
@@ -52,6 +53,7 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>

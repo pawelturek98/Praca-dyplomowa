@@ -10,9 +10,11 @@ use App\Dictionary\Platform\LectureTypeDictionary;
 use App\Entity\Files\Storage;
 use App\Entity\Platform\Course;
 use App\Entity\Platform\Lecture;
+use App\Enum\Storage\FileTypeEnum;
 use App\Factory\Storage\StorageFactory;
 use App\Form\Platform\LectureFormType;
 use App\Repository\Platform\CourseRepository;
+use App\Resolver\Storage\FilePathResolver;
 use App\Service\Uploader\Uploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,12 +27,11 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/teacher/course/')]
 class LectureController extends AbstractController
 {
-    private const TARGET_DIRECTORY = '/uploaded/lecture';
-
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
         private readonly Uploader $uploader,
         private readonly StorageFactory $storageFactory,
+        private readonly FilePathResolver $filePathResolver,
     ) {
     }
 
@@ -77,6 +78,7 @@ class LectureController extends AbstractController
             'lectureForm' => $lectureForm->createView(),
             'lecture' => $lecture,
             'course' => $lecture->getCourse(),
+            'isPdf' => str_contains($lecture->getLectureFile()?->getType(), 'pdf'),
         ]);
     }
 
@@ -135,7 +137,7 @@ class LectureController extends AbstractController
         $filename = $this->uploader
             ->setFile($file)
             ->setStrategy(FileUploaderStrategyDictionary::STRATEGY_LOCAL)
-            ->setTargetDirectory(self::TARGET_DIRECTORY)
+            ->setTargetDirectory($this->filePathResolver->resolve(FileTypeEnum::LectureAttachment))
             ->upload();
 
         return $this->storageFactory->create($filename, $this->getUser());

@@ -17,8 +17,12 @@ class CloseDateFilter implements CourseStudentFilterInterface
 
     public function modifyQueryBuilder(QueryBuilder $queryBuilder, array $data): void
     {
+        if (!in_array('csc', $queryBuilder->getAllAliases())) {
+            $queryBuilder->leftJoin('cs.course', 'csc');
+        }
+
         $queryBuilder
-            ->andWhere('css.closeDate = :closeDate')
+            ->andWhere('csc.closeDate = :closeDate')
             ->setParameter('closeDate', $data[self::NAME]);
     }
 }

@@ -40,10 +40,13 @@ app:
         name: Nazwa pliku
         type: Typ
         dispose: Oddaj do sprawdzenia
+        dispose_warning: Czy na pewno chcesz oddać do sprawdzenia?
         dispose_file: Dodaj plik
         undispose: Wycofaj ze sprawdzenia
         show:
           title: "Rozwiązanie studenta: {studentFullname}"
+      solution_attachment:
+        remove: Czy na pewno chcesz usunąć załącznik?
       solution_list:
         title: Rozwiązania studentów
         label: Rozwiązania
@@ -79,6 +82,7 @@ app:
         video: Film YouTube
         attachment: Plik
         text: Tekst
+      pdf_title: Treść pliku PDF
     lecture_list:
       label: Lista wykładów
       table:
@@ -119,6 +123,9 @@ app:
       suspended: Zawieszony
       deleted: Usunięty
   delete: Usuń
+  file:
+    validation:
+      message: Niezgodny typ pliku!
   filters: Filtrowanie
   filter:
     course: Kurs
@@ -139,6 +146,7 @@ app:
     create:
       title: Tworzenie nowego wątku
     close: Zamknij
+    closed: Zamknięte
     description: Treść
     list:
       title: Lista wątków
@@ -159,6 +167,7 @@ app:
       remove_confirm: Czy na pewno chcesz usunąć post?
   flash_messages:
     address_data_changed: Pomyślnie zmodyfikowano adres!
+    added_solution_attachment: Pomyślnie dodano załącznik do rozwiązania!
     course_created: Pomyślnie stworzono nowy kurs!
     course_deleted: Kurs został usunięty pomyślnie!
     course_deleted_error: Nie można usunąć kursu, nie jesteś właścicielem kursu!
@@ -175,9 +184,12 @@ app:
     lecture_edited: Pomyślnie zmodyfikowano wykład!
     old_password_not_same: Podano złe obecne hasło!
     solution_marked: Pomyślnie dodano ocenę do rozwiązania!
+    solution_attachment_remove: Pomyślnie usunięto załącznik do rozwiązania!
+    solution_disposed: Pomyślnie oddano do sprawdzenia!
     password_not_same: Podane hasła różnią się!
     post_created: Pomyśnie dodano nowy wpis!
     user_info_changed: Pomyślnie zmodyfikowano dane użytkownika!
+    user_profile_image_changed: Pomyślnie zapisano zdjęcie profilowe użytkownika!
     site_settings_saved: Pomyślnie zapisano ustawienia strony!
     student_marked: Pomyślnie oceniono studenta!
     student_assigned_to_course: Student aktualnie jest zapisany do kursu!
@@ -272,9 +284,11 @@ app:
       address: Ustawienia adresu
       password: Ustawienia hasła
       personal: Dane użytkownika
+      profile_image: Zdjęcie profilowe
     type:
       teacher: Nauczyciel
       administrator: Administrator
       student: Student
   yes: Tak
   no: Nie
+  download: Pobierz

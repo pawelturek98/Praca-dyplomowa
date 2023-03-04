@@ -27,4 +27,29 @@
             </div>
         </div>
     </div>
+    {% if lecture.type is constant('App\\Dictionary\\Platform\\LectureTypeDictionary::ATTACHMENT_TYPE') %}
+    <div class="row mt-3">
+        <div class="col">
+            <div class="card">
+                <div class="card-body text-center">
+                    <a href="{{ path('app.common.course.lecture.download_file', {'id': lecture.id}) }}" class="btn btn-primary">
+                        {{ 'app.download' | trans }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if isPdf %}
+        <div class="row mt-3">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">{{ 'app.course.lecture.pdf_title' | trans }}</div>
+                    <div class="card-body text-center">
+                        <iframe src="{{ path('app.common.course.lecture.show_pdf', {'id': lecture.id}) }}" frameborder="0" width="1000" height="900"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

@@ -17,8 +17,12 @@ class StartDateFilter implements CourseStudentFilterInterface
 
     public function modifyQueryBuilder(QueryBuilder $queryBuilder, array $data): void
     {
+        if (!in_array('csc', $queryBuilder->getAllAliases())) {
+            $queryBuilder->leftJoin('cs.course', 'csc');
+        }
+
         $queryBuilder
-            ->andWhere('css.startDate = :startDate')
+            ->andWhere('csc.startDate = :startDate')
             ->setParameter('startDate', $data[self::NAME]);
     }
 }

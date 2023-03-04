@@ -75,6 +75,7 @@
                     {{ 'app.course.exercise.solution_list.label' | trans }}
                 </div>
                 <div class="card-body">
+                    <div class="w-100 overflow-auto">
                     <table class="table table-bordered table-center">
                         <thead>
                         <tr>
@@ -86,9 +87,21 @@
                         <tbody>
                         {% for solutionFile in solutionFiles %}
                         <tr>
-                            <td>{{ solutionFile.storage.name }}</td>
+                            <td>
+                                <a href="{{ path('app.common.solution.attachment.download', {'id': solutionFile.id}) }}">
+                                    {{ solutionFile.storage.name }}
+                                </a>
+                            </td>
                             <td>{{ solutionFile.storage.type }}</td>
-                            <td></td>
+                            <td>
+                                <a
+                                    href="{{ path('app.student.course.solution.delete_file', {'id': solutionFile.id}) }}"
+                                    class="btn btn-danger remove"
+                                    data-message="{{ 'app.course.exercise.solution_attachment.remove' | trans }}"
+                                >
+                                    {{ 'app.list.action.delete' | trans }}
+                                </a>
+                            </td>
                         </tr>
                         {% else %}
                             <tr>
@@ -99,11 +112,16 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    </div>
                 </div>
                 {% if solution %}
                 <div class="card-footer text-right">
                     {% if not solution.isSaved %}
-                        <a href="{{ path('app.student.course.solution.dispose', {'id': solution.id}) }}" class="btn btn-primary remove">
+                        <a
+                            href="{{ path('app.student.course.solution.dispose', {'id': solution.id}) }}"
+                            class="btn btn-primary remove"
+                            data-message="{{ 'app.course.exercise.solution.dispose_warning' | trans }}"
+                        >
                             {{ 'app.course.exercise.solution.dispose' | trans }}
                         </a>
                     {% else %}

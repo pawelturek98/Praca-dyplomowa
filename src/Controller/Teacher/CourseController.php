@@ -39,7 +39,6 @@ class CourseController extends AbstractController
         PaginatorFactory $paginatorFactory,
     ): Response {
         $paginator = $paginatorFactory->createFromRequest($request);
-
         $filterForm = $this->createForm(CourseFilterFormType::class);
 
         if ($request->get($filterForm->getName())) {
